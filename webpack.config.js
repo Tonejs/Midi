@@ -18,5 +18,5 @@ module.exports = {
 		root: __dirname,
 		modulesDirectories : ["src", "node_modules"],
 	},
-	devtool: "#eval"
+	plugins: new webpack.optimize.UglifyJsPlugin({minimize: true}),
 };
