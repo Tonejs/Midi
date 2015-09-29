@@ -1,0 +1,3863 @@
+{
+    "upper:": [
+        {
+            "time": "0i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "12i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "24i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "36i"
+        },
+        {
+            "time": "60i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "72i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "84i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "96i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "108i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "120i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "132i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "144i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "156i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "168i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "36i"
+        },
+        {
+            "time": "204i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "216i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "228i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "240i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "252i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "264i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "276i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "288i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "300i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "312i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "36i"
+        },
+        {
+            "time": "348i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "360i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "372i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "384i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "396i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "408i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "420i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "432i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "444i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "456i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "468i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 61,
+            "noteName": "C#4",
+            "duration": "12i"
+        },
+        {
+            "time": "480i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "492i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "600i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "612i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "624i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "24i"
+        },
+        {
+            "time": "648i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "24i"
+        },
+        {
+            "time": "672i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "24i"
+        },
+        {
+            "time": "696i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "24i"
+        },
+        {
+            "time": "744i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "756i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "768i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "24i"
+        },
+        {
+            "time": "792i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "24i"
+        },
+        {
+            "time": "816i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "24i"
+        },
+        {
+            "time": "840i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "24i"
+        },
+        {
+            "time": "888i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "900i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "912i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "24i"
+        },
+        {
+            "time": "936i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "24i"
+        },
+        {
+            "time": "960i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "24i"
+        },
+        {
+            "time": "984i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "48i"
+        },
+        {
+            "time": "1032i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "24i"
+        },
+        {
+            "time": "1068i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1080i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "1092i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1104i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "1116i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1128i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "1140i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "12i"
+        },
+        {
+            "time": "1152i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 83,
+            "noteName": "B5",
+            "duration": "12i"
+        },
+        {
+            "time": "1164i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "1176i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1188i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "1200i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1212i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "1224i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1236i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "1248i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 83,
+            "noteName": "B5",
+            "duration": "12i"
+        },
+        {
+            "time": "1260i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "1272i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "1284i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "1296i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "12i"
+        },
+        {
+            "time": "1308i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "1320i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "1332i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "1344i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "1356i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "1368i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "1380i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "1392i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "12i"
+        },
+        {
+            "time": "1404i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "1416i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "1428i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1440i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "1452i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1464i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "1476i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1488i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "1500i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1512i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "1524i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1536i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "1548i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "1560i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "1572i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1584i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "1596i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1608i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "1620i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 61,
+            "noteName": "C#4",
+            "duration": "12i"
+        },
+        {
+            "time": "1632i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "1644i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 61,
+            "noteName": "C#4",
+            "duration": "12i"
+        },
+        {
+            "time": "1656i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "1668i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1680i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "1692i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "1704i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "1716i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "1728i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "24i"
+        },
+        {
+            "time": "1752i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "1776i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "1800i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "24i"
+        },
+        {
+            "time": "1824i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "24i"
+        },
+        {
+            "time": "1848i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "24i"
+        },
+        {
+            "time": "1872i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "24i"
+        },
+        {
+            "time": "1896i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1920i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1944i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "24i"
+        },
+        {
+            "time": "1968i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "24i"
+        },
+        {
+            "time": "1992i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "24i"
+        },
+        {
+            "time": "2016i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2028i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "2040i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2052i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "2064i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2076i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2088i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "2100i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2112i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "2124i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "2136i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "2148i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2160i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2172i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "2184i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2196i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "2208i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2220i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "2232i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2244i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "2304i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2316i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "2328i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "36i"
+        },
+        {
+            "time": "2364i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 83,
+            "noteName": "B5",
+            "duration": "12i"
+        },
+        {
+            "time": "2376i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "12i"
+        },
+        {
+            "time": "2388i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "2400i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2412i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "2424i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "2436i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "2448i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "2460i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "2472i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "36i"
+        },
+        {
+            "time": "2508i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "2520i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "2532i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "2544i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "2556i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2568i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "2580i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2592i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "2604i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 68,
+            "noteName": "G#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2616i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2628i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "2640i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2652i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "2664i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2676i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "2688i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "2700i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2712i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 75,
+            "noteName": "D#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2724i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "2736i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2748i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "2760i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 75,
+            "noteName": "D#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2772i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 73,
+            "noteName": "C#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2784i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "108i"
+        },
+        {
+            "time": "2844i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 63,
+            "noteName": "D#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2856i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2868i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "2880i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "36i"
+        },
+        {
+            "time": "2892i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 75,
+            "noteName": "D#5",
+            "duration": "12i"
+        },
+        {
+            "time": "2904i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "36i"
+        },
+        {
+            "time": "2916i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2928i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "36i"
+        },
+        {
+            "time": "2940i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 63,
+            "noteName": "D#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2952i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "36i"
+        },
+        {
+            "time": "3036i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 80,
+            "noteName": "G#5",
+            "duration": "12i"
+        },
+        {
+            "time": "3048i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "36i"
+        },
+        {
+            "time": "3060i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "3072i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "36i"
+        },
+        {
+            "time": "3084i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 68,
+            "noteName": "G#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3096i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "36i"
+        },
+        {
+            "time": "3180i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "3192i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "3204i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3216i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "3228i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 63,
+            "noteName": "D#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3240i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "3252i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "3264i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3276i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "3288i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 63,
+            "noteName": "D#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3300i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "3312i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "3324i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3336i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "3348i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 63,
+            "noteName": "D#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3360i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "3372i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "3480i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "24i"
+        },
+        {
+            "time": "3504i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "24i"
+        },
+        {
+            "time": "3528i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "24i"
+        },
+        {
+            "time": "3552i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "24i"
+        },
+        {
+            "time": "3576i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "24i"
+        },
+        {
+            "time": "3624i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "24i"
+        },
+        {
+            "time": "3648i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "24i"
+        },
+        {
+            "time": "3672i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "24i"
+        },
+        {
+            "time": "3696i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "24i"
+        },
+        {
+            "time": "3720i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "24i"
+        },
+        {
+            "time": "3744i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "3756i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "3768i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "3780i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "3792i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "3804i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "3816i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "3828i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "3840i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "3852i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "3864i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "3876i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "3888i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "3900i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "3912i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "3924i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3936i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "3948i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "3960i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "3972i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "3984i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "3996i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "4008i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "4020i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "12i"
+        },
+        {
+            "time": "4032i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 83,
+            "noteName": "B5",
+            "duration": "12i"
+        },
+        {
+            "time": "4044i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "4056i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "4068i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "4080i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "4092i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "4104i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "4116i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "4128i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 83,
+            "noteName": "B5",
+            "duration": "12i"
+        },
+        {
+            "time": "4140i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 77,
+            "noteName": "F5",
+            "duration": "12i"
+        },
+        {
+            "time": "4152i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 83,
+            "noteName": "B5",
+            "duration": "12i"
+        },
+        {
+            "time": "4164i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 86,
+            "noteName": "D6",
+            "duration": "12i"
+        },
+        {
+            "time": "4176i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "4188i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 86,
+            "noteName": "D6",
+            "duration": "12i"
+        },
+        {
+            "time": "4200i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 84,
+            "noteName": "C6",
+            "duration": "12i"
+        },
+        {
+            "time": "4212i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "4224i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "4236i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 84,
+            "noteName": "C6",
+            "duration": "12i"
+        },
+        {
+            "time": "4248i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 83,
+            "noteName": "B5",
+            "duration": "12i"
+        },
+        {
+            "time": "4260i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "4272i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "4284i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 76,
+            "noteName": "E5",
+            "duration": "12i"
+        },
+        {
+            "time": "4296i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 78,
+            "noteName": "F#5",
+            "duration": "12i"
+        },
+        {
+            "time": "4308i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 79,
+            "noteName": "G5",
+            "duration": "12i"
+        },
+        {
+            "time": "4320i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 81,
+            "noteName": "A5",
+            "duration": "12i"
+        },
+        {
+            "time": "4332i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "4344i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "4356i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "4368i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "4380i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 74,
+            "noteName": "D5",
+            "duration": "12i"
+        },
+        {
+            "time": "4392i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "4404i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "4416i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 72,
+            "noteName": "C5",
+            "duration": "12i"
+        },
+        {
+            "time": "4428i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "4440i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "4452i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "4464i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "4476i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "4488i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "4500i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "4512i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "4524i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "4536i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "4548i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "4560i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "48i"
+        }
+    ],
+    "lower:": [
+        {
+            "time": "0i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 43,
+            "noteName": "G2",
+            "duration": "24i"
+        },
+        {
+            "time": "24i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "36i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "48i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "24i"
+        },
+        {
+            "time": "72i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "96i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 43,
+            "noteName": "G2",
+            "duration": "24i"
+        },
+        {
+            "time": "120i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "144i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 42,
+            "noteName": "F#2",
+            "duration": "24i"
+        },
+        {
+            "time": "168i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "180i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "192i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "216i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "24i"
+        },
+        {
+            "time": "240i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 42,
+            "noteName": "F#2",
+            "duration": "24i"
+        },
+        {
+            "time": "264i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "24i"
+        },
+        {
+            "time": "288i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 40,
+            "noteName": "E2",
+            "duration": "24i"
+        },
+        {
+            "time": "312i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "324i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "336i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "360i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "384i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 45,
+            "noteName": "A2",
+            "duration": "24i"
+        },
+        {
+            "time": "408i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 61,
+            "noteName": "C#4",
+            "duration": "24i"
+        },
+        {
+            "time": "432i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "24i"
+        },
+        {
+            "time": "456i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "468i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "480i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "504i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "24i"
+        },
+        {
+            "time": "504i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "516i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "528i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "528i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 38,
+            "noteName": "D2",
+            "duration": "24i"
+        },
+        {
+            "time": "540i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "552i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "24i"
+        },
+        {
+            "time": "564i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "12i"
+        },
+        {
+            "time": "576i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "588i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 45,
+            "noteName": "A2",
+            "duration": "12i"
+        },
+        {
+            "time": "600i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "36i"
+        },
+        {
+            "time": "636i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "648i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "660i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "672i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "684i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "696i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "708i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "720i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "12i"
+        },
+        {
+            "time": "732i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "744i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "36i"
+        },
+        {
+            "time": "780i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "792i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "804i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "816i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "828i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "840i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "852i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "864i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "876i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 49,
+            "noteName": "C#3",
+            "duration": "12i"
+        },
+        {
+            "time": "888i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "36i"
+        },
+        {
+            "time": "924i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "936i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "948i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "960i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "972i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "984i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "996i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "1008i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1020i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "1032i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1044i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "1056i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "1068i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "1080i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "1092i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "1104i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "1116i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "1128i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "1140i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "1152i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 43,
+            "noteName": "G2",
+            "duration": "24i"
+        },
+        {
+            "time": "1176i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1200i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "24i"
+        },
+        {
+            "time": "1224i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1248i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 43,
+            "noteName": "G2",
+            "duration": "24i"
+        },
+        {
+            "time": "1272i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1296i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 42,
+            "noteName": "F#2",
+            "duration": "24i"
+        },
+        {
+            "time": "1320i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "1344i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "24i"
+        },
+        {
+            "time": "1368i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "1392i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 42,
+            "noteName": "F#2",
+            "duration": "24i"
+        },
+        {
+            "time": "1416i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "1440i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 40,
+            "noteName": "E2",
+            "duration": "24i"
+        },
+        {
+            "time": "1464i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "1488i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1512i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "1536i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 40,
+            "noteName": "E2",
+            "duration": "24i"
+        },
+        {
+            "time": "1560i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1584i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 45,
+            "noteName": "A2",
+            "duration": "24i"
+        },
+        {
+            "time": "1608i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "1632i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1656i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "1680i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 45,
+            "noteName": "A2",
+            "duration": "24i"
+        },
+        {
+            "time": "1704i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "1728i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "1740i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "1752i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "1764i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "1776i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "12i"
+        },
+        {
+            "time": "1788i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "12i"
+        },
+        {
+            "time": "1800i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "1812i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "1824i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "1836i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "1848i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "1860i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "1872i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "1884i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "1896i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "1908i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1920i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 71,
+            "noteName": "B4",
+            "duration": "12i"
+        },
+        {
+            "time": "1932i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "12i"
+        },
+        {
+            "time": "1944i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "1956i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "1968i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "1980i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "1992i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "2004i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "2016i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "24i"
+        },
+        {
+            "time": "2040i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 61,
+            "noteName": "C#4",
+            "duration": "24i"
+        },
+        {
+            "time": "2064i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "2076i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "2088i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "2100i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "2112i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "24i"
+        },
+        {
+            "time": "2136i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 45,
+            "noteName": "A2",
+            "duration": "24i"
+        },
+        {
+            "time": "2160i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 38,
+            "noteName": "D2",
+            "duration": "12i"
+        },
+        {
+            "time": "2172i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "2184i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "2196i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "2208i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "2220i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "2232i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "2244i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 61,
+            "noteName": "C#4",
+            "duration": "12i"
+        },
+        {
+            "time": "2256i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "48i"
+        },
+        {
+            "time": "2304i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 38,
+            "noteName": "D2",
+            "duration": "24i"
+        },
+        {
+            "time": "2328i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "2340i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "2352i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "2376i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "24i"
+        },
+        {
+            "time": "2400i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 38,
+            "noteName": "D2",
+            "duration": "24i"
+        },
+        {
+            "time": "2424i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "2448i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 43,
+            "noteName": "G2",
+            "duration": "24i"
+        },
+        {
+            "time": "2472i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "2484i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "2496i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "24i"
+        },
+        {
+            "time": "2520i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "2544i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 43,
+            "noteName": "G2",
+            "duration": "24i"
+        },
+        {
+            "time": "2568i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "24i"
+        },
+        {
+            "time": "2592i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "24i"
+        },
+        {
+            "time": "2616i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "2628i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "2640i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "24i"
+        },
+        {
+            "time": "2664i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "2688i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "24i"
+        },
+        {
+            "time": "2712i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "24i"
+        },
+        {
+            "time": "2736i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "24i"
+        },
+        {
+            "time": "2760i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "2784i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 51,
+            "noteName": "D#3",
+            "duration": "12i"
+        },
+        {
+            "time": "2796i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "2808i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 51,
+            "noteName": "D#3",
+            "duration": "12i"
+        },
+        {
+            "time": "2820i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "2832i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "2964i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "2976i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "36i"
+        },
+        {
+            "time": "2988i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 51,
+            "noteName": "D#3",
+            "duration": "12i"
+        },
+        {
+            "time": "3000i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "3012i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "3024i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "36i"
+        },
+        {
+            "time": "3108i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "3120i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "36i"
+        },
+        {
+            "time": "3132i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 56,
+            "noteName": "G#3",
+            "duration": "12i"
+        },
+        {
+            "time": "3144i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "36i"
+        },
+        {
+            "time": "3156i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "3168i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 51,
+            "noteName": "D#3",
+            "duration": "24i"
+        },
+        {
+            "time": "3192i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "24i"
+        },
+        {
+            "time": "3216i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "3240i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 46,
+            "noteName": "A#2",
+            "duration": "24i"
+        },
+        {
+            "time": "3264i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "24i"
+        },
+        {
+            "time": "3288i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "3312i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "3336i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "3348i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "3360i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "3384i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "3384i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "3396i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "3408i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "3408i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 40,
+            "noteName": "E2",
+            "duration": "24i"
+        },
+        {
+            "time": "3420i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "3432i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "3444i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "3456i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "12i"
+        },
+        {
+            "time": "3468i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "3480i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "3492i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "3504i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "12i"
+        },
+        {
+            "time": "3516i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "12i"
+        },
+        {
+            "time": "3528i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "12i"
+        },
+        {
+            "time": "3540i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "3552i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "12i"
+        },
+        {
+            "time": "3564i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "3576i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "3588i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "12i"
+        },
+        {
+            "time": "3600i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "3612i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "3624i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "3636i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "3648i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "12i"
+        },
+        {
+            "time": "3660i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "12i"
+        },
+        {
+            "time": "3672i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "3684i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "3696i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "3708i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "3720i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "12i"
+        },
+        {
+            "time": "3732i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "3744i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 45,
+            "noteName": "A2",
+            "duration": "24i"
+        },
+        {
+            "time": "3768i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "24i"
+        },
+        {
+            "time": "3792i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "3816i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "3840i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "3864i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "24i"
+        },
+        {
+            "time": "3888i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "24i"
+        },
+        {
+            "time": "3912i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "24i"
+        },
+        {
+            "time": "3936i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "24i"
+        },
+        {
+            "time": "3960i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "24i"
+        },
+        {
+            "time": "3984i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "24i"
+        },
+        {
+            "time": "4008i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 57,
+            "noteName": "A3",
+            "duration": "24i"
+        },
+        {
+            "time": "4032i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "4056i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 59,
+            "noteName": "B3",
+            "duration": "24i"
+        },
+        {
+            "time": "4080i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "24i"
+        },
+        {
+            "time": "4104i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 65,
+            "noteName": "F4",
+            "duration": "24i"
+        },
+        {
+            "time": "4128i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "24i"
+        },
+        {
+            "time": "4152i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "24i"
+        },
+        {
+            "time": "4176i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 60,
+            "noteName": "C4",
+            "duration": "24i"
+        },
+        {
+            "time": "4200i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 64,
+            "noteName": "E4",
+            "duration": "24i"
+        },
+        {
+            "time": "4224i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "24i"
+        },
+        {
+            "time": "4248i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 68,
+            "noteName": "G#4",
+            "duration": "24i"
+        },
+        {
+            "time": "4272i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 69,
+            "noteName": "A4",
+            "duration": "24i"
+        },
+        {
+            "time": "4296i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "24i"
+        },
+        {
+            "time": "4320i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 66,
+            "noteName": "F#4",
+            "duration": "24i"
+        },
+        {
+            "time": "4344i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "24i"
+        },
+        {
+            "time": "4368i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 67,
+            "noteName": "G4",
+            "duration": "24i"
+        },
+        {
+            "time": "4392i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "24i"
+        },
+        {
+            "time": "4416i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 62,
+            "noteName": "D4",
+            "duration": "24i"
+        },
+        {
+            "time": "4440i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "24i"
+        },
+        {
+            "time": "4464i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "12i"
+        },
+        {
+            "time": "4476i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 43,
+            "noteName": "G2",
+            "duration": "12i"
+        },
+        {
+            "time": "4488i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 45,
+            "noteName": "A2",
+            "duration": "12i"
+        },
+        {
+            "time": "4500i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 47,
+            "noteName": "B2",
+            "duration": "12i"
+        },
+        {
+            "time": "4512i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 48,
+            "noteName": "C3",
+            "duration": "12i"
+        },
+        {
+            "time": "4524i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 50,
+            "noteName": "D3",
+            "duration": "12i"
+        },
+        {
+            "time": "4536i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 52,
+            "noteName": "E3",
+            "duration": "12i"
+        },
+        {
+            "time": "4548i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 54,
+            "noteName": "F#3",
+            "duration": "12i"
+        },
+        {
+            "time": "4560i",
+            "velocity": 0.7086614173228346,
+            "midiNote": 55,
+            "noteName": "G3",
+            "duration": "48i"
+        }
+    ]
+}
