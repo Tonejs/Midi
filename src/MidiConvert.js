@@ -3,7 +3,7 @@ define(["midi-file-parser", "Transport", "Parts"], function(midiFileParser, Tran
 	return {
 		/**
 		 *  Convert a midi file to a Tone.Score-friendly JSON representation
-		 *  @param  {ArrayBuffer}  fileBlob  The output from fs.readFile or FileReader
+		 *  @param  {Binary String}  fileBlob  The output from fs.readFile or FileReader
 		 *  @param  {Object}  options   The parseing options
 		 *  @return  {Object}  A Tone.js-friendly object which can be consumed
 		 *                       by Tone.Score
@@ -14,7 +14,7 @@ define(["midi-file-parser", "Transport", "Parts"], function(midiFileParser, Tran
 		},
 		/**
 		 *  Parse the Transport-relevant descriptions from the MIDI file blob
-		 *  @param  {ArrayBuffer}  fileBlob  The output from fs.readFile or FileReader
+		 *  @param  {Binary String}  fileBlob  The output from fs.readFile or FileReader
 		 *  @return  {Object}  
 		 */
 		parseTransport : function(fileBlob){

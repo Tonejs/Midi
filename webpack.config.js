@@ -3,12 +3,12 @@ var webpack = require("webpack");
 module.exports = {
 	"context": __dirname,
 	entry: {
-		"MidiToScore": "src/MidiToScore",
+		"MidiConvert": "src/MidiConvert",
 	},
 	output: {
 		filename: "./build/[name].js",
 		sourceMapFilename : "[file].map",
-		library : "MidiToScore",
+		library : "MidiConvert",
 		libraryTarget : "umd"
 	},
 	resolve: {

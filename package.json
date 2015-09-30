@@ -1,5 +1,5 @@
 {
-  "name": "MidiToScore",
+  "name": "MidiConvert",
   "version": "1.0.0",
   "description": "Convert binary midi files to Tone.js scores",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Tonejs/MidiToScore.git"
+    "url": "https://github.com/Tonejs/MidiConvert.git"
   },
   "author": "Yotam Mann",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tonejs/MidiToScore/issues"
+    "url": "https://github.com/Tonejs/MidiConvert/issues"
   },
-  "homepage": "http://tonejs.github.com/MidiToScore/convert",
+  "homepage": "http://tonejs.github.com/MidiConvert/convert",
   "devDependencies": {
     "chai": "^3.3.0",
     "midi-file-parser": "^1.0.0",
