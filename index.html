@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MidiToScore</title>
+	<script type="text/javascript" src="./build/MidiToScore.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="http://tonejs.github.io/Logo/deps/Tone.js"></script>
+	<script type="text/javascript" src="http://tonejs.github.io/Logo/build/Logo.js"></script>
+</head>
+<body>
+	<style type="text/css">
+
+		body {
+			font-family: "Roboto Mono" monospace;
+			text-align: center;
+		}
+
+		#Topbar {
+			width: 100%;
+			height: 50px;
+			background-color: black;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+		}
+
+		#Topbar #TonejsLogo{
+			margin-top: 10px;
+		}
+
+		#FileDrop{
+			position: absolute;
+			width: 500px;
+			height: 200px;
+			margin-left: -250px;
+			border: 2px dashed black;
+			left: 50%;
+			margin-top: 70px;
+			color: black;
+		}
+
+		#FileDrop.Hover{
+			background-color: black;
+			color: white;
+		}
+
+		#FileDrop input {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			left: 0px;
+			top: 0px;
+		}
+
+		#FileDrop #Text {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			line-height: 200px;
+			left: 0px;
+			top: 0px;
+			text-align: center;
+		}
+
+		textarea {
+			font-family: "Roboto Mono" monospace;
+			height: 110px;
+			width: 300px;
+			display: inline-block;
+			position: relative;
+			float: left;
+		}
+
+		#Transport {
+			position: absolute;
+			width: 500px;
+			margin-left: -250px;
+			top: 300px;
+			left: 50%;
+			position: absolute;
+		}
+
+		#Parts span, #Transport span {
+			display: inline-block;
+			float: left;
+			width: 100px;
+			text-align: left;
+		}
+
+		#Parts {
+			position: absolute;
+			width: 500px;
+			margin-left: -250px;
+			top: 430px;
+			left: 50%;
+			position: absolute;
+		}
+
+		#Description {
+			position: absolute;
+			width: 100%;
+			height: 40px;
+			font-size: 20px;
+			bottom: 0px;
+		}
+
+		#Settings {
+			background-color: black;
+			right: 20px;
+			top: 70px;
+			width: 125px;
+			height: auto;
+			padding-bottom: 10px;
+			position: absolute;
+		}
+
+		#Settings span {
+			width: 60px;
+			float: left;
+			color: white;
+			font-size: 12px;
+			text-align: left;
+			margin-left: 10px;
+			margin-top: 10px;
+		}
+
+		#Settings input {
+			width: 30px;
+			float: left;
+			margin-left: 10px;
+			margin-top: 10px;
+		}
+
+	</style>
+
+	<div id="Topbar"></div>
+	<div id="FileDrop">
+		<div id="Text">
+			Drop a midi file here
+		</div>
+		<input type="file" accept="audio/midi">
+	</div>
+	<div id="Transport">
+		<span>Transport:</span>
+		<textarea id="TransportOutput"></textarea>
+	</div>
+	<div id="Parts">
+		<span>Parts:</span>
+		<textarea id="PartsOutput"></textarea>
+	</div>
+	<div id="Settings">
+		<span>PPQ:</span><input type="number" value="48">
+		<span>midiNote:</span><input type="checkbox" checked>
+		<span>noteName:</span><input type="checkbox" checked>
+		<span>velocity:</span><input type="checkbox" checked>
+		<span>duration:</span><input type="checkbox" checked>
+	</div>
+
+	<div id="Description">Parse a MIDI file in a Tone.js-friendly JSON format.</div>
+
+	<script type="text/javascript">
+
+		$(function(){
+
+			var logo = new Tone.Logo({
+				"width" : 130,
+				"height" : 30,
+				"container" : "#Topbar"
+			});
+
+			var currentFile = null;
+
+			if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+				$("#FileDrop #Text").text("Reading files not supported by this browser");
+			} else {
+				$("#FileDrop").on("dragenter", function(){
+					$(this).addClass("Hover");
+				}).on("dragleave drop", function(){
+					$(this).removeClass("Hover");
+				})
+
+				$("#FileDrop input").on("change", function(e){
+					//get the files
+					var files = e.target.files;
+					if (files.length > 0){
+						var file = files[0];
+						$("#FileDrop #Text").text(file.name);
+						currentFile = file;
+						parseFile(file);
+					}
+				});
+
+				$("#Settings input").on("change", function(){
+					if (currentFile){
+						parseFile(currentFile);
+					}
+				});
+			}
+
+			var options = {
+				PPQ : 48,
+				midiNote : true,
+				noteName : true,
+				velocity : true,
+				duration : true
+			}
+
+			function parseFile(file){
+				//get the settings
+				$("#Settings input").each(function(i, e){
+					if (i === 0){
+						options.PPQ = parseInt(e.value);
+					} else if (i === 1){
+						options.midiNote = e.checked;
+					} else if (i === 2){
+						options.noteName = e.checked;
+					} else if (i === 3){
+						options.velocity = e.checked;
+					} else if (i === 4){
+						options.duration = e.checked;
+					}
+				});
+				//read the file
+				var reader = new FileReader();
+				reader.onload = function(e){
+					var transportData = MidiToScore.parseTransport(e.target.result);
+					$("#TransportOutput").val(JSON.stringify(transportData, undefined, 2))
+
+					var partsData = MidiToScore.parseParts(e.target.result, options);
+					$("#PartsOutput").val(JSON.stringify(partsData, undefined, 2))
+				}
+				reader.readAsBinaryString(file);
+			}
+
+		});
+
+	</script>
+
+</body>
+</html>
