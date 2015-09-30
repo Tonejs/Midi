@@ -50,7 +50,9 @@ describe("Goldberg Variation 1 format 1 midi file", function(){
 		var trackData = MidiToScore.parseParts(midiData, {
 			PPQ : 48,
 			midiNote : true,
-			noteName : true
+			noteName : true,
+			velocity : true,
+			duration: true
 		});
 		expect(trackData).to.have.all.keys(["upper:", "lower:"]);
 		expect(trackData).to.deep.equal(midiJson);
@@ -95,7 +97,9 @@ describe("Prelude in C format 1 midi file", function(){
 		var trackData = MidiToScore.parseParts(midiData, {
 			PPQ : 96,
 			midiNote : true,
-			noteName : false
+			noteName : false,
+			velocity : true,
+			duration: true
 		});
 		expect(trackData).to.have.all.keys(["Fuga 1", "Fuga 2", "Fuga 3", "Fuga 4", "Piano left", "Piano right"]);
 		expect(trackData).to.deep.equal(midiJson);
@@ -140,7 +144,9 @@ describe("Prelude in D minor format 0 midi file", function(){
 		var trackData = MidiToScore.parseParts(midiData, {
 			PPQ : 24,
 			midiNote : true,
-			noteName : false
+			noteName : false,
+			velocity : true,
+			duration: true
 		});
 		expect(trackData).to.have.all.keys(["Präludium und Fuge in D-Dur, BWV 850"]);
 		expect(trackData).to.deep.equal(midiJson);
@@ -171,7 +177,9 @@ describe("Prelude in C minor format 0 midi file", function(){
 		var trackData = MidiToScore.parseParts(midiData, {
 			PPQ : 48,
 			midiNote : true,
-			noteName : true
+			noteName : true,
+			velocity : true,
+			duration: true
 		});
 		expect(trackData).to.have.all.keys(["Das wohltemperierte Klavier I - Praeludium und Fuge 2 in c-Moll BWV 847"]);
 		expect(trackData).to.deep.equal(midiJson);

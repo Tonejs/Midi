@@ -33,6 +33,8 @@ define(function(){
 		options.PPQ = typeof options.PPQ === "undefined" ? 48 : options.PPQ;
 		options.midiNote = typeof options.midiNote === "undefined" ? true : options.midiNote;
 		options.noteName = typeof options.noteName === "undefined" ? true : options.noteName;
+		options.duration = typeof options.duration === "undefined" ? true : options.duration;
+		options.velocity = typeof options.velocity === "undefined" ? true : options.velocity;
 
 		var output = {};
 
@@ -45,13 +47,11 @@ define(function(){
 			for (var j = 0; j < track.length; j++){
 				var evnt = track[j];
 				currentTime += evnt.deltaTime;
-				var velocity = evnt.velocity / 127;
 				if (evnt.subtype === "noteOn"){
 					var noteObj = {
 						ticks : currentTime,
 						time : currentTime, 
 						note : evnt.noteNumber,
-						velocity : velocity,
 					};
 					if (options.midiNote){
 						noteObj.midiNote = evnt.noteNumber;
@@ -59,13 +59,19 @@ define(function(){
 					if (options.noteName){
 						noteObj.noteName =  midiToNote(evnt.noteNumber);
 					}
+					if (options.velocity){
+						var velocity = evnt.velocity / 127;
+						noteObj.velocity =  velocity;
+					}
 					trackNotes.push(noteObj);
 				} else if (evnt.subtype === "noteOff"){
 					//add the duration
 					for (var k = trackNotes.length - 1; k >= 0; k--){
 						var trackNote = trackNotes[k];
 						if (trackNote.note === evnt.noteNumber && typeof trackNote.duration === "undefined"){
-							trackNote.duration = ticksToToneTicks(currentTime - trackNote.ticks, ticksPerBeat, options.PPQ);
+							if (options.duration){
+								trackNote.duration = ticksToToneTicks(currentTime - trackNote.ticks, ticksPerBeat, options.PPQ);
+							}
 							trackNote.time = ticksToToneTicks(trackNote.time, ticksPerBeat, options.PPQ);
 							delete trackNote.note;
 							delete trackNote.ticks;
