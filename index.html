@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MidiToScore</title>
-	<script type="text/javascript" src="./build/MidiToScore.js"></script>
+	<title>MidiConvert</title>
+	<script type="text/javascript" src="./build/MidiConvert.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="http://tonejs.github.io/Logo/deps/Tone.js"></script>
 	<script type="text/javascript" src="http://tonejs.github.io/Logo/build/Logo.js"></script>
@@ -224,10 +224,10 @@
 				//read the file
 				var reader = new FileReader();
 				reader.onload = function(e){
-					var transportData = MidiToScore.parseTransport(e.target.result);
+					var transportData = MidiConvert.parseTransport(e.target.result);
 					$("#TransportOutput").val(JSON.stringify(transportData, undefined, 2))
 
-					var partsData = MidiToScore.parseParts(e.target.result, options);
+					var partsData = MidiConvert.parseParts(e.target.result, options);
 					$("#PartsOutput").val(JSON.stringify(partsData, undefined, 2))
 				}
 				reader.readAsBinaryString(file);
