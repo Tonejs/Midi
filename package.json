@@ -4,7 +4,7 @@
   "description": "Convert binary midi files to Tone.js scores",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/test.js"
+    "test": "cd test && mocha test.js"
   },
   "repository": {
     "type": "git",
