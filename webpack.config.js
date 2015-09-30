@@ -11,12 +11,9 @@ module.exports = {
 		library : "MidiToScore",
 		libraryTarget : "umd"
 	},
-	externals: { 
-		Tone : "Tone",
-	},
 	resolve: {
 		root: __dirname,
 		modulesDirectories : ["src", "node_modules"],
 	},
-	plugins: new webpack.optimize.UglifyJsPlugin({minimize: true}),
+	plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true})],
 };
