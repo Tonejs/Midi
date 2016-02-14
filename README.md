@@ -43,7 +43,7 @@ var parts = MidiConvert.parseParts(midiBlob);
 Which can then be used in Tone.Part
 
 ```javascript
-var pianoPart = new Tone.Part(parts.piano).start();
+var pianoPart = new Tone.Part(callback, parts.piano).start();
 ```
 
 The options object encodes how the MIDI file is parsed:
