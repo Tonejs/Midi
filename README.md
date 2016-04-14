@@ -21,15 +21,16 @@ Set the return value:
 Tone.Transport.set(transportSettings);
 ```
 
-#### `parseParts(BinaryString midiBlob, [Object options]) => Object`
+#### `parseParts(BinaryString midiBlob, [Object options]) => Array`
 
-This function parses all of the tracks from the midi file and returns and object. The key of the return object is the name of the track and the value is an array of notes. 
+This function parses all of the tracks from the midi file and returns an array of the tracks. Each track is an array of notes. 
 
 ```javascript
 var parts = MidiConvert.parseParts(midiBlob);
 //returns =>
-//{
-//	"piano:": [
+//[
+//	//track 0
+//	[ 
 //	{
 //		"time": "0i",
 //		"midiNote": 67,
@@ -54,7 +55,7 @@ MidiConvert.parseParts(midiBlob, {
 	 *	the pulses per quarter note at which 
 	 *	the midi file is parsed.
 	 */
-	PPQ : 48,
+	PPQ : 192,
 	/*
 	 *	if the midi note number should be 
 	 *	included in the output.
