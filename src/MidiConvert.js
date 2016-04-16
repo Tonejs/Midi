@@ -15,7 +15,7 @@ define(["midi-file-parser", "Transport", "Parts"], function(midiFileParser, Tran
 		/**
 		 *  Parse the Transport-relevant descriptions from the MIDI file blob
 		 *  @param  {Binary String}  fileBlob  The output from fs.readFile or FileReader
-		 *  @return  {Object}  
+		 *  @return  {Object}
 		 */
 		parseTransport : function(fileBlob){
 			var midiJson = midiFileParser(fileBlob);
