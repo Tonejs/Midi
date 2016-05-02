@@ -20,9 +20,34 @@ define(function(){
 	}
 
 	/**
+	 *  Permute noteOff happening after noteOn (of the same note) without delta time.
+	 *  @param {Array} track Array of MIDI events
+	 *  @returns {Array} Sorted MIDI events
+	 */
+	function permuteImplicitNoteOff(track) {
+		var events = track.slice();
+
+		for (var i = 1; i < events.length - 1; i++) {
+			var event = events[i],
+			  prevEvent = events[i - 1];
+
+			if (event.deltaTime === 0 && event.subtype === 'noteOff' && prevEvent.subtype === 'noteOn' && event.noteNumber === prevEvent.noteNumber) {
+				var tmp = event.deltaTime;
+				event.deltaTime = prevEvent.deltaTime;
+				prevEvent.deltaTime = tmp;
+
+				events[i] = prevEvent;
+				events[i - 1] = event;
+			}
+		}
+
+		return events;
+	}
+
+	/**
 	 *  Parse noteOn/Off from the tracks in midi JSON format into
 	 *  Tone.Score-friendly format.
-	 *  @param  {Object}  midiJson 
+	 *  @param  {Object}  midiJson
 	 *  @param  {Object}  options   options for parseing
 	 *  @return  {Object}
 	 */
@@ -30,27 +55,31 @@ define(function(){
 		var ticksPerBeat = midiJson.header.ticksPerBeat;
 		//some default values
 		options = typeof options !== "object" ? {} : options;
-		options.PPQ = typeof options.PPQ === "undefined" ? 48 : options.PPQ;
+		options.PPQ = typeof options.PPQ === "undefined" ? 192 : options.PPQ;
 		options.midiNote = typeof options.midiNote === "undefined" ? true : options.midiNote;
 		options.noteName = typeof options.noteName === "undefined" ? true : options.noteName;
 		options.duration = typeof options.duration === "undefined" ? true : options.duration;
 		options.velocity = typeof options.velocity === "undefined" ? true : options.velocity;
 
-		var output = {};
+		var output = [];
 
 		//parse each of the tracks
 		for (var i = 0; i < midiJson.tracks.length; i++) {
 			var track = midiJson.tracks[i];
-			var trackName = "track"+i;
 			var trackNotes = [];
 			var currentTime = 0;
+
+			if (options.duration) {
+				track = permuteImplicitNoteOff(track);
+			}
+
 			for (var j = 0; j < track.length; j++){
 				var evnt = track[j];
 				currentTime += evnt.deltaTime;
 				if (evnt.subtype === "noteOn"){
 					var noteObj = {
 						ticks : currentTime,
-						time : currentTime, 
+						time : currentTime,
 						note : evnt.noteNumber,
 					};
 					if (options.midiNote){
@@ -85,7 +114,7 @@ define(function(){
 				}
 			}
 			if (trackNotes.length > 0){
-				output[trackName] = trackNotes;
+				output.push(trackNotes);
 			}
 		}
 		return output;

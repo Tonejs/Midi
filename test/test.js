@@ -48,13 +48,13 @@ describe("Goldberg Variation 1 format 1 midi file", function(){
 
 	it("extracts the tracks from the file", function(){
 		var trackData = MidiConvert.parseParts(midiData, {
-			PPQ : 48,
+			PPQ : 192,
 			midiNote : true,
 			noteName : true,
 			velocity : true,
 			duration: true
 		});
-		expect(trackData).to.have.all.keys(["upper:", "lower:"]);
+		expect(trackData.length).to.equal(2);
 		expect(trackData).to.deep.equal(midiJson);
 	});
 
@@ -101,7 +101,7 @@ describe("Prelude in C format 1 midi file", function(){
 			velocity : true,
 			duration: true
 		});
-		expect(trackData).to.have.all.keys(["Fuga 1", "Fuga 2", "Fuga 3", "Fuga 4", "Piano left", "Piano right"]);
+		expect(trackData.length).to.equal(6);
 		expect(trackData).to.deep.equal(midiJson);
 	});
 
@@ -148,7 +148,7 @@ describe("Prelude in D minor format 0 midi file", function(){
 			velocity : true,
 			duration: true
 		});
-		expect(trackData).to.have.all.keys(["Präludium und Fuge in D-Dur, BWV 850"]);
+		expect(trackData.length).to.equal(1);
 		expect(trackData).to.deep.equal(midiJson);
 	});
 
@@ -175,13 +175,46 @@ describe("Prelude in C minor format 0 midi file", function(){
 
 	it("extracts the track from the file", function(){
 		var trackData = MidiConvert.parseParts(midiData, {
-			PPQ : 48,
+			PPQ : 192,
 			midiNote : true,
 			noteName : true,
 			velocity : true,
 			duration: true
 		});
-		expect(trackData).to.have.all.keys(["Das wohltemperierte Klavier I - Praeludium und Fuge 2 in c-Moll BWV 847"]);
+		expect(trackData.length).to.equal(1);
+		expect(trackData).to.deep.equal(midiJson);
+	});
+
+});
+
+describe("Funk kit with implicit note off events", function(){
+
+	var midiData;
+	var midiJson;
+
+	before(function(done){
+		fs.readFile("midi/funk-kit.mid", "binary", function(err, data){
+			if (!err){
+				midiData = data;
+				fs.readFile("midi/funk-kit.json", "utf8", function(err, json){
+					if (!err){
+						midiJson = JSON.parse(json);
+						done();
+					}
+				});
+			}
+		});
+	});
+
+	it("permutes noteOff and noteOn events", function(){
+		var trackData = MidiConvert.parseParts(midiData, {
+			PPQ : 192,
+			midiNote : true,
+			noteName : true,
+			velocity : true,
+			duration: true
+		});
+		expect(trackData.length).to.equal(1);
 		expect(trackData).to.deep.equal(midiJson);
 	});
 

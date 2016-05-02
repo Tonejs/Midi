@@ -1,8 +1,8 @@
 {
   "name": "MidiConvert",
   "version": "1.0.0",
-  "description": "Convert binary midi files to Tone.js scores",
-  "main": "index.js",
+  "description": "Convert binary midi into Tone.js-friendly JSON",
+  "main": "build/MidiConvert.js",
   "scripts": {
     "test": "cd test && mocha test.js"
   },
