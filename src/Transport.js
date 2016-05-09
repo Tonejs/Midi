@@ -6,7 +6,9 @@ define(function(){
 	 *  @return  {Object}
 	 */
 	return function parseTransport(midiJson){
-		var ret = {};
+		var ret = {
+			bpm: 120
+		};
 		for (var i = 0; i < midiJson.tracks.length; i++){
 			var track = midiJson.tracks[i];
 			for (var j = 0; j < track.length; j++){
