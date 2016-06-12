@@ -35,14 +35,14 @@ describe("Goldberg Variation 1 format 1 midi file", function(){
 	it("gets the time signature from the file", function(){
 		var transportData = MidiConvert.parseTransport(midiData);
 		expect(transportData).to.have.property("timeSignature");
-		expect(transportData.timeSignature).to.be.an.array;
+		expect(transportData.timeSignature).to.be.an("array");
 		expect(transportData.timeSignature).to.deep.equal([3, 4]);
 	});
 
 	it("gets the bpm from the file", function(){
 		var transportData = MidiConvert.parseTransport(midiData);
 		expect(transportData).to.have.property("bpm");
-		expect(transportData.bpm).to.be.a.number;
+		expect(transportData.bpm).to.be.a("number");
 		expect(transportData.bpm).to.be.closeTo(60, 0.001);
 	});
 
@@ -82,14 +82,14 @@ describe("Prelude in C format 1 midi file", function(){
 	it("gets the time signature from the file", function(){
 		var transportData = MidiConvert.parseTransport(midiData);
 		expect(transportData).to.have.property("timeSignature");
-		expect(transportData.timeSignature).to.be.an.array;
+		expect(transportData.timeSignature).to.be.an("array");
 		expect(transportData.timeSignature).to.deep.equal([4, 4]);
 	});
 
 	it("gets the bpm from the file", function(){
 		var transportData = MidiConvert.parseTransport(midiData);
 		expect(transportData).to.have.property("bpm");
-		expect(transportData.bpm).to.be.a.number;
+		expect(transportData.bpm).to.be.a("number");
 		expect(transportData.bpm).to.be.closeTo(62.41, 0.001);
 	});
 
@@ -129,14 +129,14 @@ describe("Prelude in D minor format 0 midi file", function(){
 	it("gets the time signature from the file", function(){
 		var transportData = MidiConvert.parseTransport(midiData);
 		expect(transportData).to.have.property("timeSignature");
-		expect(transportData.timeSignature).to.be.an.array;
+		expect(transportData.timeSignature).to.be.an("array");
 		expect(transportData.timeSignature).to.deep.equal([4, 4]);
 	});
 
 	it("gets the bpm from the file", function(){
 		var transportData = MidiConvert.parseTransport(midiData);
 		expect(transportData).to.have.property("bpm");
-		expect(transportData.bpm).to.be.a.number;
+		expect(transportData.bpm).to.be.a("number");
 		expect(transportData.bpm).to.be.closeTo(51, 0.001);
 	});
 
