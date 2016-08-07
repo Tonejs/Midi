@@ -13,6 +13,10 @@
 		body {
 			font-family: "Roboto Mono" monospace;
 			text-align: center;
+			/*position: absolute;
+			top: 0px;
+			left: 0px;*/
+			margin: 0px;
 		}
 
 		#Topbar {
@@ -65,34 +69,18 @@
 
 		textarea {
 			font-family: "Roboto Mono" monospace;
-			height: 110px;
-			width: 300px;
+			height: 300px;
+			width: 100%;
 			display: inline-block;
 			position: relative;
 			float: left;
 		}
 
-		#Transport {
+		#Results {
 			position: absolute;
 			width: 500px;
 			margin-left: -250px;
 			top: 300px;
-			left: 50%;
-			position: absolute;
-		}
-
-		#Parts span, #Transport span {
-			display: inline-block;
-			float: left;
-			width: 100px;
-			text-align: left;
-		}
-
-		#Parts {
-			position: absolute;
-			width: 500px;
-			margin-left: -250px;
-			top: 430px;
 			left: 50%;
 			position: absolute;
 		}
@@ -140,20 +128,8 @@
 		</div>
 		<input type="file" accept="audio/midi">
 	</div>
-	<div id="Transport">
-		<span>Transport:</span>
-		<textarea id="TransportOutput"></textarea>
-	</div>
-	<div id="Parts">
-		<span>Parts:</span>
-		<textarea id="PartsOutput"></textarea>
-	</div>
-	<div id="Settings">
-		<span>PPQ:</span><input type="number" value="192">
-		<span>midiNote:</span><input type="checkbox" checked>
-		<span>noteName:</span><input type="checkbox" checked>
-		<span>velocity:</span><input type="checkbox" checked>
-		<span>duration:</span><input type="checkbox" checked>
+	<div id="Results">
+		<textarea id="ResultsText"></textarea>
 	</div>
 
 	<div id="Description">Parse a MIDI file into a Tone.js-friendly JSON format.</div>
@@ -164,13 +140,12 @@
 
 		$(function(){
 
-			var logo = new Tone.Logo({
+			var logo = new Logo({
 				"width" : 130,
 				"height" : 30,
 				"container" : "#Topbar"
 			});
 
-			var currentFile = null;
 
 			if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
 				$("#FileDrop #Text").text("Reading files not supported by this browser");
@@ -179,7 +154,7 @@
 					$(this).addClass("Hover");
 				}).on("dragleave drop", function(){
 					$(this).removeClass("Hover");
-				})
+				});
 
 				$("#FileDrop input").on("change", function(e){
 					//get the files
@@ -187,50 +162,21 @@
 					if (files.length > 0){
 						var file = files[0];
 						$("#FileDrop #Text").text(file.name);
-						currentFile = file;
 						parseFile(file);
 					}
 				});
-
-				$("#Settings input").on("change", function(){
-					if (currentFile){
-						parseFile(currentFile);
-					}
-				});
-			}
-
-			var options = {
-				PPQ : 48,
-				midiNote : true,
-				noteName : true,
-				velocity : true,
-				duration : true
 			}
 
 			function parseFile(file){
-				//get the settings
-				$("#Settings input").each(function(i, e){
-					if (i === 0){
-						options.PPQ = parseInt(e.value);
-					} else if (i === 1){
-						options.midiNote = e.checked;
-					} else if (i === 2){
-						options.noteName = e.checked;
-					} else if (i === 3){
-						options.velocity = e.checked;
-					} else if (i === 4){
-						options.duration = e.checked;
-					}
-				});
 				//read the file
 				var reader = new FileReader();
 				reader.onload = function(e){
-					var transportData = MidiConvert.parseTransport(e.target.result);
-					$("#TransportOutput").val(JSON.stringify(transportData, undefined, 2))
+					// var transportData = MidiConvert.parseResults(e.target.result);
+					// $("#ResultsOutput").val(JSON.stringify(transportData, undefined, 2));
 
-					var partsData = MidiConvert.parseParts(e.target.result, options);
-					$("#PartsOutput").val(JSON.stringify(partsData, undefined, 2))
-				}
+					var partsData = MidiConvert.parse(e.target.result);
+					$("#ResultsText").val(JSON.stringify(partsData, undefined, 2));
+				};
 				reader.readAsBinaryString(file);
 			}
 
