@@ -90,9 +90,7 @@ MidiConvert.load("path/to/midi.mid", function(midi){
 	//make sure you set the tempo before you schedule the events
 	Tone.Transport.set(midi.transport);
 
-
-	//pass in the note events from the first track into Tone.Part
-
+	//pass in the note events from one of the tracks as the second argument to Tone.Part
 	var midiPart = new Tone.Part(function(time, event){
 
 		//use the events to play the synth
@@ -100,6 +98,7 @@ MidiConvert.load("path/to/midi.mid", function(midi){
 
 	}, midi.tracks[0].notes).start();
 
+	//start the transport to hear the events
 	Tone.Transport.start();
 });
 ```
