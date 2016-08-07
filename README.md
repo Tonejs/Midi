@@ -1,6 +1,6 @@
 ## [DEMO](http://tonejs.github.io/MidiConvert/)
 
-MidiConvert parses loads and parses midi files into more easily understandable format:
+MidiConvert parses loads and parses midi files into an simple format:
 
 
 ```javascript
