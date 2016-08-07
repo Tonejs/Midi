@@ -7,7 +7,7 @@ define(function(){
 	 */
 	return function parseTransport(midiJson){
 		var ret = {
-			bpm: 120
+			midiPPQ : midiJson.header.ticksPerBeat
 		};
 		for (var i = 0; i < midiJson.tracks.length; i++){
 			var track = midiJson.tracks[i];
@@ -17,11 +17,14 @@ define(function(){
 					if (datum.subtype === "timeSignature"){
 						ret.timeSignature = [datum.numerator, datum.denominator];
 					} else if (datum.subtype === "setTempo"){
-						ret.bpm = 60000000 / datum.microsecondsPerBeat;
+						if (!ret.bpm){
+							ret.bpm = 60000000 / datum.microsecondsPerBeat;
+						}
 					}
 				} 
 			}
 		}
+		ret.bpm = ret.bpm || 120;
 		return ret;
 	};
 
