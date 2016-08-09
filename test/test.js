@@ -113,6 +113,18 @@ describe("Prelude in D minor format 0 midi file", function(){
 		expect(firstEvent.duration).to.be.a("number");
 		expect(firstEvent.velocity).to.be.a("number");
 	});
+
+	it("the track data has noteOff properties", function(){
+		var midi = MidiConvert.parse(midiData);
+		var firstTrack = midi.tracks[0];
+		expect(firstTrack).to.have.property("noteOffs");
+		expect(firstTrack.noteOffs.length).to.equal(1503);
+		var firstEvent = midi.tracks[0].noteOffs[0];
+		expect(firstEvent).to.have.all.keys("midi", "note", "ticks", "time");
+		expect(firstEvent.note).to.be.a("string");
+		expect(firstEvent.midi).to.be.a("number");
+		expect(firstEvent.ticks).to.be.a("number");
+	});
 });
 
 describe("parses midi control changes from file", function(){
