@@ -14,20 +14,26 @@ define(["Util"], function (Util) {
 
 	return function getNotes(track){
 		var trackNotes = [];
+		var noteOffs = [];
 		for (var j = 0; j < track.length; j++){
 			var evnt = track[j];
 			if (evnt.subtype === "noteOn"){
 				var noteObj = {
 					ticks : evnt.ticks,
 					time : evnt.time,
+					midi : evnt.noteNumber,
 					noteNumber : evnt.noteNumber,
+					note : midiToNote(evnt.noteNumber),
+					velocity : Util.midiToFloat(evnt.velocity)
 				};
-				noteObj.midi = evnt.noteNumber;
-				noteObj.note = midiToNote(evnt.noteNumber);
-				var vel = Util.midiToFloat(evnt.velocity);
-				noteObj.velocity =  vel;
 				trackNotes.push(noteObj);
 			} else if (evnt.subtype === "noteOff"){
+				noteOffs.push({
+					ticks : evnt.ticks,
+					time : evnt.time,
+					midi : evnt.noteNumber,
+					note : midiToNote(evnt.noteNumber)
+				});
 				//add the duration by going through
 				//and finding the matching note on
 				//which doens't already have a duration
@@ -42,7 +48,7 @@ define(["Util"], function (Util) {
 			}
 		}
 		if (trackNotes.length){
-			return trackNotes;
+			return [trackNotes, noteOffs];
 		}
 	};
 });

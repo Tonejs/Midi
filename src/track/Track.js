@@ -10,7 +10,8 @@ define(["Util", "track/Name", "track/Notes", "track/Control"],
 		}
 		var notes = getNotes(track, transport);
 		if (notes){
-			ret.notes = notes;
+			ret.notes = notes[0];
+			ret.noteOffs = notes[1];
 		}
 		//map over values returned from controls
 		for (var c in controls){
