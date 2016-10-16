@@ -1,65 +1,53 @@
-define(function () {
+function cleanName(str){
+	//ableton adds some weird stuff to the track
+	return str.replace(/\u0000/g, '')
+}
 
-	function simplifySixteenths(sixteenths){
-		sixteenths = sixteenths.toString();
-		if (sixteenths.length > 5){
-			return sixteenths.substring(0, 5);
-		} else {
-			return sixteenths;
-		}
+function ticksToSeconds(ticks, header){
+	return (60 / header.bpm) * (ticks / header.PPQ);
+}
+
+function isNumber(val){
+	return typeof val === 'number'
+}
+
+function isString(val){
+	return typeof val === 'string'
+}
+
+const isPitch = (function(){
+	const regexp = /^([a-g]{1}(?:b|#|x|bb)?)(-?[0-9]+)/i
+	return (val) => {
+		return isString(val) && regexp.test(val)
 	}
+}())
 
-	function simplifyTime(time){
-		if (time.substring(time.length - 2) === ":0"){
-			return time.substring(0, time.length - 2);
-		} else {
-			return time;
-		}
+
+function midiToPitch(midi){
+	const scaleIndexToNote = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+	const octave = Math.floor(midi / 12) - 1;
+	const note = midi % 12;
+	return scaleIndexToNote[note] + octave;
+}
+
+const pitchToMidi = (function(){
+	const regexp = /^([a-g]{1}(?:b|#|x|bb)?)(-?[0-9]+)/i
+	const noteToScaleIndex = {
+		"cbb" : -2, "cb" : -1, "c" : 0,  "c#" : 1,  "cx" : 2, 
+		"dbb" : 0,  "db" : 1,  "d" : 2,  "d#" : 3,  "dx" : 4,
+		"ebb" : 2,  "eb" : 3,  "e" : 4,  "e#" : 5,  "ex" : 6, 
+		"fbb" : 3,  "fb" : 4,  "f" : 5,  "f#" : 6,  "fx" : 7,
+		"gbb" : 5,  "gb" : 6,  "g" : 7,  "g#" : 8,  "gx" : 9,
+		"abb" : 7,  "ab" : 8,  "a" : 9,  "a#" : 10, "ax" : 11,
+		"bbb" : 9,  "bb" : 10, "b" : 11, "b#" : 12, "bx" : 13,
 	}
+	return (note) => {
+		const split = regexp.exec(note)
+		const pitch = split[1]
+		const octave = split[2]
+		const index = noteToScaleIndex[pitch.toLowerCase()]
+		return index + (parseInt(octave) + 1) * 12
+	}
+}())
 
-	return {
-		/**
-		 *  Convert a value in the midi range 0-127 to a float
-		 */
-		midiToFloat : function(midiVal){
-			return parseFloat((midiVal / 127).toFixed(4));
-		},
-		/**
-		 *  Convert midi ticks into Tone.js time
-		 */
-		ticksToTime : function(ticks, transport){
-			var quarterToSeconds = (60 / transport.bpm) * (ticks / transport.midiPPQ);
-			return quarterToSeconds;
-		},
-		/**
-		 *  Does an initial pass on the json MIDI track
-		 *  and converts all the timings to absolute timings
-		 *  @param {Array} track
-		 */
-		absoluteTime : function(track, transport){
-			var currentTime = 0;
-			for (var i = 0; i < track.length; i++){
-				var evnt = track[i];
-				currentTime += evnt.deltaTime;
-				evnt.time = this.ticksToTime(currentTime, transport);
-				evnt.ticks = currentTime;
-				delete evnt.deltaTime;
-			}
-			return track;
-		},
-		/**
-		 *  Does a mixin of the given values with a fallback
-		 *  @param {Object} given
-		 *  @param {Object} fallback the default object
-		 */
-		defaults : function(given, fallback){
-			given = given || {};
-			for (var param in fallback){
-				if (typeof given[param] === 'undefined'){
-					given[param] = fallback[param];
-				}
-			}
-			return given;
-		}
-	};
-});
+module.exports = {cleanName, ticksToSeconds, isString, isNumber, isPitch, midiToPitch, pitchToMidi}
