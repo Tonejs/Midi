@@ -1,19 +1,34 @@
-var webpack = require("webpack");
+var webpack = require('webpack');
+
+var PROD = process.argv.indexOf('-p') !== -1
 
 module.exports = {
-	"context": __dirname,
+	'context': __dirname,
 	entry: {
-		"MidiConvert": "src/MidiConvert",
+		'MidiConvert': 'src/MidiConvert',
 	},
 	output: {
-		filename: "./build/[name].js",
-		sourceMapFilename : "[file].map",
-		library : "MidiConvert",
-		libraryTarget : "umd"
+		filename: './build/[name].js',
+		sourceMapFilename : '[file].map',
+		library : 'MidiConvert',
+		libraryTarget : 'umd'
 	},
 	resolve: {
 		root: __dirname,
-		modulesDirectories : ["src", "node_modules"],
+		modulesDirectories : ['src', 'node_modules'],
 	},
-	plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true})],
+	module: {
+		loaders: [
+			{
+				test: /\.js$/,
+				exclude: /(node_modules)/,
+				loader: 'babel-loader',
+				query: {
+					presets: ['es2015']
+				}
+			}
+		],
+	},
+	plugins: PROD ? [new webpack.optimize.UglifyJsPlugin({minimize: true})] : [],
+	devtool: PROD ? '' : '#eval-source-map'
 };

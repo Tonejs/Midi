@@ -1,240 +1,300 @@
-var fs = require("fs");
-var MidiConvert = require("../build/MidiConvert");
-var expect = require("chai").expect;
+var fs = require("fs")
+var MidiConvert = require("../build/MidiConvert")
+var expect = require("chai").expect
 
 describe("API", function(){
 
 	it("has parse method", function(){
-		expect(MidiConvert).to.have.property("parse");
-	});
+		expect(MidiConvert).to.have.property("parse")
+	})
 
 	it("has load method", function(){
-		expect(MidiConvert).to.have.property("load");
-	});
-});
+		expect(MidiConvert).to.have.property("load")
+	})
 
-describe("Goldberg Variation 1 format 1 midi file", function(){
+	it("has create method", function(){
+		expect(MidiConvert).to.have.property("create")
+	})
+})
 
-	var midiData;
-	var midiJson;
+describe("Header", function(){
 
-	before(function(done){
-		fs.readFile("midi/bwv-988-v01.mid", "binary", function(err, data){
-			if (!err){
-				midiData = data;
-				fs.readFile("midi/bwv-988-v01.json", "utf8", function(err, json){
-					if (!err){
-						midiJson = JSON.parse(json);
-						done();
-					}
-				});
-			}
-		});
-	});
+	it("can parse the time signature and bpm from a format 1", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
+		expect(midi).to.have.property("timeSignature")
+		expect(midi.timeSignature).to.be.an("array")
+		expect(midi.timeSignature).to.deep.equal([3, 4])
 
-	it("gets the time signature from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi).to.have.property("transport");
-		expect(midi.transport).to.have.property("timeSignature");
-		expect(midi.transport.timeSignature).to.be.an("array");
-		expect(midi.transport.timeSignature).to.deep.equal([3, 4]);
-	});
+		expect(midi).to.have.property("bpm")
+		expect(midi.bpm).to.be.closeTo(60, 0.001)
+	})
 
-	it("gets the bpm from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.transport).to.have.property("bpm");
-		expect(midi.transport.bpm).to.be.a("number");
-		expect(midi.transport.bpm).to.be.closeTo(60, 0.001);
-	});
+	it("can parse the time signature and bpm from a format 0", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		expect(midi).to.have.property("timeSignature")
+		expect(midi.timeSignature).to.be.an("array")
+		expect(midi.timeSignature).to.deep.equal([4, 4])
 
-	it("gets the midiPPQ from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.transport).to.have.property("midiPPQ");
-		expect(midi.transport.midiPPQ).to.be.a("number");
-		expect(midi.transport.midiPPQ).to.equal(384);
-	});
+		expect(midi).to.have.property("bpm")
+		expect(midi.bpm).to.be.closeTo(74, 0.001)
+	})
 
-	it("extracts the tracks from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.tracks.length).to.equal(3);
-		expect(midi.tracks).to.deep.equal(midiJson.tracks);
-	});
+})
 
-});
+describe("Midi", function(){
 
+	it("can get the tracks by either index or name", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		expect(midi.get(5).name).to.equal("Fuga 3")
+		expect(midi.get(5)).to.equal(midi.get("Fuga 3"))
+		expect(midi.get(5)).to.equal(midi.tracks[5])
+	})
 
-describe("Prelude in D minor format 0 midi file", function(){
+	it("parses the correct number of tracks", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
+		expect(midi.tracks.length).to.equal(3)
+	})
 
-	var midiData;
-	var midiJson;
+	it("gets the duration of the midi file", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
+		expect(midi.duration).to.equal(96)
+	})
 
-	before(function(done){
-		fs.readFile("midi/bwv-850.mid", "binary", function(err, data){
-			if (!err){
-				midiData = data;
-				fs.readFile("midi/bwv-850.json", "utf8", function(err, json){
-					if (!err){
-						midiJson = JSON.parse(json);
-						done();
-					}
-				});
-			}
-		});
-	});
-
-	it("gets the transport data from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.transport).to.deep.equal(midiJson.transport);
-	});
-
-	it("extracts the tracks from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.tracks.length).to.equal(1);
-		expect(midi.tracks).to.deep.equal(midiJson.tracks);
-	});
-
-	it("the track data has a name", function(){
-		var midi = MidiConvert.parse(midiData);
-		var firstTrack = midi.tracks[0];
-		expect(firstTrack).to.have.property("name");
-		expect(firstTrack.name).to.equal("Präludium und Fuge in D-Dur, BWV 850");
-	});
-
-	it("the track data has all the properties", function(){
-		var midi = MidiConvert.parse(midiData);
-		var firstTrack = midi.tracks[0];
-		expect(firstTrack).to.have.property("notes");
-		expect(firstTrack.notes.length).to.equal(1503);
-		var firstEvent = midi.tracks[0].notes[0];
-		expect(firstEvent).to.have.all.keys("midi", "note", "ticks", "time", "velocity", "duration");
-		expect(firstEvent.note).to.be.a("string");
-		expect(firstEvent.midi).to.be.a("number");
-		expect(firstEvent.ticks).to.be.a("number");
-		expect(firstEvent.duration).to.be.a("number");
-		expect(firstEvent.velocity).to.be.a("number");
-	});
-
-	it("the track data has noteOff properties", function(){
-		var midi = MidiConvert.parse(midiData);
-		var firstTrack = midi.tracks[0];
-		expect(firstTrack).to.have.property("noteOffs");
-		expect(firstTrack.noteOffs.length).to.equal(1503);
-		var firstEvent = midi.tracks[0].noteOffs[0];
-		expect(firstEvent).to.have.all.keys("midi", "note", "ticks", "time");
-		expect(firstEvent.note).to.be.a("string");
-		expect(firstEvent.midi).to.be.a("number");
-		expect(firstEvent.ticks).to.be.a("number");
-	});
-});
-
-describe("parses midi control changes from file", function(){
-
-	var midiData;
-	var midiJson;
-
-	before(function(done){
-		fs.readFile("midi/bwv-847.mid", "binary", function(err, data){
-			if (!err){
-				midiData = data;
-				fs.readFile("midi/bwv-847.json", "utf8", function(err, json){
-					if (!err){
-						midiJson = JSON.parse(json);
-						done();
-					}
-				});
-			}
-		});
-	});
-
-	it("gets the transport data from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.transport).to.deep.equal(midiJson.transport);
-	});
-
-	it("extracts the tracks from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.tracks.length).to.equal(1);
-		expect(midi.tracks).to.deep.equal(midiJson.tracks);
-	});
-
-	it("extracts the curve events from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.tracks[0]).to.have.property("cc_91");
-		var curves = midi.tracks[0].cc_91;
-		expect(curves.length).to.equal(27);
-		expect(curves[0]).to.have.all.keys("value", "time", "ticks");
-	});
-});
-
-describe("Prelude in C minor format 0 midi file", function(){
-
-	var midiData;
-	var midiJson;
-
-	before(function(done){
-		fs.readFile("midi/bwv-846.mid", "binary", function(err, data){
-			if (!err){
-				midiData = data;
-				fs.readFile("midi/bwv-846.json", "utf8", function(err, json){
-					if (!err){
-						midiJson = JSON.parse(json);
-						done();
-					}
-				});
-			}
-		});
-	});
-
-	it("gets the transport data from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.transport).to.deep.equal(midiJson.transport);
-	});
-
-	it("extracts the tracks from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.tracks.length).to.equal(11);
-		expect(midi.tracks).to.deep.equal(midiJson.tracks);
-	});
-
-	it("extracts the sustain events from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.tracks[2]).to.have.property("sustain");
-		var pedalTrack = midi.tracks[2].sustain;
-		expect(pedalTrack[0]).to.have.all.keys("value", "time", "ticks");
-		expect(pedalTrack.length).to.equal(70);
-	});
-
-});
+	it("can slice a midi file", function(){
+		var midi = MidiConvert.create()
+		var track = midi.track()
+		track.note(60, 0, 2, 1)
+		track.note(61, 1, 2, 1)
+		track.note(62, 3, 2, 1)
+		var midi2 = midi.slice(0, 3)
+		expect(midi2.duration).to.equal(3)
+		expect(midi2.tracks[0].length).to.equal(2)
+		var midi3 = midi.slice(1, 3)
+		expect(midi3.duration).to.equal(2)
+		expect(midi3.tracks[0].length).to.equal(1)
+		expect(midi3.tracks[0].notes[0].time).to.equal(0)
+	})
+})
 
 
-describe("Funk kit with implicit note off events", function(){
+describe("Track", function(){
 
-	var midiData;
-	var midiJson;
+	it("can add an empty track with a name", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		expect(midi.tracks.length).to.equal(11)
+		midi.track("test")
+		expect(midi.tracks.length).to.equal(12)
+		expect(midi.get("test").notes).to.be.instanceOf(Array)
+	})
 
-	before(function(done){
-		fs.readFile("midi/funk-kit.mid", "binary", function(err, data){
-			if (!err){
-				midiData = data;
-				fs.readFile("midi/funk-kit.json", "utf8", function(err, json){
-					if (!err){
-						midiJson = JSON.parse(json);
-						done();
-					}
-				});
-			}
-		});
-	});
+	it("has correct methods", function(){
+		var track = MidiConvert.create().track()
+		expect(track.note).to.be.function
+		expect(track.noteOn).to.be.function
+		expect(track.noteOff).to.be.function
+	})
 
-	it("gets the transport data from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.transport).to.deep.equal(midiJson.transport);
-	});
+	it("can add notes with noteOn/noteOff", function(){
+		var track = MidiConvert.create().track()
+		expect(track.notes.length).to.equal(0)
+		track.noteOn(60, 0)
+		track.noteOn(61, 1)
+		expect(track.notes.length).to.equal(2)
+		track.noteOff(60, 2)
+		track.noteOff(61, 4)
+		expect(track.notes.length).to.equal(2)
+		expect(track.notes[0].midi).to.equal(60)
+		expect(track.notes[1].midi).to.equal(61)
+		expect(track.notes[0].duration).to.equal(2)
+		expect(track.notes[1].duration).to.equal(3)
+	})
 
-	it("extracts the tracks from the file", function(){
-		var midi = MidiConvert.parse(midiData);
-		expect(midi.tracks.length).to.equal(1);
-		expect(midi.tracks).to.deep.equal(midiJson.tracks);
-	});
+	it("can add notes with noteOn/noteOff even if it's out of order", function(){
+		var track = MidiConvert.create().track()
+		expect(track.notes.length).to.equal(0)
+		track.noteOn(62, 3)
+		track.noteOn(60, 0)
+		track.noteOn(61, 1)
+		expect(track.notes.length).to.equal(3)
+		track.noteOff(62, 4)
+		track.noteOff(61, 4)
+		track.noteOff(60, 2)
+		expect(track.notes.length).to.equal(3)
+		expect(track.notes[0].midi).to.equal(60)
+		expect(track.notes[1].midi).to.equal(61)
+		expect(track.notes[2].midi).to.equal(62)
+		expect(track.notes[0].duration).to.equal(2)
+		expect(track.notes[1].duration).to.equal(3)
+		expect(track.notes[2].duration).to.equal(1)
+	})
 
-});
+	it("can scale the track timing", function(){
+		var track = MidiConvert.create().track()
+		track.note(62, 3, 2, 1)
+		track.note(60, 0, 2, 1)
+		track.note(61, 1, 2, 1)
+		track.scale(2)
+		expect(track.notes[0].time).to.equal(0)
+		expect(track.notes[0].duration).to.equal(4)
+		expect(track.notes[1].time).to.equal(2)
+		expect(track.notes[2].time).to.equal(6)
+	})
+
+	it("get the length of the track", function(){
+		var track = MidiConvert.create().track()
+		track.note(60, 0, 2, 1)
+		track.note(61, 1, 2, 1)
+		expect(track.length).to.equal(2)
+		track.note(62, 3, 2, 1)
+		expect(track.length).to.equal(3)
+	})
+
+	it("get the duration of the track", function(){
+		var track = MidiConvert.create().track()
+		expect(track.duration).to.equal(0)
+		track.note(60, 0, 2, 1)
+		track.note(61, 1, 2, 1)
+		expect(track.duration).to.equal(3)
+		track.note(62, 3, 2, 1)
+		expect(track.duration).to.equal(5)
+	})
+
+	it("get the startTime of the track", function(){
+		var track = MidiConvert.create().track()
+		expect(track.duration).to.equal(0)
+		track.note(60, 2, 2, 1)
+		expect(track.duration).to.equal(4)
+		expect(track.startTime).to.equal(2)
+	})
+
+	it("gets the instrument", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
+		var track = midi.tracks[1]
+		expect(track.instrument).to.equal("harpsichord")
+	})
+
+})
+
+describe("Note", function(){
+
+	it("can add a note with 'note'", function(){
+		var track = MidiConvert.create().track()
+		track.note(60, 0)
+		var note = track.notes[0]
+		expect(note.time).to.equal(0)
+		expect(note.midi).to.equal(60)
+	})
+
+	it("can parse notes correctly", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var track = midi.tracks[5]
+		expect(track.notes.length).to.equal(175)
+		expect(track.notes[0].midi).to.equal(55)
+		expect(track.notes[0].name).to.equal("G3")
+		expect(track.notes[1].midi).to.equal(57)
+		expect(track.notes[2].duration).to.be.closeTo(0.405, 0.001)
+		expect(track.notes[3].velocity).to.be.closeTo(0.472, 0.001)
+	})
+
+	it("has right defaults", function(){
+		var track = MidiConvert.create().track().note(60, 10)
+		var note = track.notes[0]
+		expect(note.velocity).to.equal(1)
+		expect(note.duration).to.equal(0)
+		expect(note.noteOff).to.equal(10)
+		expect(note.noteOn).to.equal(10)
+		expect(note.time).to.equal(10)
+		expect(note.name).to.equal("C4")
+	})
+
+	it("has right constructor args", function(){
+		var track = MidiConvert.create().track().note(61, 1, 1, 0.5)
+		var note = track.notes[0]
+		expect(note.velocity).to.equal(0.5)
+		expect(note.duration).to.equal(1)
+		expect(note.noteOff).to.equal(2)
+		expect(note.noteOn).to.equal(1)
+		expect(note.time).to.equal(1)
+		expect(note.name).to.equal("C#4")
+	})
+
+	it("updates values correctly", function(){
+		var track = MidiConvert.create().track().note(61, 1, 1, 0.5)
+		var note = track.notes[0]
+		expect(note.duration).to.equal(1)
+		expect(note.noteOff).to.equal(2)
+		note.noteOff = 3
+		expect(note.duration).to.equal(2)
+		note.duration = 4
+		expect(note.noteOff).to.equal(5)
+		note.name = "B#3"
+		expect(note.midi).to.equal(60)
+	})
+
+})
+
+describe("Control Change", function(){
+
+	it("parses cc values", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var track = midi.get(2)
+		expect(track.controlChanges[64]).to.be.array
+		expect(track.controlChanges[64].length).to.equal(70)
+		var cc0 = track.controlChanges[64][0]
+		expect(cc0.time).to.equal(0)
+		expect(cc0.value).to.equal(1)
+	})
+
+	it("can add cc values", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var track = midi.get(2)
+		expect(track.controlChanges[64]).to.be.array
+		expect(track.controlChanges[64].length).to.equal(70)
+		track.cc(64, 0.2, 1)
+		expect(track.controlChanges[64].length).to.equal(71)
+	})
+
+	it("has cc values", function(){
+		var track = MidiConvert.create().track()
+		track.cc(64, 0.2, 0.4)
+		expect(track.controlChanges[64].length).to.equal(1)
+		var cc = track.controlChanges[64][0]
+		expect(cc.time).to.equal(0.2)
+		expect(cc.value).to.equal(0.4)
+		expect(cc.number).to.equal(64)
+		expect(cc.name).to.equal("sustain")
+	})
+
+})
+
+describe("Encode", function(){
+
+	it("can encode and re decode a midi track", function(){
+		var midi = MidiConvert.create()
+		midi.bpm = 80
+		midi.track()
+			.note(60, 0, 1)
+			.note(61, 1, 1.5)
+			.note(62, 2, 1)
+
+		midi.track()
+			.note(64, 0, 1)
+			.note(65, 1, 1.5)
+			.note(66, 2, 1)
+		var reencoded = MidiConvert.parse(midi.encode())		
+		expect(reencoded.bpm).to.equal(80)
+		expect(reencoded.tracks.length).to.equal(2)
+		expect(reencoded.tracks[0].notes.length).to.equal(3)
+		expect(reencoded.tracks[0].notes[0].midi).to.equal(60)
+		expect(reencoded.tracks[0].notes[0].duration).to.equal(1)
+		expect(reencoded.tracks[0].notes[1].time).to.equal(1)
+		expect(reencoded.tracks[0].notes[1].duration).to.equal(1.5)
+		expect(reencoded.tracks[0].notes[2].time).to.equal(2)
+	})
+
+	it("can encode an output like the input", function(){
+		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		midi.encode()
+	})
+
+})

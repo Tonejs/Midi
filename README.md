@@ -1,11 +1,12 @@
-## [DEMO](http://tonejs.github.io/MidiConvert/)
+## [DEMO](https://tonejs.github.io/MidiConvert/)
 
-MidiConvert parses loads and parses midi files into an simple format:
+MidiConvert makes it straightforward to work with MIDI files in Javascript. It uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) to decode MIDI files and [jsmidgen](https://github.com/dingram/jsmidgen) to encode MIDI files. 
 
 
 ```javascript
-MidiConvert.load("path/to/midi.mid", function(midiData){
-	console.log(midiData);
+//load a midi file
+MidiConvert.load("path/to/midi.mid", function(midi){
+	console.log(midi)
 })
 ```
 
@@ -16,10 +17,10 @@ The data parsed from the midi file looks like this:
 ```javascript
 {
 	// the transport and timing data
-	transport : {
+	header : {
 		bpm : Number,                     // the tempo, e.g. 120
 		timeSignature : [Number, Number], // the time signature, e.g. [4, 4],
-		midiPPQ : Number                  // the original PPQ of the midi file
+		PPQ : Number                  	  // the Pulses Per Quarter of the midi file
 	},
 	// an array of midi tracks
 	tracks : [
@@ -27,30 +28,25 @@ The data parsed from the midi file looks like this:
 			name : String, // the track name if one was given
 			notes : [
 				{
-					ticks : Number // absolute time (time since beginning) in ticks
+					midi : Number, // midi number, e.g. 60
 					time : Number, // time in seconds
 					note : String, // note name, e.g. "C4"
-					midi : Number, // midi number, e.g. 60
-					velocity : Number,  // normalized
+					velocity : Number,  // normalized 0-1 velocity
 					duration : String   // duration between noteOn and noteOff
 				}
 			],
-			//midi control changes are named if they have a common name
-			sustain : [
-				{
-					ticks : Number // absolute time in ticks
-					time : Number, // time in seconds
-					value : Number  // normalized
-				}
-			],
-			//cc changes are named 'cc_[Number]'
-			cc_91 : [
-				{
-					ticks : Number // absolute time in ticks
-					time : Number, // time in seconds
-					value : Number  // normalized
-				}
-			],
+			//midi control changes
+			controlChanges : {
+				//if there are control changes in the midi file
+				'91' : [
+					{
+						number : Number // the cc number
+						time : Number, // time in seconds
+						value : Number  // normalized 0-1
+					}
+				],
+			},
+			instrument : String 	//the instrument if one is given
 		}
 	]
 }
@@ -58,24 +54,32 @@ The data parsed from the midi file looks like this:
 
 ### Raw Midi Parsing
 
-If you are using the file in Node.js or have the raw binary string from the midi file, just use the `parse` method:
+If you are using Node.js or have the raw binary string from the midi file, just use the `parse` method:
 
 ```javascript
 fs.readFile("test.mid", "binary", function(err, midiBlob){
 	if (!err){
-		MidiConvert.parse(midiBlob);
+		var midi = MidiConvert.parse(midiBlob)
 	}
-});
+})
 ```
 
-In the browser, the MIDI blob as a string can be obtained using the [FileReader API](https://developer.mozilla.org/en-US/docs/Web/API/FileReader). 
+### Encoding Midi
+
+You can also create midi files from scratch of by modifying an existing file. 
 
 ```javascript
-var reader = new FileReader();
-reader.onload = function(e){
-	MidiConvert.parse(e.target.result);
-}
-reader.readAsBinaryString(file);
+//create a new midi file
+var midi = MidiConvert.create()
+//add a track
+midi.track()
+	//chain note events: note, time, duration
+	.note(60, 0, 2)
+	.note(63, 1, 2)
+	.note(60, 2, 2)
+
+//write the output
+fs.writeFileSync("output.mid", midi.encode(), "binary")
 ```
 
 ### Tone.Part
@@ -83,26 +87,26 @@ reader.readAsBinaryString(file);
 The note data can be easily passed into [Tone.Part](http://tonejs.github.io/docs/#Part)
 
 ```javascript
-var synth = new Tone.PolySynth(8).toMaster();
+var synth = new Tone.PolySynth(8).toMaster()
 
 MidiConvert.load("path/to/midi.mid", function(midi){
 
 	//make sure you set the tempo before you schedule the events
-	Tone.Transport.set(midi.transport);
+	Tone.Transport.bpm.value = midi.bpm
 
 	//pass in the note events from one of the tracks as the second argument to Tone.Part
-	var midiPart = new Tone.Part(function(time, event){
+	var midiPart = new Tone.Part(function(time, note){
 
 		//use the events to play the synth
-		synth.triggerAttackRelease(event.note, event.duration, time, event.velocity);
+		synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)
 
-	}, midi.tracks[0].notes).start();
+	}, midi.tracks[0].notes).start()
 
 	//start the transport to hear the events
-	Tone.Transport.start();
-});
+	Tone.Transport.start()
+})
 ```
 
 ### Acknowledgment
 
-MidiConvert uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) which is ported from [jasmid](https://github.com/gasman/jasmid)
+MidiConvert uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) which is ported from [jasmid](https://github.com/gasman/jasmid) for decoding MIDI data and and [jsmidgen](https://github.com/dingram/jsmidgen) for encoding MIDI data. 

@@ -3,8 +3,8 @@
 <head>
 	<title>MidiConvert</title>
 	<script type="text/javascript" src="../build/MidiConvert.js"></script>
-	<script type="text/javascript" src="http://tonejs.github.io/CDN/latest/Tone.js"></script>
-	<script type="text/javascript" src="http://tonejs.github.io/Logo/build/Logo.js"></script>
+	<script type="text/javascript" src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
+	<script type="text/javascript" src="https://tonejs.github.io/Logo/build/Logo.js"></script>
 </head>
 <body>
 	<style type="text/css">
@@ -30,6 +30,8 @@
 
 		button {
 			width: 100px;
+			left: 50%;
+			margin-left: -50px;
 			height: 40px;
 			text-align: center;
 			position: absolute;
@@ -73,7 +75,7 @@
 		}).toMaster();
 
 		function playNote(time, event){
-			synth.triggerAttackRelease(event.note, event.duration, time, event.velocity);
+			synth.triggerAttackRelease(event.name, event.duration, time, event.velocity);
 		}
 
 		var button = document.querySelector("button");
@@ -82,25 +84,26 @@
 				Tone.Transport.stop();
 				button.textContent = "START";
 			} else {
-				Tone.Transport.start();
+				Tone.Transport.start("+0.1", 0);
 				button.textContent = "STOP";
 			}
 		});
 
-		MidiConvert.load("../test/midi/bwv-846.mid", function(midi){
+		MidiConvert.load("../test/midi/bwv-846.mid").then(function(midi){
+			
 			// play right and left hand with a poly synth
-			var rightHand = midi.tracks[1].notes;
-			var leftHand = midi.tracks[2].notes;
+			var rightHand = midi.get("Piano right").notes;
+			var leftHand = midi.get("Piano left").notes;
 
-			//make sure you set the tempo before you schedule the events
-			Tone.Transport.set(midi.transport);
+			// make sure you set the tempo before you schedule the events
+			Tone.Transport.bpm.value = midi.bpm;
+			Tone.Transport.timeSignature = midi.timeSignature;
 
-			var rightHandPart = new Tone.Part(playNote, rightHand).start();
-			var leftHandPart = new Tone.Part(playNote, leftHand).start();
+			var rightHandPart = new Tone.Part(playNote, rightHand).start(0);
+			var leftHandPart = new Tone.Part(playNote, leftHand).start(0);
 
-			button.className = "active";
+			button.classList.add("active")
 		});
-
 
 	</script>
 
