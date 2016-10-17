@@ -49,7 +49,11 @@ const MidiConvert = {
 	 *  @returns {Promise} A promise which is invoked with the returned Midi object
 	 */
 	load : function(url, callback){
-		return new Midi().load(url, callback)
+		const promise = new Midi().load(url)
+		if (callback){
+			promise.then(callback)
+		}
+		return promise
 	},
 	/**
 	 * Create an empty midi file
