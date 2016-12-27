@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "description": "Convert binary midi into Tone.js-friendly JSON",
   "main": "build/MidiConvert.js",
+  "types": "src/MidiConvert.d.ts",
   "scripts": {
     "test": "cd test && mocha test.js"
   },
