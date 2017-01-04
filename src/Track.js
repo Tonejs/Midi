@@ -30,11 +30,17 @@ class Track {
      */
     this.instrument = ''
 
+    /**
+     * The MIDI patch ID of the instrument, if one exists
+     * @type {Number}
+     */
+    this.instrumentPatchID = -1
+
 		/**
-		 * The MIDI patch ID of the instrument, if one exists
+		 * The MIDI family ID of the instrument, if one exists
 		 * @type {Number}
 		 */
-		this.instrumentPatchID = -1
+		this.instrumentFamilyID = -1
 	}
 
 	note(midi, time, duration=0, velocity=1){
@@ -92,12 +98,15 @@ class Track {
 	}
 
   /**
-   * Sets the MIDI patch ID of the instrument.  For a list of possible values, see the [General MIDI Instrument Patch Map](https://www.midi.org/specifications/item/gm-level-1-sound-set)
+   * Sets `instrumentPatchID` and `instrumentFamilyID`
    *
-   * @param  {[Number]} id
+   * For a list of possible values, see the [General MIDI Instrument Patch Map](https://www.midi.org/specifications/item/gm-level-1-sound-set)
+   *
+   * @param  {[Number]} id The Patch ID for this instrument, as specified in the General MIDI Instrument Patch Map
    */
   patch(id){
     this.instrumentPatchID = id
+    this.instrumentFamilyID = Math.floor(id / 8)
     return this
   }
 

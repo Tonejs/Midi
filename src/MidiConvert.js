@@ -37,7 +37,7 @@ const MidiConvert = {
 	 *  	]
 	 *  }
 	 *  @param  {Binary String}  fileBlob  The output from fs.readFile or FileReader
-	 *  @returns {Object} All of the options parsed from the midi file. 
+	 *  @returns {Object} All of the options parsed from the midi file.
 	 */
 	parse : function(fileBlob){
 		return new Midi().decode(fileBlob)

@@ -128,16 +128,23 @@ describe("Track", function(){
 		expect(track.notes[2].duration).to.equal(1)
 	})
 
-	it("can scale the track timing", function(){
+  it("can scale the track timing", function(){
+    var track = MidiConvert.create().track()
+    track.note(62, 3, 2, 1)
+    track.note(60, 0, 2, 1)
+    track.note(61, 1, 2, 1)
+    track.scale(2)
+    expect(track.notes[0].time).to.equal(0)
+    expect(track.notes[0].duration).to.equal(4)
+    expect(track.notes[1].time).to.equal(2)
+    expect(track.notes[2].time).to.equal(6)
+  })
+
+	it("can set the instrumentPatchID and instrumentFamilyID with 'patch'", function(){
 		var track = MidiConvert.create().track()
-		track.note(62, 3, 2, 1)
-		track.note(60, 0, 2, 1)
-		track.note(61, 1, 2, 1)
-		track.scale(2)
-		expect(track.notes[0].time).to.equal(0)
-		expect(track.notes[0].duration).to.equal(4)
-		expect(track.notes[1].time).to.equal(2)
-		expect(track.notes[2].time).to.equal(6)
+		track.patch(32)
+		expect(track.instrumentPatchID).to.equal(32)
+		expect(track.instrumentFamilyID).to.equal(4)
 	})
 
 	it("get the length of the track", function(){
@@ -173,10 +180,11 @@ describe("Track", function(){
     expect(track.instrument).to.equal("harpsichord")
   })
 
-  it("gets the instrumentPatchID", function(){
+  it("gets the instrumentPatchID and instrumentFamilyID", function(){
     var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
     var track = midi.tracks[1]
     expect(track.instrumentPatchID).to.equal(6)
+    expect(track.instrumentFamilyID).to.equal(0)
   })
 })
 
@@ -291,14 +299,14 @@ describe("Encode", function(){
 		var reencoded = MidiConvert.parse(midi.encode())
 		expect(reencoded.bpm).to.equal(80)
 		expect(reencoded.tracks.length).to.equal(2)
-		expect(reencoded.tracks[0].instrumentPatchID).to.equal(31)
-		expect(reencoded.tracks[0].notes.length).to.equal(3)
-		expect(reencoded.tracks[0].notes[0].midi).to.equal(60)
-		expect(reencoded.tracks[0].notes[0].duration).to.equal(1)
-		expect(reencoded.tracks[0].notes[1].time).to.equal(1)
-		expect(reencoded.tracks[0].notes[1].duration).to.equal(1.5)
-		expect(reencoded.tracks[0].notes[2].time).to.equal(2)
-		expect(reencoded.tracks[1].instrumentPatchID).to.equal(32)
+    expect(reencoded.tracks[0].instrumentPatchID).to.equal(31)
+    expect(reencoded.tracks[0].notes.length).to.equal(3)
+    expect(reencoded.tracks[0].notes[0].midi).to.equal(60)
+    expect(reencoded.tracks[0].notes[0].duration).to.equal(1)
+    expect(reencoded.tracks[0].notes[1].time).to.equal(1)
+    expect(reencoded.tracks[0].notes[1].duration).to.equal(1.5)
+    expect(reencoded.tracks[0].notes[2].time).to.equal(2)
+    expect(reencoded.tracks[1].instrumentPatchID).to.equal(32)
 	})
 
 	it("can encode an output like the input", function(){
