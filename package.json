@@ -5,7 +5,11 @@
   "main": "build/MidiConvert.js",
   "types": "src/MidiConvert.d.ts",
   "scripts": {
-    "test": "cd test && mocha test.js"
+    "clean": "rm -rf ./build/*; mkdir -p ./build/",
+    "pretest": "yarn run build",
+    "test": "$( yarn bin )/nyc $( yarn bin )/mocha ./test/test.js",
+    "posttest": "$( yarn bin )/nyc report --reporter=json && $( yarn bin )/codecov -f coverage/*.json",
+    "build": "yarn run clean; $( yarn bin )/webpack"
   },
   "repository": {
     "type": "git",
@@ -18,13 +22,15 @@
   },
   "homepage": "https://tonejs.github.com/MidiConvert/",
   "devDependencies": {
-    "chai": "^3.3.0",
-    "midi-file-parser": "^1.0.0",
-    "jsmidgen": "^0.1.5",
-    "mocha": "^2.3.3",
-    "webpack": "^1.12.2",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.16.0"
+    "babel-preset-es2015": "^6.16.0",
+    "chai": "^3.3.0",
+    "codecov": "^1.0.1",
+    "jsmidgen": "^0.1.5",
+    "midi-file-parser": "^1.0.0",
+    "nyc": "^10.0.0",
+    "mocha": "^3.2.0",
+    "webpack": "^1.12.2"
   }
 }

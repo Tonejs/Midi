@@ -1,3 +1,8 @@
+# MidiConvert #
+
+[![Build Status](https://travis-ci.org/Tonejs/MidiConvert.svg?branch=develop)](https://travis-ci.org/Tonejs/MidiConvert)
+[![codecov](https://codecov.io/gh/Tonejs/MidiConvert/branch/develop/graph/badge.svg)](https://codecov.io/gh/Tonejs/MidiConvert)
+
 ## [DEMO](https://tonejs.github.io/MidiConvert/)
 
 MidiConvert makes it straightforward to work with MIDI files in Javascript. It uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) to decode MIDI files and [jsmidgen](https://github.com/dingram/jsmidgen) to encode MIDI files. 
