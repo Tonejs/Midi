@@ -1,7 +1,8 @@
-import {Note} from './Note'
+import {BinaryInsert} from './BinaryInsert'
 import {Control} from './Control'
 import {Merge} from './Merge'
-import {BinaryInsert} from './BinaryInsert'
+import {Note} from './Note'
+import {instrumentByPatchID, instrumentByFamilyID} from './instrumentMaps'
 
 class Track {
 	constructor(name='', instrument=''){
@@ -107,6 +108,7 @@ class Track {
   patch(id){
     this.instrumentPatchID = id
     this.instrumentFamilyID = Math.floor(id / 8)
+    this.instrument = instrumentByPatchID[id]
     return this
   }
 

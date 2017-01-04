@@ -140,9 +140,10 @@ describe("Track", function(){
     expect(track.notes[2].time).to.equal(6)
   })
 
-	it("can set the instrumentPatchID and instrumentFamilyID with 'patch'", function(){
+	it("can set the instrument with 'patch'", function(){
 		var track = MidiConvert.create().track()
 		track.patch(32)
+    expect(track.instrument).to.equal('acoustic bass')
 		expect(track.instrumentPatchID).to.equal(32)
 		expect(track.instrumentFamilyID).to.equal(4)
 	})
@@ -174,15 +175,10 @@ describe("Track", function(){
 		expect(track.startTime).to.equal(2)
 	})
 
-  it("gets the instrument", function(){
+  it("gets the instrument, instrumentPatchID, and instrumentFamilyID", function(){
     var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
     var track = midi.tracks[1]
     expect(track.instrument).to.equal("harpsichord")
-  })
-
-  it("gets the instrumentPatchID and instrumentFamilyID", function(){
-    var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
-    var track = midi.tracks[1]
     expect(track.instrumentPatchID).to.equal(6)
     expect(track.instrumentFamilyID).to.equal(0)
   })
