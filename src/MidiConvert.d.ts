@@ -1,4 +1,4 @@
-export type Note = {
+export interface Note {
   time: number,
   name: string,
   midi: number,
@@ -6,7 +6,7 @@ export type Note = {
   duration: number,
 };
 
-export type Track = {
+export interface Track {
   name: string,
   instrument: string,
   notes: Array<Note>,
@@ -14,7 +14,7 @@ export type Track = {
   length: number,
 };
 
-export type ControlChange = {
+export interface ControlChange {
   time: number,
   name: string,
   midi: number,
@@ -22,7 +22,7 @@ export type ControlChange = {
   duration: number,
 };
 
-export type MIDI = {
+export interface MIDI {
   header: {
     bpm: number,
     timeSignature: [number, number],
