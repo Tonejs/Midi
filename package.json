@@ -6,10 +6,10 @@
   "types": "src/MidiConvert.d.ts",
   "scripts": {
     "clean": "rm -rf ./build/*; mkdir -p ./build/",
-    "pretest": "yarn run build",
+    "pretest": "yarn run clean; $( yarn bin )/webpack",
     "test": "$( yarn bin )/nyc $( yarn bin )/mocha ./test/test.js",
     "posttest": "$( yarn bin )/nyc report --reporter=json && $( yarn bin )/codecov -f coverage/*.json",
-    "build": "yarn run clean; $( yarn bin )/webpack"
+    "build": "yarn run clean; $( yarn bin )/webpack -p"
   },
   "repository": {
     "type": "git",
