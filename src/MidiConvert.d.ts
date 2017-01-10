@@ -1,4 +1,4 @@
-export type Note = {
+export interface Note {
   time: number,
   name: string,
   midi: number,
@@ -6,15 +6,16 @@ export type Note = {
   duration: number,
 };
 
-export type Track = {
+export interface Track {
   name: string,
   instrument: string,
+  instrumentPatchID: number,
   notes: Array<Note>,
   duration: number,
   length: number,
 };
 
-export type ControlChange = {
+export interface ControlChange {
   time: number,
   name: string,
   midi: number,
@@ -22,7 +23,7 @@ export type ControlChange = {
   duration: number,
 };
 
-export type MIDI = {
+export interface MIDI {
   header: {
     bpm: number,
     timeSignature: [number, number],
@@ -40,3 +41,10 @@ export type MIDI = {
 export function parse(raw: ArrayBuffer): MIDI;
 export function load(url: string, data?: any, method?: 'GET'|'POST'): Promise<MIDI>;
 export function create(): MIDI;
+
+export interface StringsByID {
+  [index: number]: string;
+}
+
+export const instrumentByPatchID: StringsByID;
+export const instrumentFamilyByID: StringsByID;

@@ -1,7 +1,8 @@
-import {Note} from './Note'
+import {BinaryInsert} from './BinaryInsert'
 import {Control} from './Control'
 import {Merge} from './Merge'
-import {BinaryInsert} from './BinaryInsert'
+import {Note} from './Note'
+import {instrumentByPatchID, instrumentByFamilyID} from './instrumentMaps'
 
 class Track {
 	constructor(name='', instrument=''){
@@ -24,11 +25,23 @@ class Track {
 		 */
 		this.controlChanges = {}
 
+    /**
+     * The track's instrument, if one exists
+     * @type {String}
+     */
+    this.instrument = ''
+
+    /**
+     * The MIDI patch ID of the instrument, if one exists
+     * @type {Number}
+     */
+    this.instrumentPatchID = -1
+
 		/**
-		 * The tracks insturment if one exists
-		 * @type {String}
+		 * The MIDI family ID of the instrument, if one exists
+		 * @type {Number}
 		 */
-		this.instrument = ''
+		this.instrumentFamilyID = -1
 	}
 
 	note(midi, time, duration=0, velocity=1){
@@ -39,14 +52,14 @@ class Track {
 
 	/**
 	 * Add a note on event
-	 * @param  {Number|String} midi     The midi note as either a midi number or 
+	 * @param  {Number|String} midi     The midi note as either a midi number or
 	 *                                  Pitch Notation like ('C#4')
 	 * @param  {Number} time     The time in seconds
 	 * @param  {Number} velocity The velocity value 0-1
 	 * @return {Track} this
 	 */
 	noteOn(midi, time, velocity=1){
-		const note = new Note(midi, time, 0, velocity)		
+		const note = new Note(midi, time, 0, velocity)
 		BinaryInsert(this.notes, note)
 		return this
 	}
@@ -84,6 +97,20 @@ class Track {
 		BinaryInsert(this.controlChanges[num], cc)
 		return this
 	}
+
+  /**
+   * Sets `instrumentPatchID` and `instrumentFamilyID`
+   *
+   * For a list of possible values, see the [General MIDI Instrument Patch Map](https://www.midi.org/specifications/item/gm-level-1-sound-set)
+   *
+   * @param  {[Number]} id The Patch ID for this instrument, as specified in the General MIDI Instrument Patch Map
+   */
+  patch(id){
+    this.instrumentPatchID = id
+    this.instrumentFamilyID = Math.floor(id / 8)
+    this.instrument = instrumentByPatchID[id]
+    return this
+  }
 
 	/**
 	 * An array of all the note on events
@@ -167,7 +194,7 @@ class Track {
 	}
 
 	/**
-	 * Slice returns a new track with only events that occured between startTime and endTime. 
+	 * Slice returns a new track with only events that occured between startTime and endTime.
 	 * Modifies this track.
 	 * @param {Number} startTime
 	 * @param {Number} endTime
@@ -200,6 +227,10 @@ class Track {
 			lastEventTime = ticks
 			return delta
 		}
+
+    if (this.instrumentPatchID !== -1) {
+      trackEncoder.instrument(CHANNEL, this.instrumentPatchID)
+    }
 
 		Merge(this.noteOns, (noteOn) => {
 			trackEncoder.addNoteOn(CHANNEL, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127))
