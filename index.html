@@ -4,7 +4,6 @@
 	<title>MidiConvert</title>
 	<script type="text/javascript" src="./build/MidiConvert.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
 	<script type="text/javascript" src="https://tonejs.github.io/Logo/build/Logo.js"></script>
 </head>
 <body>
@@ -17,16 +16,16 @@
 		}
 
 		#Topbar {
-			width: 100%;
-			height: 50px;
+			width: calc(100% - 6px);
+			height: 35px;
 			background-color: black;
 			position: absolute;
-			left: 0px;
-			top: 0px;
+			left: 3px;
+			top: 3px;
 		}
 
 		#Topbar #TonejsLogo{
-			margin-top: 10px;
+			margin-top: 3px;
 		}
 
 		#FileDrop{

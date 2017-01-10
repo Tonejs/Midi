@@ -9,7 +9,8 @@ export interface Note {
 export interface Track {
   name: string,
   instrument: string,
-  instrumentPatchID: number,
+  instrumentNumber: number,
+  instrumentFamily: string,
   notes: Array<Note>,
   duration: number,
   length: number,

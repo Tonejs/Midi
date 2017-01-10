@@ -2,10 +2,10 @@ import {BinaryInsert} from './BinaryInsert'
 import {Control} from './Control'
 import {Merge} from './Merge'
 import {Note} from './Note'
-import {instrumentByPatchID, instrumentByFamilyID} from './instrumentMaps'
+import {instrumentByPatchID, instrumentFamilyByID} from './instrumentMaps'
 
 class Track {
-	constructor(name='', instrument=''){
+	constructor(name='', instrumentNumber=-1){
 
 		/**
 		 * The name of the track
@@ -25,23 +25,11 @@ class Track {
 		 */
 		this.controlChanges = {}
 
-    /**
-     * The track's instrument, if one exists
-     * @type {String}
-     */
-    this.instrument = ''
-
-    /**
-     * The MIDI patch ID of the instrument, if one exists
-     * @type {Number}
-     */
-    this.instrumentPatchID = -1
-
 		/**
-		 * The MIDI family ID of the instrument, if one exists
+		 * The MIDI patch ID of the instrument. -1 if none is set.
 		 * @type {Number}
 		 */
-		this.instrumentFamilyID = -1
+		this.instrumentNumber = instrumentNumber
 	}
 
 	note(midi, time, duration=0, velocity=1){
@@ -98,19 +86,15 @@ class Track {
 		return this
 	}
 
-  /**
-   * Sets `instrumentPatchID` and `instrumentFamilyID`
-   *
-   * For a list of possible values, see the [General MIDI Instrument Patch Map](https://www.midi.org/specifications/item/gm-level-1-sound-set)
-   *
-   * @param  {[Number]} id The Patch ID for this instrument, as specified in the General MIDI Instrument Patch Map
-   */
-  patch(id){
-    this.instrumentPatchID = id
-    this.instrumentFamilyID = Math.floor(id / 8)
-    this.instrument = instrumentByPatchID[id]
-    return this
-  }
+	/**
+	 * Sets instrumentNumber.
+	 * For a list of possible values, see the [General MIDI Instrument Patch Map](https://www.midi.org/specifications/item/gm-level-1-sound-set)
+	 * @param  {Number} id The Patch ID for this instrument, as specified in the General MIDI Instrument Patch Map
+	 */
+	patch(id){
+		this.instrumentNumber = id
+		return this
+	}
 
 	/**
 	 * An array of all the note on events
@@ -182,6 +166,30 @@ class Track {
 	}
 
 	/**
+	 * The name of the midi instrument
+	 * @type {String}
+	 */
+	get instrument() {
+		return instrumentByPatchID[this.instrumentNumber]
+	}
+	set instrument(inst) {
+		const index = instrumentByPatchID.indexOf(inst)
+		if (index !== -1){
+			this.instrumentNumber = index
+		}
+	}
+
+	/**
+	 * The family that the instrument belongs to
+	 * @type {String}
+	 * @readOnly
+	 */
+	get instrumentFamily() {
+		return instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)]
+	}
+
+
+	/**
 	 * Scale the timing of all the events in the track
 	 * @param {Number} amount The amount to scale all the values
 	 */
@@ -228,9 +236,9 @@ class Track {
 			return delta
 		}
 
-    if (this.instrumentPatchID !== -1) {
-      trackEncoder.instrument(CHANNEL, this.instrumentPatchID)
-    }
+		if (this.instrumentNumber !== -1) {
+			trackEncoder.instrument(CHANNEL, this.instrumentNumber)
+		}
 
 		Merge(this.noteOns, (noteOn) => {
 			trackEncoder.addNoteOn(CHANNEL, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127))
