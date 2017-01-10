@@ -1,6 +1,11 @@
+# MidiConvert #
+
+[![Build Status](https://travis-ci.org/Tonejs/MidiConvert.svg?branch=master)](https://travis-ci.org/Tonejs/MidiConvert)
+[![codecov](https://codecov.io/gh/Tonejs/MidiConvert/branch/master/graph/badge.svg)](https://codecov.io/gh/Tonejs/MidiConvert)
+
 ## [DEMO](https://tonejs.github.io/MidiConvert/)
 
-MidiConvert makes it straightforward to work with MIDI files in Javascript. It uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) to decode MIDI files and [jsmidgen](https://github.com/dingram/jsmidgen) to encode MIDI files. 
+MidiConvert makes it straightforward to work with MIDI files in Javascript. It uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) to decode MIDI files and [jsmidgen](https://github.com/dingram/jsmidgen) to encode MIDI files.
 
 
 ```javascript
@@ -46,7 +51,11 @@ The data parsed from the midi file looks like this:
 					}
 				],
 			},
-			instrument : String 	//the instrument if one is given
+      instrument : String         // the instrument if one is given
+      instrumentPatchID : Number  // the ID for this instrument, as defined by
+                                  // the MIDI spec
+			instrumentFamilyID : Number // the ID for this instrument's family, as
+                                  // defined by the MIDI spec
 		}
 	]
 }
@@ -66,13 +75,15 @@ fs.readFile("test.mid", "binary", function(err, midiBlob){
 
 ### Encoding Midi
 
-You can also create midi files from scratch of by modifying an existing file. 
+You can also create midi files from scratch of by modifying an existing file.
 
 ```javascript
 //create a new midi file
 var midi = MidiConvert.create()
 //add a track
 midi.track()
+  //select an instrument type
+  .patch(32)
 	//chain note events: note, time, duration
 	.note(60, 0, 2)
 	.note(63, 1, 2)
@@ -109,4 +120,4 @@ MidiConvert.load("path/to/midi.mid", function(midi){
 
 ### Acknowledgment
 
-MidiConvert uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) which is ported from [jasmid](https://github.com/gasman/jasmid) for decoding MIDI data and and [jsmidgen](https://github.com/dingram/jsmidgen) for encoding MIDI data. 
+MidiConvert uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) which is ported from [jasmid](https://github.com/gasman/jasmid) for decoding MIDI data and and [jsmidgen](https://github.com/dingram/jsmidgen) for encoding MIDI data.

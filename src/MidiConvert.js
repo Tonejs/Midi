@@ -1,6 +1,10 @@
 import {Midi} from './Midi'
+import {instrumentByPatchID, instrumentFamilyByID} from './instrumentMaps'
 
 const MidiConvert = {
+  instrumentByPatchID,
+  instrumentFamilyByID,
+
 	/**
 	 *  Parse all the data from the Midi file into this format:
 	 *  {
@@ -37,7 +41,7 @@ const MidiConvert = {
 	 *  	]
 	 *  }
 	 *  @param  {Binary String}  fileBlob  The output from fs.readFile or FileReader
-	 *  @returns {Object} All of the options parsed from the midi file. 
+	 *  @returns {Object} All of the options parsed from the midi file.
 	 */
 	parse : function(fileBlob){
 		return new Midi().decode(fileBlob)
@@ -49,7 +53,11 @@ const MidiConvert = {
 	 *  @returns {Promise} A promise which is invoked with the returned Midi object
 	 */
 	load : function(url, callback){
-		return new Midi().load(url, callback)
+		const promise = new Midi().load(url)
+		if (callback){
+			promise.then(callback)
+		}
+		return promise
 	},
 	/**
 	 * Create an empty midi file
