@@ -1,6 +1,7 @@
-var fs = require("fs")
 var MidiConvert = require("../build/MidiConvert")
 var expect = require("chai").expect
+var fs = require("fs")
+var path = require("path")
 
 describe("API", function(){
 
@@ -20,7 +21,7 @@ describe("API", function(){
 describe("Header", function(){
 
 	it("can parse the time signature and bpm from a format 1", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-988-v01.mid"))
 		expect(midi).to.have.property("timeSignature")
 		expect(midi.timeSignature).to.be.an("array")
 		expect(midi.timeSignature).to.deep.equal([3, 4])
@@ -30,7 +31,7 @@ describe("Header", function(){
 	})
 
 	it("can parse the time signature and bpm from a format 0", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		expect(midi).to.have.property("timeSignature")
 		expect(midi.timeSignature).to.be.an("array")
 		expect(midi.timeSignature).to.deep.equal([4, 4])
@@ -44,19 +45,19 @@ describe("Header", function(){
 describe("Midi", function(){
 
 	it("can get the tracks by either index or name", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		expect(midi.get(5).name).to.equal("Fuga 3")
 		expect(midi.get(5)).to.equal(midi.get("Fuga 3"))
 		expect(midi.get(5)).to.equal(midi.tracks[5])
 	})
 
 	it("parses the correct number of tracks", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-988-v01.mid"))
 		expect(midi.tracks.length).to.equal(3)
 	})
 
 	it("gets the duration of the midi file", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-988-v01.mid"))
 		expect(midi.duration).to.equal(96)
 	})
 
@@ -80,7 +81,7 @@ describe("Midi", function(){
 describe("Track", function(){
 
 	it("can add an empty track with a name", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		expect(midi.tracks.length).to.equal(11)
 		midi.track("test")
 		expect(midi.tracks.length).to.equal(12)
@@ -195,7 +196,7 @@ describe("Note", function(){
 	})
 
 	it("can parse notes correctly", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		var track = midi.tracks[5]
 		expect(track.notes.length).to.equal(175)
 		expect(track.notes[0].midi).to.equal(55)
@@ -245,7 +246,7 @@ describe("Note", function(){
 describe("Control Change", function(){
 
 	it("parses cc values", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		var track = midi.get(2)
 		expect(track.controlChanges[64]).to.be.array
 		expect(track.controlChanges[64].length).to.equal(70)
@@ -255,7 +256,7 @@ describe("Control Change", function(){
 	})
 
 	it("can add cc values", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		var track = midi.get(2)
 		expect(track.controlChanges[64]).to.be.array
 		expect(track.controlChanges[64].length).to.equal(70)
@@ -306,8 +307,19 @@ describe("Encode", function(){
 	})
 
 	it("can encode an output like the input", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-846.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		midi.encode()
 	})
 
 })
+
+function readMIDI(filename) {
+  return fs.readFileSync(
+    path.join(
+      __dirname,
+      "midi",
+      filename
+    ),
+    "binary"
+  )
+}

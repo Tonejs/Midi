@@ -30,5 +30,5 @@ module.exports = {
 		],
 	},
 	plugins: PROD ? [new webpack.optimize.UglifyJsPlugin({minimize: true})] : [],
-	devtool: PROD ? '' : '#eval-source-map'
+	devtool: PROD ? '' : '#source-map'
 };

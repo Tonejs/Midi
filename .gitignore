@@ -1,5 +1,8 @@
 node_modules
 
 test/index.js
+coverage/**
+.nyc_output/**
 
 TODO.txt
+**.js.map
