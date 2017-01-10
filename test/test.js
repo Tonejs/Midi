@@ -177,7 +177,7 @@ describe("Track", function(){
 	})
 
 	it("gets the instrumentNumber, instrument, and instrumentFamily", function(){
-		var midi = MidiConvert.parse(fs.readFileSync("midi/bwv-988-v01.mid", "binary"))
+		var midi = MidiConvert.parse(readMIDI("bwv-988-v01.mid"))
 		var track = midi.tracks[1]
 		expect(track.instrument).to.equal("harpsichord")
 		expect(track.instrumentNumber).to.equal(6)
