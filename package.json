@@ -6,7 +6,8 @@
   "types": "src/MidiConvert.d.ts",
   "scripts": {
     "clean": "rm -rf ./build/*; mkdir -p ./build/",
-    "build": "yarn run clean; $( yarn bin )/webpack -p"
+    "build": "webpack -p",
+    "test": "npm run build; cd test; mocha test.js"
   },
   "repository": {
     "type": "git",
