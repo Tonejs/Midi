@@ -22,10 +22,10 @@ class Midi {
 
 	/**
 	 * Load the given url and parse the midi at that url
-	 * @param  {String}   url  
+	 * @param  {String}   url
 	 * @param {*} data Anything that should be sent in the XHR
-	 * @param {String} method Either GET or POST    
-	 * @return {Promise}            
+	 * @param {String} method Either GET or POST
+	 * @return {Promise}
 	 */
 	load(url, data=null, method='GET'){
 		return new Promise((success, fail) => {
@@ -58,7 +58,7 @@ class Midi {
 		}
 
 		const midiData = Decoder(bytes)
-		
+
 		this.header = parseHeader(midiData)
 
 		//replace the previous tracks
@@ -80,8 +80,10 @@ class Midi {
 					track.noteOff(event.noteNumber, absoluteTime)
 				} else if (event.subtype === 'controller' && event.controllerType){
 					track.cc(event.controllerType, absoluteTime, event.value / 127)
-				} else if (event.type === 'meta' && event.subtype === 'instrumentName'){
-					track.instrument = event.text
+        } else if (event.type === 'meta' && event.subtype === 'instrumentName'){
+          track.instrument = event.text
+				} else if (event.type === 'channel' && event.subtype === 'programChange'){
+					track.patch(event.programNumber)
 				}
 			})
 		})
@@ -192,7 +194,7 @@ class Midi {
 		this.header.timeSignature = timeSignature
 	}
 
-	/** 
+	/**
 	 * The duration is the end time of the longest track
 	 * @type {Number}
 	 */

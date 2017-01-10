@@ -129,16 +129,24 @@ describe("Track", function(){
 		expect(track.notes[2].duration).to.equal(1)
 	})
 
-	it("can scale the track timing", function(){
+  it("can scale the track timing", function(){
+    var track = MidiConvert.create().track()
+    track.note(62, 3, 2, 1)
+    track.note(60, 0, 2, 1)
+    track.note(61, 1, 2, 1)
+    track.scale(2)
+    expect(track.notes[0].time).to.equal(0)
+    expect(track.notes[0].duration).to.equal(4)
+    expect(track.notes[1].time).to.equal(2)
+    expect(track.notes[2].time).to.equal(6)
+  })
+
+	it("can set the instrument with 'patch'", function(){
 		var track = MidiConvert.create().track()
-		track.note(62, 3, 2, 1)
-		track.note(60, 0, 2, 1)
-		track.note(61, 1, 2, 1)
-		track.scale(2)
-		expect(track.notes[0].time).to.equal(0)
-		expect(track.notes[0].duration).to.equal(4)
-		expect(track.notes[1].time).to.equal(2)
-		expect(track.notes[2].time).to.equal(6)
+		track.patch(32)
+    expect(track.instrument).to.equal('acoustic bass')
+		expect(track.instrumentPatchID).to.equal(32)
+		expect(track.instrumentFamilyID).to.equal(4)
 	})
 
 	it("get the length of the track", function(){
@@ -168,11 +176,13 @@ describe("Track", function(){
 		expect(track.startTime).to.equal(2)
 	})
 
-	it("gets the instrument", function(){
-		var midi = MidiConvert.parse(readMIDI("bwv-988-v01.mid", "binary"))
-		var track = midi.tracks[1]
-		expect(track.instrument).to.equal("harpsichord")
-	})
+  it("gets the instrument, instrumentPatchID, and instrumentFamilyID", function(){
+    var midi = MidiConvert.parse(readMIDI("midi/bwv-988-v01.mid", "binary"))
+    var track = midi.tracks[1]
+    expect(track.instrument).to.equal("harpsichord")
+    expect(track.instrumentPatchID).to.equal(6)
+    expect(track.instrumentFamilyID).to.equal(0)
+  })
 })
 
 describe("Note", function(){
@@ -273,23 +283,27 @@ describe("Encode", function(){
 		var midi = MidiConvert.create()
 		midi.bpm = 80
 		midi.track()
+			.patch(31)
 			.note(60, 0, 1)
 			.note(61, 1, 1.5)
 			.note(62, 2, 1)
 
 		midi.track()
+			.patch(32)
 			.note(64, 0, 1)
 			.note(65, 1, 1.5)
 			.note(66, 2, 1)
 		var reencoded = MidiConvert.parse(midi.encode())
 		expect(reencoded.bpm).to.equal(80)
 		expect(reencoded.tracks.length).to.equal(2)
-		expect(reencoded.tracks[0].notes.length).to.equal(3)
-		expect(reencoded.tracks[0].notes[0].midi).to.equal(60)
-		expect(reencoded.tracks[0].notes[0].duration).to.equal(1)
-		expect(reencoded.tracks[0].notes[1].time).to.equal(1)
-		expect(reencoded.tracks[0].notes[1].duration).to.equal(1.5)
-		expect(reencoded.tracks[0].notes[2].time).to.equal(2)
+    expect(reencoded.tracks[0].instrumentPatchID).to.equal(31)
+    expect(reencoded.tracks[0].notes.length).to.equal(3)
+    expect(reencoded.tracks[0].notes[0].midi).to.equal(60)
+    expect(reencoded.tracks[0].notes[0].duration).to.equal(1)
+    expect(reencoded.tracks[0].notes[1].time).to.equal(1)
+    expect(reencoded.tracks[0].notes[1].duration).to.equal(1.5)
+    expect(reencoded.tracks[0].notes[2].time).to.equal(2)
+    expect(reencoded.tracks[1].instrumentPatchID).to.equal(32)
 	})
 
 	it("can encode an output like the input", function(){
