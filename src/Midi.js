@@ -108,12 +108,12 @@ class Midi {
 	}
 
 	/**
-	 * Conver the output encoding into a Uint8Array
-	 * @return {Uint9Array} [description]
+	 * Convert the output encoding into an Array
+	 * @return {Array}
 	 */
-	toUint8Array(){
+	toArray(){
 		const encodedStr = this.encode()
-		const buffer = new Uint8Array(encodedStr.length)
+		const buffer = new Array(encodedStr.length)
 		for (let i = 0; i < encodedStr.length; i++){
 			buffer[i] = encodedStr.charCodeAt(i)
 		}
