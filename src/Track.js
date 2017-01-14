@@ -5,7 +5,7 @@ import {Note} from './Note'
 import {instrumentByPatchID, instrumentFamilyByID, drumKitByPatchID} from './instrumentMaps'
 
 class Track {
-	constructor(name='', instrumentNumber=-1, channel=-1){
+	constructor(name, instrumentNumber=-1, channel=-1){
 
 		/**
 		 * The name of the track
@@ -285,6 +285,38 @@ class Track {
 		}, this.noteOffs, (noteOff) => {
 			trackEncoder.addNoteOff(channelNumber, noteOff.name, getDeltaTime(noteOff.time))
 		})
+	}
+
+	/**
+	 *  Convert all of the fields to JSON
+	 *  @return  {Object}
+	 */
+	toJSON(){
+
+		const ret = {}
+
+		if (typeof this.id !== 'undefined')
+			ret.id = this.id
+
+		if (this.name)
+			ret.name = this.name
+
+		if (this.instrumentNumber !== -1){
+			ret.instrumentNumber = this.instrumentNumber
+			ret.instrument = this.instrument
+			ret.instrumentFamily = this.instrumentFamily
+		}
+
+		if (this.channelNumber !== -1)
+			ret.channelNumber = this.channelNumber
+
+		if (this.notes.length)
+			ret.notes = this.notes.map((n) => n.toJSON())
+
+		if (Object.keys(this.controlChanges).length)
+			ret.controlChanges = this.controlChanges
+
+		return ret
 	}
 
 }
