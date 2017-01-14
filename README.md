@@ -34,6 +34,7 @@ The data parsed from the midi file looks like this:
   // an array of midi tracks
   tracks: [
     {
+      id: Number,                     // the position of this track in the array
       name: String,                   // the track name if one was given
       notes: [
         {

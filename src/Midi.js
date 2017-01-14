@@ -64,9 +64,10 @@ class Midi {
 		//replace the previous tracks
 		this.tracks = []
 
-		midiData.tracks.forEach((trackData) => {
+		midiData.tracks.forEach((trackData, i) => {
 
 			const track = new Track()
+			track.id = i
 			this.tracks.push(track)
 
 			let absoluteTime = 0
