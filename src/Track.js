@@ -185,9 +185,15 @@ class Track {
 	 * @type {String}
 	 */
 	get instrument() {
-		return this.isPercussion
-			?	drumKitByPatchID[this.instrumentNumber]
-			: instrumentByPatchID[this.instrumentNumber]
+		if (this.instrumentNumber !== -1){
+			if (this.isPercussion){
+				return drumKitByPatchID[this.instrumentNumber]
+			} else {
+				return instrumentByPatchID[this.instrumentNumber]
+			}
+		} else {
+			return 'none'
+		}
 	}
 	set instrument(inst) {
 		const index = instrumentByPatchID.indexOf(inst)
@@ -211,9 +217,15 @@ class Track {
 	 * @readOnly
 	 */
 	get instrumentFamily() {
-		return this.isPercussion
-			?	'drums'
-			: instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)]
+		if (this.instrumentNumber !== -1){
+			if (this.isPercussion){
+				return 'drums'
+			} else {
+				return instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)]
+			}
+		} else {
+			return 'none'
+		}
 	}
 
 	/**

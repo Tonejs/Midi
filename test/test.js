@@ -46,7 +46,7 @@ describe("Midi", function(){
 
 	it("should read the name from the first empty track", function(){
 		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
-		expect(midi.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
+		expect(midi.header.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
 	})
 
 	it("can get the tracks by either index or name", function(){
@@ -186,6 +186,13 @@ describe("Track", function(){
 		var track = MidiConvert.create().track()
 		track.channel(0x2)
 		expect(track.isPercussion).to.equal(false)
+	})
+
+	it("returns 'none' for instrument and instrumentFamily if the instrumentNumber is -1", function(){
+		var track = MidiConvert.create().track()
+		expect(track.isPercussion).to.equal(false)
+		expect(track.instrument).to.equal("none")
+		expect(track.instrumentFamily).to.equal("none")
 	})
 
 	it("get the length of the track", function(){
@@ -351,7 +358,7 @@ describe("Encode", function(){
 
 	it("encodes the song name", function(){
 		var midi = MidiConvert.create()
-		midi.name = 'i am a banana'
+		midi.header.name = 'i am a banana'
 
 		midi.track()
 			.patch(0)
@@ -360,7 +367,7 @@ describe("Encode", function(){
 		var reencoded = MidiConvert.parse(midi.encode())
 
 		expect(reencoded.tracks.length).to.equal(2)
-		expect(reencoded.name).to.equal('i am a banana')
+		expect(reencoded.header.name).to.equal('i am a banana')
 		expect(reencoded.tracks[0].name).to.equal('i am a banana')
 		expect(reencoded.tracks[1].instrumentNumber).to.equal(0)
 		expect(reencoded.tracks[1].notes.length).to.equal(1)

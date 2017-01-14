@@ -7,8 +7,6 @@ class Note{
 		 * The MIDI note number
 		 * @type {Number}
 		 */
-		this.midi;
-
 		if (Util.isNumber(midi)){
 			this.midi = midi
 		} else if (Util.isPitch(midi)){
