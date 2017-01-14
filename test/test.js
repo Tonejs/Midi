@@ -44,6 +44,11 @@ describe("Header", function(){
 
 describe("Midi", function(){
 
+	it("should read the name from the first empty track", function(){
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
+		expect(midi.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
+	})
+
 	it("can get the tracks by either index or name", function(){
 		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		expect(midi.get(5).name).to.equal("Fuga 3")
@@ -93,6 +98,8 @@ describe("Track", function(){
 		expect(track.note).to.be.function
 		expect(track.noteOn).to.be.function
 		expect(track.noteOff).to.be.function
+		expect(track.patch).to.be.function
+		expect(track.channel).to.be.function
 	})
 
 	it("can add notes with noteOn/noteOff", function(){
@@ -147,6 +154,38 @@ describe("Track", function(){
 		expect(track.instrument).to.equal("acoustic bass")
 		expect(track.instrumentNumber).to.equal(32)
 		expect(track.instrumentFamily).to.equal("bass")
+	})
+
+	it("uses the correct instrument name for drum kits", function(){
+		var track = MidiConvert.create().track()
+		track.channel(0xA)
+		track.patch(32)
+		expect(track.instrument).to.equal("jazz kit")
+		expect(track.instrumentFamily).to.equal("drums")
+	})
+
+	it("can set the channelNumber with 'channel'", function(){
+		var track = MidiConvert.create().track()
+		track.channel(0x3)
+		expect(track.channelNumber).to.equal(0x3)
+	})
+
+	it("is a percussion track when the channel is 0x9", function(){
+		var track = MidiConvert.create().track()
+		track.channel(0x9)
+		expect(track.isPercussion).to.equal(true)
+	})
+
+	it("is a percussion track when the channel is 0xA", function(){
+		var track = MidiConvert.create().track()
+		track.channel(0xA)
+		expect(track.isPercussion).to.equal(true)
+	})
+
+	it("is not a percussion track otherwise", function(){
+		var track = MidiConvert.create().track()
+		track.channel(0x2)
+		expect(track.isPercussion).to.equal(false)
 	})
 
 	it("get the length of the track", function(){
@@ -289,13 +328,15 @@ describe("Encode", function(){
 			.note(62, 2, 1)
 
 		midi.track()
-			.patch(32)
+			.channel(0x9)
+			.patch(116)
 			.note(64, 0, 1)
 			.note(65, 1, 1.5)
 			.note(66, 2, 1)
 		var reencoded = MidiConvert.parse(midi.encode())
 		expect(reencoded.bpm).to.equal(80)
 		expect(reencoded.tracks.length).to.equal(2)
+		expect(reencoded.tracks[0].channelNumber).to.equal(0)
 		expect(reencoded.tracks[0].instrumentNumber).to.equal(31)
 		expect(reencoded.tracks[0].notes.length).to.equal(3)
 		expect(reencoded.tracks[0].notes[0].midi).to.equal(60)
@@ -303,7 +344,26 @@ describe("Encode", function(){
 		expect(reencoded.tracks[0].notes[1].time).to.equal(1)
 		expect(reencoded.tracks[0].notes[1].duration).to.equal(1.5)
 		expect(reencoded.tracks[0].notes[2].time).to.equal(2)
-		expect(reencoded.tracks[1].instrumentNumber).to.equal(32)
+		expect(reencoded.tracks[1].instrumentNumber).to.equal(116)
+		expect(reencoded.tracks[1].channelNumber).to.equal(0x9)
+		expect(reencoded.tracks[1].isPercussion).to.equal(true)
+	})
+
+	it("encodes the song name", function(){
+		var midi = MidiConvert.create()
+		midi.name = 'i am a banana'
+
+		midi.track()
+			.patch(0)
+			.note(60, 0, 1)
+
+		var reencoded = MidiConvert.parse(midi.encode())
+
+		expect(reencoded.tracks.length).to.equal(2)
+		expect(reencoded.name).to.equal('i am a banana')
+		expect(reencoded.tracks[0].name).to.equal('i am a banana')
+		expect(reencoded.tracks[1].instrumentNumber).to.equal(0)
+		expect(reencoded.tracks[1].notes.length).to.equal(1)
 	})
 
 	it("can encode an output like the input", function(){
