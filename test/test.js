@@ -51,7 +51,7 @@ describe("Midi", function(){
 	})
 
 	it("is JSON serializable", function(){
-		var midi = MidiConvert.parse(readMIDI("bwv-846.mid")).toJSON()
+		var midi = toJSON(MidiConvert.parse(readMIDI("bwv-846.mid")))
 
 		expect(midi.header.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
 		expect(midi.header.timeSignature).to.deep.equal([4, 4])
@@ -327,7 +327,7 @@ describe("Note", function(){
 		var track = MidiConvert.create().track().note(60, 10)
 		track.instrumentNumber = 1
 		track.name = "test"
-		var json = track.toJSON()
+		var json = toJSON(track)
 		expect(json.id).to.be.undefined
 		expect(json.notes).to.be.array
 		expect(json.instrument).to.equal("bright acoustic piano")
@@ -438,4 +438,8 @@ function readMIDI(filename) {
     ),
     "binary"
   )
+}
+
+function toJSON(obj) {
+	return JSON.parse(JSON.stringify(obj))
 }
