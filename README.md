@@ -28,6 +28,9 @@ The data parsed from the midi file looks like this:
     PPQ: Number                       // the Pulses Per Quarter of the midi file
   },
 
+  startTime: Number,                  // the time before the first note plays
+  duration: Number,                   // the time until the last note finishes
+
   // an array of midi tracks
   tracks: [
     {
@@ -38,9 +41,12 @@ The data parsed from the midi file looks like this:
           time: Number,               // time in seconds
           note: String,               // note name, e.g. "C4"
           velocity: Number,           // normalized 0-1 velocity
-          duration: String,           // duration between noteOn and noteOff
+          duration: Number,           // duration between noteOn and noteOff
         }
       ],
+
+      startTime: Number,              // the time before the first note plays
+      duration: Number,               // the time until the last note finishes
 
       // midi control changes
       controlChanges: {
