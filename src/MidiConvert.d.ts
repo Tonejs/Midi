@@ -12,16 +12,15 @@ export interface Track {
   instrumentNumber: number,
   instrumentFamily: string,
   notes: Array<Note>,
+  startTime: number,
   duration: number,
   length: number,
 };
 
 export interface ControlChange {
-  time: number,
-  name: string,
-  midi: number,
-  velocity: number,
-  duration: number,
+  number: number,
+  time: string,
+  value: number,
 };
 
 export interface MIDI {
@@ -30,6 +29,8 @@ export interface MIDI {
     timeSignature: [number, number],
     PPQ: number,
   },
+
+  startTime: number,
   duration: number,
 
   tracks: Array<Track>,
