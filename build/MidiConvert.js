@@ -1894,14 +1894,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'instrument',
 			get: function get() {
-				if (this.instrumentNumber !== -1) {
-					if (this.isPercussion) {
-						return _instrumentMaps.drumKitByPatchID[this.instrumentNumber];
-					} else {
-						return _instrumentMaps.instrumentByPatchID[this.instrumentNumber];
-					}
+				if (this.isPercussion) {
+					return _instrumentMaps.drumKitByPatchID[this.instrumentNumber];
 				} else {
-					return 'none';
+					return _instrumentMaps.instrumentByPatchID[this.instrumentNumber];
 				}
 			},
 			set: function set(inst) {
@@ -1931,14 +1927,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'instrumentFamily',
 			get: function get() {
-				if (this.instrumentNumber !== -1) {
-					if (this.isPercussion) {
-						return 'drums';
-					} else {
-						return _instrumentMaps.instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)];
-					}
+				if (this.isPercussion) {
+					return 'drums';
 				} else {
-					return 'none';
+					return _instrumentMaps.instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)];
 				}
 			}
 		}]);

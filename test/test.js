@@ -188,11 +188,11 @@ describe("Track", function(){
 		expect(track.isPercussion).to.equal(false)
 	})
 
-	it("returns 'none' for instrument and instrumentFamily if the instrumentNumber is -1", function(){
+	it("returns 'undefined' for instrument and instrumentFamily if the instrumentNumber is -1", function(){
 		var track = MidiConvert.create().track()
 		expect(track.isPercussion).to.equal(false)
-		expect(track.instrument).to.equal("none")
-		expect(track.instrumentFamily).to.equal("none")
+		expect(track.instrument).to.be.undefined
+		expect(track.instrumentFamily).to.be.undefined
 	})
 
 	it("get the length of the track", function(){

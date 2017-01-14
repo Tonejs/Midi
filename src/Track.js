@@ -185,14 +185,10 @@ class Track {
 	 * @type {String}
 	 */
 	get instrument() {
-		if (this.instrumentNumber !== -1){
-			if (this.isPercussion){
-				return drumKitByPatchID[this.instrumentNumber]
-			} else {
-				return instrumentByPatchID[this.instrumentNumber]
-			}
+		if (this.isPercussion){
+			return drumKitByPatchID[this.instrumentNumber]
 		} else {
-			return 'none'
+			return instrumentByPatchID[this.instrumentNumber]
 		}
 	}
 	set instrument(inst) {
@@ -217,14 +213,10 @@ class Track {
 	 * @readOnly
 	 */
 	get instrumentFamily() {
-		if (this.instrumentNumber !== -1){
-			if (this.isPercussion){
-				return 'drums'
-			} else {
-				return instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)]
-			}
+		if (this.isPercussion){
+			return 'drums'
 		} else {
-			return 'none'
+			return instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)]
 		}
 	}
 
