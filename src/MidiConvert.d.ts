@@ -8,6 +8,7 @@ export interface Note {
 
 export interface Track {
   id?: number,
+  channelNumber: number,
   name: string,
   instrument: string,
   instrumentNumber: number,

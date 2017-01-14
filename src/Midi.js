@@ -85,6 +85,7 @@ class Midi {
           track.instrument = event.text
 				} else if (event.type === 'channel' && event.subtype === 'programChange'){
 					track.patch(event.programNumber)
+          track.channelNumber = event.channel
 				}
 			})
 		})

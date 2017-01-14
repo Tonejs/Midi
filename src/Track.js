@@ -5,13 +5,19 @@ import {Note} from './Note'
 import {instrumentByPatchID, instrumentFamilyByID} from './instrumentMaps'
 
 class Track {
-	constructor(name='', instrumentNumber=-1){
+	constructor(name='', instrumentNumber=-1, channel=-1){
 
 		/**
 		 * The name of the track
 		 * @type {String}
 		 */
 		this.name = name
+
+		/**
+		 * The MIDI channel of the track
+		 * @type {number}
+		 */
+		this.channelNumber = channel
 
 		/**
 		 * The note events
@@ -74,7 +80,7 @@ class Track {
 	 * Add a CC event
 	 * @param  {Number} num The CC number
 	 * @param  {Number} time The time of the event in seconds
-	 * @param {Number} value The value of the CC
+	 * @param  {Number} value The value of the CC
 	 * @return {Track} this
 	 */
 	cc(num, time, value){
@@ -93,6 +99,15 @@ class Track {
 	 */
 	patch(id){
 		this.instrumentNumber = id
+		return this
+	}
+
+	/**
+	 * Sets channelNumber.
+	 * @param  {Number} id The MIDI channel number, between 0 and 0xF.  0x9 is percussion
+	 */
+	channel(id){
+		this.channelNumber = id
 		return this
 	}
 
@@ -179,6 +194,15 @@ class Track {
 		}
 	}
 
+
+	/**
+	 * Whether or not this is a percussion track
+	 * @type {Boolean}
+	 */
+	get isPercussion() {
+		return this.channelNumber === 0x9
+	}
+
 	/**
 	 * The family that the instrument belongs to
 	 * @type {String}
@@ -227,7 +251,8 @@ class Track {
 		const ticksPerSecond = header.PPQ / (60 / header.bpm)
 		let lastEventTime = 0
 
-		const CHANNEL = 0
+		// unset, `channelNumber` defaults to -1, but that's not a valid MIDI channel
+		const channelNumber = Math.max(0, this.channelNumber)
 
 		function getDeltaTime(time){
 			const ticks = Math.floor(ticksPerSecond * time)
@@ -237,13 +262,13 @@ class Track {
 		}
 
 		if (this.instrumentNumber !== -1) {
-			trackEncoder.instrument(CHANNEL, this.instrumentNumber)
+			trackEncoder.instrument(channelNumber, this.instrumentNumber)
 		}
 
 		Merge(this.noteOns, (noteOn) => {
-			trackEncoder.addNoteOn(CHANNEL, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127))
+			trackEncoder.addNoteOn(channelNumber, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127))
 		}, this.noteOffs, (noteOff) => {
-			trackEncoder.addNoteOff(CHANNEL, noteOff.name, getDeltaTime(noteOff.time))
+			trackEncoder.addNoteOff(channelNumber, noteOff.name, getDeltaTime(noteOff.time))
 		})
 	}
 
