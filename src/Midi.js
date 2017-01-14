@@ -17,8 +17,6 @@ class Midi {
 			PPQ : 480
 		}
 
-		this.name = ''
-
 		this.tracks = []
 	}
 
@@ -95,8 +93,9 @@ class Midi {
 				}
 			})
 
-			if (!this.name && !track.length && track.name) {
-				this.name = track.name;
+			//if the track is empty, then it is the file name
+			if (!this.header.name && !track.length && track.name) {
+				this.header.name = track.name;
 			}
 		})
 
@@ -114,13 +113,13 @@ class Midi {
 
 		const firstEmptyTrack = this.tracks.filter(track => !track.length)[0];
 
-		if (this.name && !(firstEmptyTrack && firstEmptyTrack.name === this.name)) {
+		if (this.header.name && !(firstEmptyTrack && firstEmptyTrack.name === this.header.name)) {
 			const track = output.addTrack()
 			track.addEvent(
 				new Encoder.MetaEvent({
 					time: 0,
 					type: Encoder.MetaEvent.TRACK_NAME,
-					data: this.name
+					data: this.header.name
 				})
 			)
 		}
