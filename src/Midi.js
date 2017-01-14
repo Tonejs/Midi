@@ -17,6 +17,8 @@ class Midi {
 			PPQ : 480
 		}
 
+		this.name = ''
+
 		this.tracks = []
 	}
 
@@ -92,6 +94,10 @@ class Midi {
 					track.channelNumber = event.channel
 				}
 			})
+
+			if (!this.name && !track.length && track.name) {
+				this.name = track.name;
+			}
 		})
 
 		return this
@@ -105,6 +111,19 @@ class Midi {
 		const output = new Encoder.File({
 			ticks : this.header.PPQ
 		})
+
+		const firstEmptyTrack = this.tracks.filter(track => !track.length)[0];
+
+		if (this.name && !(firstEmptyTrack && firstEmptyTrack.name === this.name)) {
+			const track = output.addTrack()
+			track.addEvent(
+				new Encoder.MetaEvent({
+					time: 0,
+					type: Encoder.MetaEvent.TRACK_NAME,
+					data: this.name
+				})
+			)
+		}
 
 		this.tracks.forEach((track, i) => {
 			const trackEncoder = output.addTrack()

@@ -44,6 +44,11 @@ describe("Header", function(){
 
 describe("Midi", function(){
 
+	it("should read the name from the first empty track", function(){
+		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
+		expect(midi.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
+	})
+
 	it("can get the tracks by either index or name", function(){
 		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		expect(midi.get(5).name).to.equal("Fuga 3")
@@ -342,6 +347,23 @@ describe("Encode", function(){
 		expect(reencoded.tracks[1].instrumentNumber).to.equal(116)
 		expect(reencoded.tracks[1].channelNumber).to.equal(0x9)
 		expect(reencoded.tracks[1].isPercussion).to.equal(true)
+	})
+
+	it("encodes the song name", function(){
+		var midi = MidiConvert.create()
+		midi.name = 'i am a banana'
+
+		midi.track()
+			.patch(0)
+			.note(60, 0, 1)
+
+		var reencoded = MidiConvert.parse(midi.encode())
+
+		expect(reencoded.tracks.length).to.equal(2)
+		expect(reencoded.name).to.equal('i am a banana')
+		expect(reencoded.tracks[0].name).to.equal('i am a banana')
+		expect(reencoded.tracks[1].instrumentNumber).to.equal(0)
+		expect(reencoded.tracks[1].notes.length).to.equal(1)
 	})
 
 	it("can encode an output like the input", function(){
