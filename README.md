@@ -23,6 +23,8 @@ The data parsed from the midi file looks like this:
 {
   // the transport and timing data
   header: {
+    name: String,                     // the name of the first empty track, 
+                                      // which is usually the song name
     bpm: Number,                      // the tempo, e.g. 120
     timeSignature: [Number, Number],  // the time signature, e.g. [4, 4],
     PPQ: Number                       // the Pulses Per Quarter of the midi file
