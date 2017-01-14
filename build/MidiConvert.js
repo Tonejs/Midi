@@ -243,9 +243,10 @@ return /******/ (function(modules) { // webpackBootstrap
 				//replace the previous tracks
 				this.tracks = [];
 	
-				midiData.tracks.forEach(function (trackData) {
+				midiData.tracks.forEach(function (trackData, i) {
 	
 					var track = new _Track.Track();
+					track.id = i;
 					_this2.tracks.push(track);
 	
 					var absoluteTime = 0;
@@ -255,6 +256,10 @@ return /******/ (function(modules) { // webpackBootstrap
 							track.name = _Util2.default.cleanName(event.text);
 						} else if (event.subtype === 'noteOn') {
 							track.noteOn(event.noteNumber, absoluteTime, event.velocity / 127);
+	
+							if (track.channelNumber === -1) {
+								track.channelNumber = event.channel;
+							}
 						} else if (event.subtype === 'noteOff') {
 							track.noteOff(event.noteNumber, absoluteTime);
 						} else if (event.subtype === 'controller' && event.controllerType) {
@@ -263,9 +268,16 @@ return /******/ (function(modules) { // webpackBootstrap
 							track.instrument = event.text;
 						} else if (event.type === 'channel' && event.subtype === 'programChange') {
 							track.patch(event.programNumber);
+							track.channelNumber = event.channel;
 						}
 					});
+	
+					//if the track is empty, then it is the file name
+					if (!_this2.header.name && !track.length && track.name) {
+						_this2.header.name = track.name;
+					}
 				});
+	
 				return this;
 			}
 	
@@ -283,7 +295,20 @@ return /******/ (function(modules) { // webpackBootstrap
 					ticks: this.header.PPQ
 				});
 	
-				this.tracks.forEach(function (track, i) {
+				var firstEmptyTrack = this.tracks.filter(function (track) {
+					return !track.length;
+				})[0];
+	
+				if (this.header.name && !(firstEmptyTrack && firstEmptyTrack.name === this.header.name)) {
+					var track = output.addTrack();
+					track.addEvent(new _jsmidgen2.default.MetaEvent({
+						time: 0,
+						type: _jsmidgen2.default.MetaEvent.TRACK_NAME,
+						data: this.header.name
+					}));
+				}
+	
+				this.tracks.forEach(function (track) {
 					var trackEncoder = output.addTrack();
 					trackEncoder.setTempo(_this3.bpm);
 					track.encode(trackEncoder, _this3.header);
@@ -292,15 +317,15 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 	
 			/**
-	   * Conver the output encoding into a Uint8Array
-	   * @return {Uint9Array} [description]
+	   * Convert the output encoding into an Array
+	   * @return {Array}
 	   */
 	
 		}, {
-			key: 'toUint8Array',
-			value: function toUint8Array() {
+			key: 'toArray',
+			value: function toArray() {
 				var encodedStr = this.encode();
-				var buffer = new Uint8Array(encodedStr.length);
+				var buffer = new Array(encodedStr.length);
 				for (var i = 0; i < encodedStr.length; i++) {
 					buffer[i] = encodedStr.charCodeAt(i);
 				}
@@ -406,7 +431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this.header.timeSignature;
 			},
 			set: function set(timeSig) {
-				this.header.timeSignature = timeSignature;
+				this.header.timeSignature = timeSig;
 			}
 	
 			/**
@@ -1536,9 +1561,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var Track = function () {
-		function Track() {
-			var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+		function Track(name) {
 			var instrumentNumber = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
+			var channel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
 	
 			_classCallCheck(this, Track);
 	
@@ -1547,6 +1572,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @type {String}
 	   */
 			this.name = name;
+	
+			/**
+	   * The MIDI channel of the track
+	   * @type {number}
+	   */
+			this.channelNumber = channel;
 	
 			/**
 	   * The note events
@@ -1622,7 +1653,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * Add a CC event
 	   * @param  {Number} num The CC number
 	   * @param  {Number} time The time of the event in seconds
-	   * @param {Number} value The value of the CC
+	   * @param  {Number} value The value of the CC
 	   * @return {Track} this
 	   */
 	
@@ -1647,6 +1678,18 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'patch',
 			value: function patch(id) {
 				this.instrumentNumber = id;
+				return this;
+			}
+	
+			/**
+	   * Sets channelNumber.
+	   * @param  {Number} id The MIDI channel number, between 0 and 0xF.  0x9 and 0xA are percussion
+	   */
+	
+		}, {
+			key: 'channel',
+			value: function channel(id) {
+				this.channelNumber = id;
 				return this;
 			}
 	
@@ -1713,7 +1756,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				var ticksPerSecond = header.PPQ / (60 / header.bpm);
 				var lastEventTime = 0;
 	
-				var CHANNEL = 0;
+				// unset, `channelNumber` defaults to -1, but that's not a valid MIDI channel
+				var channelNumber = Math.max(0, this.channelNumber);
 	
 				function getDeltaTime(time) {
 					var ticks = Math.floor(ticksPerSecond * time);
@@ -1723,14 +1767,46 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 	
 				if (this.instrumentNumber !== -1) {
-					trackEncoder.instrument(CHANNEL, this.instrumentNumber);
+					trackEncoder.instrument(channelNumber, this.instrumentNumber);
 				}
 	
 				(0, _Merge.Merge)(this.noteOns, function (noteOn) {
-					trackEncoder.addNoteOn(CHANNEL, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127));
+					trackEncoder.addNoteOn(channelNumber, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127));
 				}, this.noteOffs, function (noteOff) {
-					trackEncoder.addNoteOff(CHANNEL, noteOff.name, getDeltaTime(noteOff.time));
+					trackEncoder.addNoteOff(channelNumber, noteOff.name, getDeltaTime(noteOff.time));
 				});
+			}
+	
+			/**
+	   *  Convert all of the fields to JSON
+	   *  @return  {Object}
+	   */
+	
+		}, {
+			key: 'toJSON',
+			value: function toJSON() {
+	
+				var ret = {};
+	
+				if (typeof this.id !== 'undefined') ret.id = this.id;
+	
+				if (this.name) ret.name = this.name;
+	
+				if (this.instrumentNumber !== -1) {
+					ret.instrumentNumber = this.instrumentNumber;
+					ret.instrument = this.instrument;
+					ret.instrumentFamily = this.instrumentFamily;
+				}
+	
+				if (this.channelNumber !== -1) ret.channelNumber = this.channelNumber;
+	
+				if (this.notes.length) ret.notes = this.notes.map(function (n) {
+					return n.toJSON();
+				});
+	
+				if (Object.keys(this.controlChanges).length) ret.controlChanges = this.controlChanges;
+	
+				return ret;
 			}
 		}, {
 			key: 'noteOns',
@@ -1818,13 +1894,28 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'instrument',
 			get: function get() {
-				return _instrumentMaps.instrumentByPatchID[this.instrumentNumber];
+				if (this.isPercussion) {
+					return _instrumentMaps.drumKitByPatchID[this.instrumentNumber];
+				} else {
+					return _instrumentMaps.instrumentByPatchID[this.instrumentNumber];
+				}
 			},
 			set: function set(inst) {
 				var index = _instrumentMaps.instrumentByPatchID.indexOf(inst);
 				if (index !== -1) {
 					this.instrumentNumber = index;
 				}
+			}
+	
+			/**
+	   * Whether or not this is a percussion track
+	   * @type {Boolean}
+	   */
+	
+		}, {
+			key: 'isPercussion',
+			get: function get() {
+				return [0x9, 0xA].includes(this.channelNumber);
 			}
 	
 			/**
@@ -1836,7 +1927,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'instrumentFamily',
 			get: function get() {
-				return _instrumentMaps.instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)];
+				if (this.isPercussion) {
+					return 'drums';
+				} else {
+					return _instrumentMaps.instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)];
+				}
 			}
 		}]);
 	
@@ -2065,8 +2160,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * The MIDI note number
 	   * @type {Number}
 	   */
-			this.midi;
-	
 			if (_Util2.default.isNumber(midi)) {
 				this.midi = midi;
 			} else if (_Util2.default.isPitch(midi)) {
@@ -2185,9 +2278,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	
+	var _drumKitByPatchID;
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	var instrumentByPatchID = exports.instrumentByPatchID = ["acoustic grand piano", "bright acoustic piano", "electric grand piano", "honky-tonk piano", "electric piano 1", "electric piano 2", "harpsichord", "clavi", "celesta", "glockenspiel", "music box", "vibraphone", "marimba", "xylophone", "tubular bells", "dulcimer", "drawbar organ", "percussive organ", "rock organ", "church organ", "reed organ", "accordion", "harmonica", "tango accordion", "acoustic guitar (nylon)", "acoustic guitar (steel)", "electric guitar (jazz)", "electric guitar (clean)", "electric guitar (muted)", "overdriven guitar", "distortion guitar", "guitar harmonics", "acoustic bass", "electric bass (finger)", "electric bass (pick)", "fretless bass", "slap bass 1", "slap bass 2", "synth bass 1", "synth bass 2", "violin", "viola", "cello", "contrabass", "tremolo strings", "pizzicato strings", "orchestral harp", "timpani", "string ensemble 1", "string ensemble 2", "synthstrings 1", "synthstrings 2", "choir aahs", "voice oohs", "synth voice", "orchestra hit", "trumpet", "trombone", "tuba", "muted trumpet", "french horn", "brass section", "synthbrass 1", "synthbrass 2", "soprano sax", "alto sax", "tenor sax", "baritone sax", "oboe", "english horn", "bassoon", "clarinet", "piccolo", "flute", "recorder", "pan flute", "blown bottle", "shakuhachi", "whistle", "ocarina", "lead 1 (square)", "lead 2 (sawtooth)", "lead 3 (calliope)", "lead 4 (chiff)", "lead 5 (charang)", "lead 6 (voice)", "lead 7 (fifths)", "lead 8 (bass + lead)", "pad 1 (new age)", "pad 2 (warm)", "pad 3 (polysynth)", "pad 4 (choir)", "pad 5 (bowed)", "pad 6 (metallic)", "pad 7 (halo)", "pad 8 (sweep)", "fx 1 (rain)", "fx 2 (soundtrack)", "fx 3 (crystal)", "fx 4 (atmosphere)", "fx 5 (brightness)", "fx 6 (goblins)", "fx 7 (echoes)", "fx 8 (sci-fi)", "sitar", "banjo", "shamisen", "koto", "kalimba", "bag pipe", "fiddle", "shanai", "tinkle bell", "agogo", "steel drums", "woodblock", "taiko drum", "melodic tom", "synth drum", "reverse cymbal", "guitar fret noise", "breath noise", "seashore", "bird tweet", "telephone ring", "helicopter", "applause", "gunshot"];
 	
 	var instrumentFamilyByID = exports.instrumentFamilyByID = ["piano", "chromatic percussion", "organ", "guitar", "bass", "strings", "ensemble", "brass", "reed", "pipe", "synth lead", "synth pad", "synth effects", "ethnic", "percussive", "sound effects"];
+	
+	var drumKitByPatchID = exports.drumKitByPatchID = (_drumKitByPatchID = {}, _defineProperty(_drumKitByPatchID, 0, "standard kit"), _defineProperty(_drumKitByPatchID, 8, "room kit"), _defineProperty(_drumKitByPatchID, 16, "power kit"), _defineProperty(_drumKitByPatchID, 24, "electronic kit"), _defineProperty(_drumKitByPatchID, 25, "tr-808 kit"), _defineProperty(_drumKitByPatchID, 32, "jazz kit"), _defineProperty(_drumKitByPatchID, 40, "brush kit"), _defineProperty(_drumKitByPatchID, 48, "orchestra kit"), _defineProperty(_drumKitByPatchID, 56, "sound fx kit"), _drumKitByPatchID);
 
 /***/ },
 /* 12 */
@@ -2200,7 +2300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	/**
 	 *  Parse tempo and time signature from the midiJson
-	 *  @param  {Object}  midiJson 
+	 *  @param  {Object}  midiJson
 	 *  @return  {Object}
 	 */
 	function parseHeader(midiJson) {

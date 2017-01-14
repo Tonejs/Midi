@@ -64,9 +64,10 @@ class Midi {
 		//replace the previous tracks
 		this.tracks = []
 
-		midiData.tracks.forEach((trackData) => {
+		midiData.tracks.forEach((trackData, i) => {
 
 			const track = new Track()
+			track.id = i
 			this.tracks.push(track)
 
 			let absoluteTime = 0
@@ -76,17 +77,28 @@ class Midi {
 					track.name = Util.cleanName(event.text)
 				} else if (event.subtype === 'noteOn'){
 					track.noteOn(event.noteNumber, absoluteTime, event.velocity / 127)
+
+					if (track.channelNumber === -1) {
+						track.channelNumber = event.channel
+					}
 				} else if (event.subtype === 'noteOff'){
 					track.noteOff(event.noteNumber, absoluteTime)
 				} else if (event.subtype === 'controller' && event.controllerType){
 					track.cc(event.controllerType, absoluteTime, event.value / 127)
-        } else if (event.type === 'meta' && event.subtype === 'instrumentName'){
-          track.instrument = event.text
+				} else if (event.type === 'meta' && event.subtype === 'instrumentName'){
+					track.instrument = event.text
 				} else if (event.type === 'channel' && event.subtype === 'programChange'){
 					track.patch(event.programNumber)
+					track.channelNumber = event.channel
 				}
 			})
+
+			//if the track is empty, then it is the file name
+			if (!this.header.name && !track.length && track.name) {
+				this.header.name = track.name;
+			}
 		})
+
 		return this
 	}
 
@@ -99,7 +111,20 @@ class Midi {
 			ticks : this.header.PPQ
 		})
 
-		this.tracks.forEach((track, i) => {
+		const firstEmptyTrack = this.tracks.filter(track => !track.length)[0];
+
+		if (this.header.name && !(firstEmptyTrack && firstEmptyTrack.name === this.header.name)) {
+			const track = output.addTrack()
+			track.addEvent(
+				new Encoder.MetaEvent({
+					time: 0,
+					type: Encoder.MetaEvent.TRACK_NAME,
+					data: this.header.name
+				})
+			)
+		}
+
+		this.tracks.forEach((track) => {
 			const trackEncoder = output.addTrack()
 			trackEncoder.setTempo(this.bpm)
 			track.encode(trackEncoder, this.header)
@@ -108,12 +133,12 @@ class Midi {
 	}
 
 	/**
-	 * Conver the output encoding into a Uint8Array
-	 * @return {Uint9Array} [description]
+	 * Convert the output encoding into an Array
+	 * @return {Array}
 	 */
-	toUint8Array(){
+	toArray(){
 		const encodedStr = this.encode()
-		const buffer = new Uint8Array(encodedStr.length)
+		const buffer = new Array(encodedStr.length)
 		for (let i = 0; i < encodedStr.length; i++){
 			buffer[i] = encodedStr.charCodeAt(i)
 		}
@@ -191,7 +216,7 @@ class Midi {
 		return this.header.timeSignature
 	}
 	set timeSignature(timeSig){
-		this.header.timeSignature = timeSignature
+		this.header.timeSignature = timeSig
 	}
 
 	/**

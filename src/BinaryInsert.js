@@ -30,7 +30,7 @@ function findElement(array, time) {
 		} else if (event.time < time){
 			//search upper
 			beginning = midPoint + 1
-		} 
+		}
 	}
 	return -1
 }

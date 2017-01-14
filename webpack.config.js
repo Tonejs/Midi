@@ -1,7 +1,5 @@
 var webpack = require('webpack');
 
-var PROD = process.argv.indexOf('-p') !== -1
-
 module.exports = {
 	'context': __dirname,
 	entry: {
@@ -29,6 +27,10 @@ module.exports = {
 			}
 		],
 	},
-	plugins: PROD ? [new webpack.optimize.UglifyJsPlugin({minimize: true})] : [],
-	devtool: PROD ? '' : '#source-map'
+	plugins: new webpack.DefinePlugin({
+		'process.env': {
+			'NODE_ENV': JSON.stringify('production')
+		}
+	}),
+	devtool: '#source-map'
 };

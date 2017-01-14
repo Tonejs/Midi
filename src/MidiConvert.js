@@ -2,8 +2,8 @@ import {Midi} from './Midi'
 import {instrumentByPatchID, instrumentFamilyByID} from './instrumentMaps'
 
 const MidiConvert = {
-  instrumentByPatchID,
-  instrumentFamilyByID,
+	instrumentByPatchID,
+	instrumentFamilyByID,
 
 	/**
 	 *  Parse all the data from the Midi file into this format:
