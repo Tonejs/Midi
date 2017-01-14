@@ -146,6 +146,21 @@ class Midi {
 	}
 
 	/**
+	 *  Convert all of the fields to JSON
+	 *  @return  {Object}
+	 */
+	toJSON(){
+		return {
+			header: this.header,
+			startTime: this.startTime,
+			duration: this.duration,
+			tracks: (this.tracks || []).map(
+				track => track.toJSON()
+			)
+		}
+	}
+
+	/**
 	 * Add a new track.
 	 * @param {String=} name Optionally include the name of the track
 	 * @returns {Track}

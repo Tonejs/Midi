@@ -46,7 +46,43 @@ describe("Midi", function(){
 
 	it("should read the name from the first empty track", function(){
 		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
+
 		expect(midi.header.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
+	})
+
+	it("is JSON serializable", function(){
+		var midi = toJSON(MidiConvert.parse(readMIDI("bwv-846.mid")))
+
+		expect(midi.header.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
+		expect(midi.header.timeSignature).to.deep.equal([4, 4])
+		expect(Math.round(midi.header.bpm)).to.equal(74)
+		expect(midi.header.PPQ).to.equal(480)
+
+		expect(midi.startTime).to.equal(0)
+		expect(Math.round(midi.duration)).to.equal(201)
+
+		expect(midi.tracks.length).to.equal(11)
+		expect(midi.tracks[1].id).to.equal(1)
+		expect(midi.tracks[1].channelNumber).to.equal(0)
+		expect(midi.tracks[1].isPercussion).to.equal(false)
+		expect(midi.tracks[1].name).to.equal('Piano right')
+		expect(midi.tracks[1].instrument).to.equal('acoustic grand piano')
+		expect(midi.tracks[1].instrumentNumber).to.equal(0)
+		expect(midi.tracks[1].instrumentFamily).to.equal('piano')
+
+		expect(midi.tracks[1].startTime.toFixed(1)).to.equal('0.4')
+		expect(Math.round(midi.tracks[1].duration)).to.equal(113)
+		expect(midi.tracks[1].length).to.equal(415)
+
+		expect(midi.tracks[1].notes[0].time.toFixed(1)).to.equal('0.4')
+		expect(midi.tracks[1].notes[0].name).to.equal('G4')
+		expect(midi.tracks[1].notes[0].midi).to.equal(67)
+		expect(midi.tracks[1].notes[0].velocity.toFixed(1)).to.equal('0.4')
+		expect(midi.tracks[1].notes[0].duration.toFixed(1)).to.equal('0.2')
+
+		expect(midi.tracks[1].controlChanges[7][0].number).to.equal(7)
+		expect(midi.tracks[1].controlChanges[7][0].time).to.equal(0)
+		expect(midi.tracks[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
 	})
 
 	it("can get the tracks by either index or name", function(){
@@ -291,7 +327,7 @@ describe("Note", function(){
 		var track = MidiConvert.create().track().note(60, 10)
 		track.instrumentNumber = 1
 		track.name = "test"
-		var json = track.toJSON()
+		var json = toJSON(track)
 		expect(json.id).to.be.undefined
 		expect(json.notes).to.be.array
 		expect(json.instrument).to.equal("bright acoustic piano")
@@ -402,4 +438,8 @@ function readMIDI(filename) {
     ),
     "binary"
   )
+}
+
+function toJSON(obj) {
+	return JSON.parse(JSON.stringify(obj))
 }

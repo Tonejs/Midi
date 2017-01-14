@@ -285,7 +285,11 @@ class Track {
 	 */
 	toJSON(){
 
-		const ret = {}
+		const ret = {
+			startTime: this.startTime,
+			duration: this.duration,
+			length: this.length,
+		}
 
 		if (typeof this.id !== 'undefined')
 			ret.id = this.id
@@ -299,8 +303,10 @@ class Track {
 			ret.instrumentFamily = this.instrumentFamily
 		}
 
-		if (this.channelNumber !== -1)
+		if (this.channelNumber !== -1){
 			ret.channelNumber = this.channelNumber
+			ret.isPercussion = this.isPercussion
+		}
 
 		if (this.notes.length)
 			ret.notes = this.notes.map((n) => n.toJSON())

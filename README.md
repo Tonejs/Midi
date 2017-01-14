@@ -61,6 +61,8 @@ The data parsed from the midi file looks like this:
         ],
       },
 
+      isPercussion: Boolean,          // true if this track is on a percussion
+                                      // channel
       channelNumber: Number,          // the ID for this channel; 9 and 10 are
                                       // reserved for percussion
 

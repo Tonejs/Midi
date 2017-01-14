@@ -7,19 +7,21 @@ export interface Note {
 };
 
 export interface Track {
-	id: number,
+	id?: number,
+	readonly isPercussion: boolean,
 	channelNumber: number,
 	name: string,
 	instrument: string,
 	instrumentNumber: number,
-	instrumentFamily: string,
+	readonly instrumentFamily: string,
 	notes: Array<Note>,
-	startTime: number,
-	duration: number,
-	length: number,
+	readonly startTime: number,
+	readonly duration: number,
+	readonly length: number,
 };
 
 export interface ControlChange {
+	readonly name: string,
 	number: number,
 	time: string,
 	value: number,
@@ -32,8 +34,8 @@ export interface MIDI {
 		PPQ: number,
 	},
 
-	startTime: number,
-	duration: number,
+	readonly startTime: number,
+	readonly duration: number,
 
 	tracks: Array<Track>,
 
