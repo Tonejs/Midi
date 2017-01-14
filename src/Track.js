@@ -2,7 +2,7 @@ import {BinaryInsert} from './BinaryInsert'
 import {Control} from './Control'
 import {Merge} from './Merge'
 import {Note} from './Note'
-import {instrumentByPatchID, instrumentFamilyByID} from './instrumentMaps'
+import {instrumentByPatchID, instrumentFamilyByID, drumKitByPatchID} from './instrumentMaps'
 
 class Track {
 	constructor(name='', instrumentNumber=-1, channel=-1){
@@ -104,7 +104,7 @@ class Track {
 
 	/**
 	 * Sets channelNumber.
-	 * @param  {Number} id The MIDI channel number, between 0 and 0xF.  0x9 is percussion
+	 * @param  {Number} id The MIDI channel number, between 0 and 0xF.  0x9 and 0xA are percussion
 	 */
 	channel(id){
 		this.channelNumber = id
@@ -185,7 +185,9 @@ class Track {
 	 * @type {String}
 	 */
 	get instrument() {
-		return instrumentByPatchID[this.instrumentNumber]
+		return this.isPercussion
+			?	drumKitByPatchID[this.instrumentNumber]
+			: instrumentByPatchID[this.instrumentNumber]
 	}
 	set instrument(inst) {
 		const index = instrumentByPatchID.indexOf(inst)
@@ -200,7 +202,7 @@ class Track {
 	 * @type {Boolean}
 	 */
 	get isPercussion() {
-		return this.channelNumber === 0x9
+		return [0x9, 0xA].includes(this.channelNumber)
 	}
 
 	/**
@@ -209,9 +211,10 @@ class Track {
 	 * @readOnly
 	 */
 	get instrumentFamily() {
-		return instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)]
+		return this.isPercussion
+			?	'drums'
+			: instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)]
 	}
-
 
 	/**
 	 * Scale the timing of all the events in the track

@@ -151,6 +151,14 @@ describe("Track", function(){
 		expect(track.instrumentFamily).to.equal("bass")
 	})
 
+	it("uses the correct instrument name for drum kits", function(){
+		var track = MidiConvert.create().track()
+		track.channel(0xA)
+		track.patch(32)
+		expect(track.instrument).to.equal("jazz kit")
+		expect(track.instrumentFamily).to.equal("drums")
+	})
+
 	it("can set the channelNumber with 'channel'", function(){
 		var track = MidiConvert.create().track()
 		track.channel(0x3)
@@ -163,9 +171,15 @@ describe("Track", function(){
 		expect(track.isPercussion).to.equal(true)
 	})
 
+	it("is a percussion track when the channel is 0xA", function(){
+		var track = MidiConvert.create().track()
+		track.channel(0xA)
+		expect(track.isPercussion).to.equal(true)
+	})
+
 	it("is not a percussion track otherwise", function(){
 		var track = MidiConvert.create().track()
-		track.channel(0x10)
+		track.channel(0x2)
 		expect(track.isPercussion).to.equal(false)
 	})
 

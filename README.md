@@ -61,7 +61,7 @@ The data parsed from the midi file looks like this:
         ],
       },
 
-      channelNumber: Number,          // the ID for this channel; 9 is
+      channelNumber: Number,          // the ID for this channel; 9 and 10 are
                                       // reserved for percussion
 
       instrumentNumber: Number,       // the ID for this instrument, as defined

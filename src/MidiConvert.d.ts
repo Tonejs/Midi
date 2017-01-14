@@ -52,3 +52,4 @@ export interface StringsByID {
 
 export const instrumentByPatchID: StringsByID;
 export const instrumentFamilyByID: StringsByID;
+export const drumKitByPatchID: StringsByID;
