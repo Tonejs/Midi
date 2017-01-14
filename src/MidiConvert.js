@@ -1,9 +1,10 @@
 import {Midi} from './Midi'
-import {instrumentByPatchID, instrumentFamilyByID} from './instrumentMaps'
+import {instrumentByPatchID, instrumentFamilyByID, drumKitByPatchID} from './instrumentMaps'
 
 const MidiConvert = {
 	instrumentByPatchID,
 	instrumentFamilyByID,
+	drumKitByPatchID,
 
 	/**
 	 *  Parse all the data from the Midi file into this format:
