@@ -308,7 +308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					}));
 				}
 	
-				this.tracks.forEach(function (track, i) {
+				this.tracks.forEach(function (track) {
 					var trackEncoder = output.addTrack();
 					trackEncoder.setTempo(_this3.bpm);
 					track.encode(trackEncoder, _this3.header);
@@ -431,7 +431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this.header.timeSignature;
 			},
 			set: function set(timeSig) {
-				this.header.timeSignature = timeSignature;
+				this.header.timeSignature = timeSig;
 			}
 	
 			/**
@@ -1561,8 +1561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var Track = function () {
-		function Track() {
-			var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+		function Track(name) {
 			var instrumentNumber = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
 			var channel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
 	
@@ -1776,6 +1775,38 @@ return /******/ (function(modules) { // webpackBootstrap
 				}, this.noteOffs, function (noteOff) {
 					trackEncoder.addNoteOff(channelNumber, noteOff.name, getDeltaTime(noteOff.time));
 				});
+			}
+	
+			/**
+	   *  Convert all of the fields to JSON
+	   *  @return  {Object}
+	   */
+	
+		}, {
+			key: 'toJSON',
+			value: function toJSON() {
+	
+				var ret = {};
+	
+				if (typeof this.id !== 'undefined') ret.id = this.id;
+	
+				if (this.name) ret.name = this.name;
+	
+				if (this.instrumentNumber !== -1) {
+					ret.instrumentNumber = this.instrumentNumber;
+					ret.instrument = this.instrument;
+					ret.instrumentFamily = this.instrumentFamily;
+				}
+	
+				if (this.channelNumber !== -1) ret.channelNumber = this.channelNumber;
+	
+				if (this.notes.length) ret.notes = this.notes.map(function (n) {
+					return n.toJSON();
+				});
+	
+				if (Object.keys(this.controlChanges).length) ret.controlChanges = this.controlChanges;
+	
+				return ret;
 			}
 		}, {
 			key: 'noteOns',
