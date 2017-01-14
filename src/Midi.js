@@ -124,7 +124,7 @@ class Midi {
 			)
 		}
 
-		this.tracks.forEach((track, i) => {
+		this.tracks.forEach((track) => {
 			const trackEncoder = output.addTrack()
 			trackEncoder.setTempo(this.bpm)
 			track.encode(trackEncoder, this.header)
@@ -216,7 +216,7 @@ class Midi {
 		return this.header.timeSignature
 	}
 	set timeSignature(timeSig){
-		this.header.timeSignature = timeSignature
+		this.header.timeSignature = timeSig
 	}
 
 	/**
