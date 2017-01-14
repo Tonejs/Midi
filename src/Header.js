@@ -1,6 +1,6 @@
 /**
  *  Parse tempo and time signature from the midiJson
- *  @param  {Object}  midiJson 
+ *  @param  {Object}  midiJson
  *  @return  {Object}
  */
 function parseHeader(midiJson){
@@ -19,7 +19,7 @@ function parseHeader(midiJson){
 						ret.bpm = 60000000 / datum.microsecondsPerBeat
 					}
 				}
-			} 
+			}
 		}
 	}
 	ret.bpm = ret.bpm || 120

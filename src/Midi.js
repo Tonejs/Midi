@@ -85,11 +85,11 @@ class Midi {
 					track.noteOff(event.noteNumber, absoluteTime)
 				} else if (event.subtype === 'controller' && event.controllerType){
 					track.cc(event.controllerType, absoluteTime, event.value / 127)
-        } else if (event.type === 'meta' && event.subtype === 'instrumentName'){
-          track.instrument = event.text
+				} else if (event.type === 'meta' && event.subtype === 'instrumentName'){
+					track.instrument = event.text
 				} else if (event.type === 'channel' && event.subtype === 'programChange'){
 					track.patch(event.programNumber)
-          track.channelNumber = event.channel
+					track.channelNumber = event.channel
 				}
 			})
 		})
