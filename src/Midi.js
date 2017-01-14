@@ -77,6 +77,10 @@ class Midi {
 					track.name = Util.cleanName(event.text)
 				} else if (event.subtype === 'noteOn'){
 					track.noteOn(event.noteNumber, absoluteTime, event.velocity / 127)
+
+					if (track.channelNumber === -1) {
+						track.channelNumber = event.channel
+					}
 				} else if (event.subtype === 'noteOff'){
 					track.noteOff(event.noteNumber, absoluteTime)
 				} else if (event.subtype === 'controller' && event.controllerType){
@@ -89,6 +93,7 @@ class Midi {
 				}
 			})
 		})
+
 		return this
 	}
 
