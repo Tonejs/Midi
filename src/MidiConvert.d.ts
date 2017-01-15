@@ -29,6 +29,7 @@ export interface ControlChange {
 
 export interface MIDI {
 	header: {
+		name: string,
 		bpm: number,
 		timeSignature: [number, number],
 		PPQ: number,
