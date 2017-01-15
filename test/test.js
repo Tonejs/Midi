@@ -85,6 +85,33 @@ describe("Midi", function(){
 		expect(midi.tracks[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
 	})
 
+	it("provides serializable defaults for expected properties", function(){
+		var midi = toJSON(MidiConvert.create())
+
+		expect(midi.header.name).to.be.a('string')
+		expect(midi.header.name).to.be.empty
+		expect(midi.startTime).to.be.a('number')
+		expect(midi.startTime).to.equal(0)
+		expect(midi.duration).to.be.a('number')
+		expect(midi.duration).to.equal(0)
+
+		expect(midi.tracks.length).to.equal(0)
+	})
+
+	it("provides serializable defaults for expected properties on track", function(){
+		var raw = MidiConvert.create()
+		raw.track()
+
+		var midi = toJSON(raw)
+		var track = midi.tracks[0];
+
+		expect(track.name).to.be.empty
+		expect(track.name).to.be.a('string')
+		expect(track.notes.length).to.equal(0)
+		expect(track.controlChanges).to.be.empty
+		expect(track.controlChanges).to.be.an('object')
+	})
+
 	it("can get the tracks by either index or name", function(){
 		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		expect(midi.get(5).name).to.equal("Fuga 3")

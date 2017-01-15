@@ -5,7 +5,7 @@ import {Note} from './Note'
 import {instrumentByPatchID, instrumentFamilyByID, drumKitByPatchID} from './instrumentMaps'
 
 class Track {
-	constructor(name, instrumentNumber=-1, channel=-1){
+	constructor(name='', instrumentNumber=-1, channel=-1){
 
 		/**
 		 * The name of the track
@@ -289,13 +289,14 @@ class Track {
 			startTime: this.startTime,
 			duration: this.duration,
 			length: this.length,
+			notes: [],
+			controlChanges: {},
 		}
 
 		if (typeof this.id !== 'undefined')
 			ret.id = this.id
 
-		if (this.name)
-			ret.name = this.name
+		ret.name = this.name
 
 		if (this.instrumentNumber !== -1){
 			ret.instrumentNumber = this.instrumentNumber
