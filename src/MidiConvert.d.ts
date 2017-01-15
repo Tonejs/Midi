@@ -43,6 +43,8 @@ export interface MIDI {
 	controlChanges: {
 		[key: number]: ControlChange
 	},
+
+	toJSON(): MIDI,
 };
 
 export function parse(raw: ArrayBuffer): MIDI;
