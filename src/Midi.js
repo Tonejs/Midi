@@ -161,6 +161,16 @@ class Midi {
 	}
 
 	/**
+	 * Convert JSON to Midi object
+	 * @param {object} json
+	 * @returns {Midi}
+	 */
+	fromJSON(json){
+		this.header = json.header;
+
+		return this
+	}
+	/**
 	 * Add a new track.
 	 * @param {String=} name Optionally include the name of the track
 	 * @returns {Track}
