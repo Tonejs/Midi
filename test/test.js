@@ -85,6 +85,15 @@ describe("Midi", function(){
 		expect(midi.tracks[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
 	})
 
+	it("is JSON deserializable", function(){
+		var midi = MidiConvert.deserialize(toJSON(MidiConvert.parse(readMIDI("bwv-846.mid"))))
+
+		expect(midi.header.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
+		expect(midi.header.timeSignature).to.deep.equal([4, 4])
+		expect(Math.round(midi.header.bpm)).to.equal(74)
+		expect(midi.header.PPQ).to.equal(480)
+	})
+
 	it("can get the tracks by either index or name", function(){
 		var midi = MidiConvert.parse(readMIDI("bwv-846.mid"))
 		expect(midi.get(5).name).to.equal("Fuga 3")
