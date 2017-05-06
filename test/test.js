@@ -371,6 +371,19 @@ describe("Note", function(){
 		expect(json.name).to.equal("test")
 	})
 
+	it("can decode track from JSON", function(){
+		var track = MidiConvert.create().track().note(60, 10)
+		track.instrumentNumber = 1
+		track.name = "test"
+		var decodedTrack = MidiConvert.create().track().fromJSON(track.toJSON())
+		expect(decodedTrack.id).to.be.undefined
+		expect(decodedTrack.notes).to.be.array
+		expect(decodedTrack.instrument).to.equal("bright acoustic piano")
+		expect(decodedTrack.instrumentNumber).to.equal(1)
+		expect(decodedTrack.instrumentFamily).to.equal('piano')
+		expect(decodedTrack.name).to.equal('test')
+	})
+
 })
 
 describe("Control Change", function(){
