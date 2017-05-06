@@ -106,6 +106,8 @@ class Note{
 		this.time = json.time
 		this.velocity = json.velocity
 		this.duration = json.duration
+
+		return this;
 	}
 }
 
