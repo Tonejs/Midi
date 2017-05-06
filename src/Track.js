@@ -339,11 +339,12 @@ class Track {
 			this.instrumentNumber = -1;
 		}
 
-		// if (json.notes.length) {
-		// 	json.notes.forEach((note) => {
-		// 		this.notes.forEach(new Note(1, 1).fromJSON(note))
-		// 	});
-		// }
+		if (json.notes) {
+			json.notes.forEach((note) => {
+				var newNote = new Note(note.midi, note.time).fromJSON(note)
+				this.notes.push(newNote)
+			});
+		}
 
 		// if (Object.keys(this.controlChanges).length)
 		// 	ret.controlChanges = this.controlChanges
