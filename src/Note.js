@@ -107,7 +107,7 @@ class Note{
 		this.velocity = json.velocity
 		this.duration = json.duration
 
-		return this;
+		return this
 	}
 }
 

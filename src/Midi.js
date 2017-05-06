@@ -166,11 +166,11 @@ class Midi {
 	 * @returns {Midi}
 	 */
 	fromJSON(json){
-		this.header = json.header;
-		
+		this.header = json.header
+
 		json.tracks.forEach((track) => {
-			var newTrack = new Track(track.name).fromJSON(track);
-			this.tracks.push(newTrack);
+			var newTrack = new Track(track.name).fromJSON(track)
+			this.tracks.push(newTrack)
 		});
 
 		return this

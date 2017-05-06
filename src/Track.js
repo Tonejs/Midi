@@ -316,7 +316,7 @@ class Track {
 
 		return ret
 	}
-	
+
 	/**
 	 * Convert JSON to Track object
 	 * @param {object} json
@@ -327,7 +327,7 @@ class Track {
 		this.name = json.name
 		this.id = json.id
 		this.instrumentNumber = json.instrumentNumber
-		this.channelNumber = json.channelNumber;
+		this.channelNumber = json.channelNumber
 
 		if (json.notes) {
 			json.notes.forEach((note) => {
@@ -337,10 +337,10 @@ class Track {
 		}
 
 		if (json.controlChanges) {
-			this.controlChanges = json.controlChanges;			
+			this.controlChanges = json.controlChanges
 		}
 
-		return this;
+		return this
 	}
 }
 
