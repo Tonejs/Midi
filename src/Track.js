@@ -325,19 +325,9 @@ class Track {
 	fromJSON(json){
 
 		this.name = json.name
-
-		if (typeof json.id !== 'undefined')
-			this.id = json.id
-		
-		if (json.instrumentNumber !== -1){
-			this.instrumentNumber = json.instrumentNumber
-		}
-
-		if (typeof json.channelNumber !== 'undefined'){
-			this.channelNumber = json.channelNumber
-		} else {
-			this.instrumentNumber = -1;
-		}
+		this.id = json.id
+		this.instrumentNumber = json.instrumentNumber
+		this.channelNumber = json.channelNumber;
 
 		if (json.notes) {
 			json.notes.forEach((note) => {
@@ -346,8 +336,10 @@ class Track {
 			});
 		}
 
-		// if (Object.keys(this.controlChanges).length)
-		// 	ret.controlChanges = this.controlChanges
+		if (json.controlChanges) {
+			this.controlChanges = json.controlChanges;			
+		}
+
 		return this;
 	}
 }

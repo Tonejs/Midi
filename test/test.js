@@ -115,9 +115,9 @@ describe("Midi", function(){
 		expect(midi.tracks[1].notes[0].velocity.toFixed(1)).to.equal('0.4')
 		expect(midi.tracks[1].notes[0].duration.toFixed(1)).to.equal('0.2')
 
-		// expect(midi.tracks[1].controlChanges[7][0].number).to.equal(7)		// controlChanges are undefined as well
-		// expect(midi.tracks[1].controlChanges[7][0].time).to.equal(0)
-		// expect(midi.tracks[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
+		expect(midi.tracks[1].controlChanges[7][0].number).to.equal(7)
+		expect(midi.tracks[1].controlChanges[7][0].time).to.equal(0)
+		expect(midi.tracks[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
 	})
 
 	it("can get the tracks by either index or name", function(){
