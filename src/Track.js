@@ -333,9 +333,10 @@ class Track {
 			this.instrumentNumber = json.instrumentNumber
 		}
 
-		if (this.channelNumber !== -1){
+		if (typeof json.channelNumber !== 'undefined'){
 			this.channelNumber = json.channelNumber
-			this.isPercussion = json.isPercussion
+		} else {
+			this.instrumentNumber = -1;
 		}
 
 		// if (json.notes.length) {

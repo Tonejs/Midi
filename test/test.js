@@ -98,7 +98,7 @@ describe("Midi", function(){
 
 		expect(midi.tracks.length).to.equal(11)
 		expect(midi.tracks[1].id).to.equal(1)
-		// expect(midi.tracks[1].channelNumber).to.equal(0)
+		expect(midi.tracks[1].channelNumber).to.equal(0)
 		expect(midi.tracks[1].isPercussion).to.equal(false)
 		expect(midi.tracks[1].name).to.equal('Piano right')
 		expect(midi.tracks[1].instrument).to.equal('acoustic grand piano')
