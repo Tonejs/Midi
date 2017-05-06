@@ -92,6 +92,32 @@ describe("Midi", function(){
 		expect(midi.header.timeSignature).to.deep.equal([4, 4])
 		expect(Math.round(midi.header.bpm)).to.equal(74)
 		expect(midi.header.PPQ).to.equal(480)
+
+		expect(midi.startTime).to.equal(0)
+		// expect(Math.round(midi.duration)).to.equal(201)
+
+		expect(midi.tracks.length).to.equal(11)
+		expect(midi.tracks[1].id).to.equal(1)
+		// expect(midi.tracks[1].channelNumber).to.equal(0)
+		expect(midi.tracks[1].isPercussion).to.equal(false)
+		expect(midi.tracks[1].name).to.equal('Piano right')
+		expect(midi.tracks[1].instrument).to.equal('acoustic grand piano')
+		expect(midi.tracks[1].instrumentNumber).to.equal(0)
+		expect(midi.tracks[1].instrumentFamily).to.equal('piano')
+
+		// expect(midi.tracks[1].startTime.toFixed(1)).to.equal('0.4')
+		// expect(Math.round(midi.tracks[1].duration)).to.equal(113)
+		// expect(midi.tracks[1].length).to.equal(415)
+
+		// expect(midi.tracks[1].notes[0].time.toFixed(1)).to.equal('0.4')		// notes[0] is undefined for now
+		// expect(midi.tracks[1].notes[0].name).to.equal('G4')
+		// expect(midi.tracks[1].notes[0].midi).to.equal(67)
+		// expect(midi.tracks[1].notes[0].velocity.toFixed(1)).to.equal('0.4')
+		// expect(midi.tracks[1].notes[0].duration.toFixed(1)).to.equal('0.2')
+
+		// expect(midi.tracks[1].controlChanges[7][0].number).to.equal(7)		// controlChanges are undefined as well
+		// expect(midi.tracks[1].controlChanges[7][0].time).to.equal(0)
+		// expect(midi.tracks[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
 	})
 
 	it("can get the tracks by either index or name", function(){

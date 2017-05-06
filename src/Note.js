@@ -93,6 +93,20 @@ class Note{
 			duration : this.duration
 		}
 	}
+
+
+	/**
+	 * Convert JSON to Note object
+	 * @param {object} json
+	 * @returns {Note}
+	 */
+	fromJSON(json) {
+		this.name = json.name
+		this.midi = json.midi
+		this.time = json.time
+		this.velocity = json.velocity
+		this.duration = json.duration
+	}
 }
 
 export {Note}

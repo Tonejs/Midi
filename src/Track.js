@@ -316,7 +316,38 @@ class Track {
 
 		return ret
 	}
+	
+	/**
+	 * Convert JSON to Track object
+	 * @param {object} json
+	 * @returns {Track}
+	 */
+	fromJSON(json){
 
+		this.name = json.name
+
+		if (typeof json.id !== 'undefined')
+			this.id = json.id
+		
+		if (json.instrumentNumber !== -1){
+			this.instrumentNumber = json.instrumentNumber
+		}
+
+		if (this.channelNumber !== -1){
+			this.channelNumber = json.channelNumber
+			this.isPercussion = json.isPercussion
+		}
+
+		// if (json.notes.length) {
+		// 	json.notes.forEach((note) => {
+		// 		this.notes.forEach(new Note(1, 1).fromJSON(note))
+		// 	});
+		// }
+
+		// if (Object.keys(this.controlChanges).length)
+		// 	ret.controlChanges = this.controlChanges
+		return this;
+	}
 }
 
 export {Track}
