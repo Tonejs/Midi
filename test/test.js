@@ -105,19 +105,19 @@ describe("Midi", function(){
 		expect(midi.get(1).instrumentNumber).to.equal(0)
 		expect(midi.get(1).instrumentFamily).to.equal('piano')
 
-		expect(midi.get[1].startTime.toFixed(1)).to.equal('0.4')
-		expect(Math.round(midi.get[1].duration)).to.equal(113)
-		expect(midi.get[1].length).to.equal(415)
+		expect(midi.get(1).startTime.toFixed(1)).to.equal('0.4')
+		expect(Math.round(midi.get(1).duration)).to.equal(113)
+		expect(midi.get(1).length).to.equal(415)
 
-		expect(midi.get[1].notes[0].time.toFixed(1)).to.equal('0.4')
-		expect(midi.get[1].notes[0].name).to.equal('G4')
-		expect(midi.get[1].notes[0].midi).to.equal(67)
-		expect(midi.get[1].notes[0].velocity.toFixed(1)).to.equal('0.4')
-		expect(midi.get[1].notes[0].duration.toFixed(1)).to.equal('0.2')
+		expect(midi.get(1).notes[0].time.toFixed(1)).to.equal('0.4')
+		expect(midi.get(1).notes[0].name).to.equal('G4')
+		expect(midi.get(1).notes[0].midi).to.equal(67)
+		expect(midi.get(1).notes[0].velocity.toFixed(1)).to.equal('0.4')
+		expect(midi.get(1).notes[0].duration.toFixed(1)).to.equal('0.2')
 
-		expect(midi.get[1].controlChanges[7][0].number).to.equal(7)
-		expect(midi.get[1].controlChanges[7][0].time).to.equal(0)
-		expect(midi.get[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
+		expect(midi.get(1).controlChanges[7][0].number).to.equal(7)
+		expect(midi.get(1).controlChanges[7][0].time).to.equal(0)
+		expect(midi.get(1).controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
 	})
 
 	it("can get the tracks by either index or name", function(){
