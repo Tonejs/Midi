@@ -86,7 +86,7 @@ describe("Midi", function(){
 	})
 
 	it("is JSON deserializable", function(){
-		var midi = MidiConvert.deserialize(toJSON(MidiConvert.parse(readMIDI("bwv-846.mid"))))
+		var midi = MidiConvert.fromJSON(toJSON(MidiConvert.parse(readMIDI("bwv-846.mid"))))
 
 		expect(midi.header.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
 		expect(midi.header.timeSignature).to.deep.equal([4, 4])
