@@ -38,6 +38,31 @@ class Track {
 		this.instrumentNumber = instrumentNumber
 	}
 
+		/**
+	 * Convert JSON to Track object
+	 * @param {object} json
+	 * @static
+	 * @returns {Track}
+	 */
+	static fromJSON(json){
+
+		var track = new Track(json.name, json.instrumentNumber, json.channelNumber )
+		track.id = json.id
+
+		if (json.notes) {
+			json.notes.forEach((note) => {
+				var newNote = new Note(note.midi, note.time).fromJSON(note)
+				track.notes.push(newNote)
+			})
+		}
+
+		if (json.controlChanges) {
+			track.controlChanges = json.controlChanges
+		}
+
+		return track
+	}
+
 	note(midi, time, duration=0, velocity=1){
 		const note = new Note(midi, time, duration, velocity)
 		BinaryInsert(this.notes, note)
@@ -315,32 +340,6 @@ class Track {
 			ret.controlChanges = this.controlChanges
 
 		return ret
-	}
-
-	/**
-	 * Convert JSON to Track object
-	 * @param {object} json
-	 * @returns {Track}
-	 */
-	fromJSON(json){
-
-		this.name = json.name
-		this.id = json.id
-		this.instrumentNumber = json.instrumentNumber
-		this.channelNumber = json.channelNumber
-
-		if (json.notes) {
-			json.notes.forEach((note) => {
-				var newNote = new Note(note.midi, note.time).fromJSON(note)
-				this.notes.push(newNote)
-			});
-		}
-
-		if (json.controlChanges) {
-			this.controlChanges = json.controlChanges
-		}
-
-		return this
 	}
 }
 

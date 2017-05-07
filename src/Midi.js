@@ -32,7 +32,7 @@ class Midi {
 		midi.header = json.header
 
 		json.tracks.forEach((track) => {
-			var newTrack = new Track(track.name).fromJSON(track)
+			var newTrack = Track.fromJSON(track)
 			midi.tracks.push(newTrack)
 		})
 
