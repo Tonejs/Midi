@@ -21,6 +21,25 @@ class Midi {
 	}
 
 	/**
+	 * Convert JSON to Midi object
+	 * @param {object} json
+	 * @static
+	 * @returns {Midi}
+	 */
+	static fromJSON(json){
+
+		var midi = new Midi()
+		midi.header = json.header;
+
+		json.tracks.forEach((track) => {
+			var newTrack = new Track(track.name).fromJSON(track)
+			midi.tracks.push(newTrack)
+		});
+
+		return midi
+	}
+
+	/**
 	 * Load the given url and parse the midi at that url
 	 * @param  {String}   url
 	 * @param {*} data Anything that should be sent in the XHR
@@ -160,21 +179,6 @@ class Midi {
 		}
 	}
 
-	/**
-	 * Convert JSON to Midi object
-	 * @param {object} json
-	 * @returns {Midi}
-	 */
-	fromJSON(json){
-		this.header = json.header
-
-		json.tracks.forEach((track) => {
-			var newTrack = new Track(track.name).fromJSON(track)
-			this.tracks.push(newTrack)
-		});
-
-		return this
-	}
 	/**
 	 * Add a new track.
 	 * @param {String=} name Optionally include the name of the track
