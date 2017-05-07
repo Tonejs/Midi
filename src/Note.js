@@ -35,6 +35,16 @@ class Note{
 	}
 
 	/**
+	 * Convert JSON to Note object
+	 * @param {object} json
+	 * @returns {Note}
+	 */
+	static fromJSON(json) {
+		var note = new Note(json.midi, json.time, json.duration, json.velocity)
+		return note
+	}
+
+	/**
 	 * If the note is the same as the given note
 	 * @param {String|Number} note
 	 * @return {Boolean}
@@ -92,22 +102,6 @@ class Note{
 			velocity : this.velocity,
 			duration : this.duration
 		}
-	}
-
-
-	/**
-	 * Convert JSON to Note object
-	 * @param {object} json
-	 * @returns {Note}
-	 */
-	fromJSON(json) {
-		this.name = json.name
-		this.midi = json.midi
-		this.time = json.time
-		this.velocity = json.velocity
-		this.duration = json.duration
-
-		return this
 	}
 }
 

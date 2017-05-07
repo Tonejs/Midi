@@ -51,7 +51,7 @@ class Track {
 
 		if (json.notes) {
 			json.notes.forEach((note) => {
-				var newNote = new Note(note.midi, note.time).fromJSON(note)
+				var newNote = Note.fromJSON(note)
 				track.notes.push(newNote)
 			})
 		}
