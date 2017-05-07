@@ -27,10 +27,9 @@ class Midi {
 	 * @returns {Midi}
 	 */
 	static fromJSON(json){
-
 		var midi = new Midi()
-		midi.header = json.header
 
+		midi.header = json.header
 		json.tracks.forEach((track) => {
 			var newTrack = Track.fromJSON(track)
 			midi.tracks.push(newTrack)

@@ -45,10 +45,10 @@ class Track {
 	 * @returns {Track}
 	 */
 	static fromJSON(json){
-
 		var track = new Track(json.name, json.instrumentNumber, json.channelNumber )
-		track.id = json.id
 
+		track.id = json.id
+		
 		if (json.notes) {
 			json.notes.forEach((note) => {
 				var newNote = Note.fromJSON(note)
