@@ -72,7 +72,7 @@ const MidiConvert = {
 	 * @param {object} json
 	 * @returns {Midi} Deserialized midi object
 	 */
-	deserialize : function(json){
+	fromJSON : function(json){
 		return new Midi().fromJSON(json)
 	}
 }
