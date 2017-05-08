@@ -5,6 +5,31 @@ import {Note} from './Note'
 import {instrumentByPatchID, instrumentFamilyByID, drumKitByPatchID} from './instrumentMaps'
 
 class Track {
+	/**
+	 * Convert JSON to Track object
+	 * @param {object} json
+	 * @static
+	 * @returns {Track}
+	 */
+	static fromJSON(json){
+		var track = new Track(json.name, json.instrumentNumber, json.channelNumber )
+
+		track.id = json.id
+		
+		if (json.notes) {
+			json.notes.forEach((note) => {
+				var newNote = Note.fromJSON(note)
+				track.notes.push(newNote)
+			})
+		}
+
+		if (json.controlChanges) {
+			track.controlChanges = json.controlChanges
+		}
+
+		return track
+	}
+	
 	constructor(name, instrumentNumber=-1, channel=-1){
 
 		/**
@@ -36,31 +61,6 @@ class Track {
 		 * @type {Number}
 		 */
 		this.instrumentNumber = instrumentNumber
-	}
-
-		/**
-	 * Convert JSON to Track object
-	 * @param {object} json
-	 * @static
-	 * @returns {Track}
-	 */
-	static fromJSON(json){
-		var track = new Track(json.name, json.instrumentNumber, json.channelNumber )
-
-		track.id = json.id
-		
-		if (json.notes) {
-			json.notes.forEach((note) => {
-				var newNote = Note.fromJSON(note)
-				track.notes.push(newNote)
-			})
-		}
-
-		if (json.controlChanges) {
-			track.controlChanges = json.controlChanges
-		}
-
-		return track
 	}
 
 	note(midi, time, duration=0, velocity=1){

@@ -1,6 +1,16 @@
 import Util from './Util'
 
 class Note{
+	/**
+	 * Convert JSON to Note object
+	 * @param {object} json
+	 * @returns {Note}
+	 */
+	static fromJSON(json) {
+		var note = new Note(json.midi, json.time, json.duration, json.velocity)
+		return note
+	}
+	
 	constructor(midi, time, duration=0, velocity=1){
 
 		/**
@@ -32,16 +42,6 @@ class Note{
 		 * @type {Number}
 		 */
 		this.velocity = velocity
-	}
-
-	/**
-	 * Convert JSON to Note object
-	 * @param {object} json
-	 * @returns {Note}
-	 */
-	static fromJSON(json) {
-		var note = new Note(json.midi, json.time, json.duration, json.velocity)
-		return note
 	}
 
 	/**

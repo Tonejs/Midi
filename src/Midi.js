@@ -8,18 +8,6 @@ import {parseHeader} from './Header'
  * @class The Midi object. Contains tracks and the header info.
  */
 class Midi {
-	constructor(){
-
-		this.header = {
-			//defaults
-			bpm : 120,
-			timeSignature : [4, 4],
-			PPQ : 480
-		}
-
-		this.tracks = []
-	}
-
 	/**
 	 * Convert JSON to Midi object
 	 * @param {object} json
@@ -36,6 +24,18 @@ class Midi {
 		})
 
 		return midi
+	}
+	
+	constructor(){
+
+		this.header = {
+			//defaults
+			bpm : 120,
+			timeSignature : [4, 4],
+			PPQ : 480
+		}
+
+		this.tracks = []
 	}
 
 	/**
