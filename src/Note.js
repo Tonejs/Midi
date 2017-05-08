@@ -4,6 +4,7 @@ class Note{
 	/**
 	 * Convert JSON to Note object
 	 * @param {object} json
+	 * @static
 	 * @returns {Note}
 	 */
 	static fromJSON(json) {
