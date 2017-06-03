@@ -1,6 +1,6 @@
-import Decoder from 'midi-file-parser'
-import Encoder from 'jsmidgen'
-import Util from './Util'
+import * as Decoder from 'midi-file-parser'
+import * as Encoder from 'jsmidgen'
+import * as Util from './Util'
 import {Track} from './Track'
 import {parseHeader} from './Header'
 
