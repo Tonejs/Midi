@@ -1,21 +1,21 @@
-function cleanName(str){
+export function cleanName(str){
 	//ableton adds some weird stuff to the track
 	return str.replace(/\u0000/g, '')
 }
 
-function ticksToSeconds(ticks, header){
+export function ticksToSeconds(ticks, header){
 	return (60 / header.bpm) * (ticks / header.PPQ);
 }
 
-function isNumber(val){
+export function isNumber(val){
 	return typeof val === 'number'
 }
 
-function isString(val){
+export function isString(val){
 	return typeof val === 'string'
 }
 
-const isPitch = (function(){
+export const isPitch = (function(){
 	const regexp = /^([a-g]{1}(?:b|#|x|bb)?)(-?[0-9]+)/i
 	return (val) => {
 		return isString(val) && regexp.test(val)
@@ -23,14 +23,14 @@ const isPitch = (function(){
 }())
 
 
-function midiToPitch(midi){
+export function midiToPitch(midi){
 	const scaleIndexToNote = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 	const octave = Math.floor(midi / 12) - 1;
 	const note = midi % 12;
 	return scaleIndexToNote[note] + octave;
 }
 
-const pitchToMidi = (function(){
+export const pitchToMidi = (function(){
 	const regexp = /^([a-g]{1}(?:b|#|x|bb)?)(-?[0-9]+)/i
 	const noteToScaleIndex = {
 		"cbb" : -2, "cb" : -1, "c" : 0,  "c#" : 1,  "cx" : 2,
@@ -49,5 +49,3 @@ const pitchToMidi = (function(){
 		return index + (parseInt(octave) + 1) * 12
 	}
 }())
-
-module.exports = {cleanName, ticksToSeconds, isString, isNumber, isPitch, midiToPitch, pitchToMidi}
