@@ -168,7 +168,7 @@ class Midi {
 	 *  @return  {Object}
 	 */
 	toJSON(){
-		return {
+		const ret = {
 			header: this.header,
 			startTime: this.startTime,
 			duration: this.duration,
@@ -176,6 +176,11 @@ class Midi {
 				track => track.toJSON()
 			)
 		}
+
+		if (!ret.header.name)
+			ret.header.name = ''
+
+		return ret
 	}
 
 	/**
@@ -222,7 +227,11 @@ class Midi {
 	 */
 	get startTime(){
 		const startTimes = this.tracks.map((t) => t.startTime)
-		return Math.min.apply(Math, startTimes)
+
+		if (!startTimes.length)
+			return 0
+
+		return Math.min.apply(Math, startTimes) || 0
 	}
 
 	/**
@@ -258,7 +267,11 @@ class Midi {
 	 */
 	get duration(){
 		const durations = this.tracks.map((t) => t.duration)
-		return Math.max.apply(Math, durations)
+
+		if (!durations.length)
+			return 0
+
+		return Math.max.apply(Math, durations) || 0
 	}
 }
 

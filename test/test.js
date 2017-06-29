@@ -84,40 +84,31 @@ describe("Midi", function(){
 		expect(midi.tracks[1].controlChanges[7][0].time).to.equal(0)
 		expect(midi.tracks[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
 	})
+  it("provides serializable defaults for expected properties", function(){
+		var midi = toJSON(MidiConvert.create())
 
-	it("is JSON deserializable", function(){
-		var midi = MidiConvert.fromJSON(toJSON(MidiConvert.parse(readMIDI("bwv-846.mid"))))
-
-		expect(midi.header.name).to.equal("Das wohltemperierte Klavier I - Praeludium und Fuge 1 in C-Dur BWV 846")
-		expect(midi.header.timeSignature).to.deep.equal([4, 4])
-		expect(Math.round(midi.header.bpm)).to.equal(74)
-		expect(midi.header.PPQ).to.equal(480)
-
+		expect(midi.header.name).to.be.a('string')
+		expect(midi.header.name).to.be.empty
+		expect(midi.startTime).to.be.a('number')
 		expect(midi.startTime).to.equal(0)
-		expect(Math.round(midi.duration)).to.equal(201)
+		expect(midi.duration).to.be.a('number')
+		expect(midi.duration).to.equal(0)
 
-		expect(midi.tracks.length).to.equal(11)
-		expect(midi.get(1).id).to.equal(1)
-		expect(midi.get(1).channelNumber).to.equal(0)
-		expect(midi.get(1).isPercussion).to.equal(false)
-		expect(midi.get(1).name).to.equal('Piano right')
-		expect(midi.get(1).instrument).to.equal('acoustic grand piano')
-		expect(midi.get(1).instrumentNumber).to.equal(0)
-		expect(midi.get(1).instrumentFamily).to.equal('piano')
+		expect(midi.tracks.length).to.equal(0)
+	})
 
-		expect(midi.get(1).startTime.toFixed(1)).to.equal('0.4')
-		expect(Math.round(midi.get(1).duration)).to.equal(113)
-		expect(midi.get(1).length).to.equal(415)
+	it("provides serializable defaults for expected properties on track", function(){
+		var raw = MidiConvert.create()
+		raw.track()
 
-		expect(midi.get(1).notes[0].time.toFixed(1)).to.equal('0.4')
-		expect(midi.get(1).notes[0].name).to.equal('G4')
-		expect(midi.get(1).notes[0].midi).to.equal(67)
-		expect(midi.get(1).notes[0].velocity.toFixed(1)).to.equal('0.4')
-		expect(midi.get(1).notes[0].duration.toFixed(1)).to.equal('0.2')
+		var midi = toJSON(raw)
+		var track = midi.tracks[0];
 
-		expect(midi.get(1).controlChanges[7][0].number).to.equal(7)
-		expect(midi.get(1).controlChanges[7][0].time).to.equal(0)
-		expect(midi.get(1).controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
+		expect(track.name).to.be.empty
+		expect(track.name).to.be.a('string')
+		expect(track.notes.length).to.equal(0)
+		expect(track.controlChanges).to.be.empty
+		expect(track.controlChanges).to.be.an('object')
 	})
 
 	it("can get the tracks by either index or name", function(){
