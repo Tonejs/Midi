@@ -1,6 +1,6 @@
-import Decoder from 'midi-file-parser'
-import Encoder from 'jsmidgen'
-import Util from './Util'
+import * as Decoder from 'midi-file-parser'
+import * as Encoder from 'jsmidgen'
+import * as Util from './Util'
 import {Track} from './Track'
 import {parseHeader} from './Header'
 
@@ -8,6 +8,24 @@ import {parseHeader} from './Header'
  * @class The Midi object. Contains tracks and the header info.
  */
 class Midi {
+	/**
+	 * Convert JSON to Midi object
+	 * @param {object} json
+	 * @static
+	 * @returns {Midi}
+	 */
+	static fromJSON(json){
+		var midi = new Midi()
+
+		midi.header = json.header
+		json.tracks.forEach((track) => {
+			var newTrack = Track.fromJSON(track)
+			midi.tracks.push(newTrack)
+		})
+
+		return midi
+	}
+	
 	constructor(){
 
 		this.header = {

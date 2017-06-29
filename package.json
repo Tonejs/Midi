@@ -3,6 +3,7 @@
   "version": "0.4.1",
   "description": "Convert binary midi into Tone.js-friendly JSON",
   "main": "build/MidiConvert.js",
+  "module": "src/MidiConvert.js",
   "types": "src/MidiConvert.d.ts",
   "scripts": {
     "clean": "rm -rf ./build/*; mkdir -p ./build/",
@@ -22,15 +23,15 @@
   },
   "homepage": "https://tonejs.github.com/MidiConvert/",
   "devDependencies": {
-    "jsmidgen": "^0.1.5",
-    "midi-file-parser": "^1.0.0",
     "babel-core": "^6.17.0",
-    "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.16.0",
+    "babel-loader": "7",
+    "babel-preset-es2015": "7",
     "chai": "^3.3.0",
     "codecov": "^1.0.1",
-    "nyc": "^10.0.0",
+    "jsmidgen": "^0.1.5",
+    "midi-file-parser": "^1.0.0",
     "mocha": "^3.2.0",
-    "webpack": "^1.12.2"
+    "nyc": "^10.0.0",
+    "webpack": "2"
   }
 }

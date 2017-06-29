@@ -93,7 +93,7 @@ fs.readFile("test.mid", "binary", function(err, midiBlob) {
 
 ### Encoding Midi
 
-You can also create midi files from scratch of by modifying an existing file.
+You can also create midi files from scratch or by modifying an existing file.
 
 ```javascript
 // create a new midi file
@@ -123,8 +123,8 @@ MidiConvert.load("path/to/midi.mid", function(midi) {
   // make sure you set the tempo before you schedule the events
   Tone.Transport.bpm.value = midi.header.bpm
 
-  // pass in the note events from one of the tracks as the second argument to
-  // Tone.Part var midiPart = new Tone.Part(function(time, note) {
+  // pass in the note events from one of the tracks as the second argument to Tone.Part 
+  var midiPart = new Tone.Part(function(time, note) {
 
     //use the events to play the synth
     synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)

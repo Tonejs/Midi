@@ -84,8 +84,7 @@ describe("Midi", function(){
 		expect(midi.tracks[1].controlChanges[7][0].time).to.equal(0)
 		expect(midi.tracks[1].controlChanges[7][0].value.toFixed(1)).to.equal('0.8')
 	})
-
-	it("provides serializable defaults for expected properties", function(){
+  it("provides serializable defaults for expected properties", function(){
 		var midi = toJSON(MidiConvert.create())
 
 		expect(midi.header.name).to.be.a('string')
