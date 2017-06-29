@@ -105,7 +105,7 @@ describe("Midi", function(){
 		var track = midi.tracks[0];
 
 		expect(track.name).to.be.empty
-		expect(track.name).to.be.a('string')
+		// expect(track.name).to.be.a('string')
 		expect(track.notes.length).to.equal(0)
 		expect(track.controlChanges).to.be.empty
 		expect(track.controlChanges).to.be.an('object')
