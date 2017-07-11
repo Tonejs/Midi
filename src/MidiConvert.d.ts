@@ -4,7 +4,7 @@ export interface Note {
 	midi: number,
 	velocity: number,
 	duration: number,
-};
+}
 
 export interface Track {
 	id?: number,
@@ -18,14 +18,14 @@ export interface Track {
 	readonly startTime: number,
 	readonly duration: number,
 	readonly length: number,
-};
+}
 
 export interface ControlChange {
 	readonly name: string,
 	number: number,
 	time: string,
 	value: number,
-};
+}
 
 export interface MIDI {
 	header: {
@@ -45,7 +45,7 @@ export interface MIDI {
 	},
 
 	toJSON(): MIDI,
-};
+}
 
 export function parse(raw: ArrayBuffer): MIDI;
 export function load(url: string, data?: any, method?: 'GET'|'POST'): Promise<MIDI>;
