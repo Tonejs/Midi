@@ -145,6 +145,17 @@ class Midi {
 		this.tracks.forEach((track) => {
 			const trackEncoder = output.addTrack()
 			trackEncoder.setTempo(this.bpm)
+
+			if (track.name) {
+				trackEncoder.addEvent(
+					new Encoder.MetaEvent({
+						time: 0,
+						type: Encoder.MetaEvent.TRACK_NAME,
+						data: track.name
+					})
+				)
+			}
+
 			track.encode(trackEncoder, this.header)
 		})
 		return output.toBytes()
