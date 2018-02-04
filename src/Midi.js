@@ -60,7 +60,9 @@ class Midi {
 			})
 			request.addEventListener('error', fail)
 			request.send(data)
-		})
+		}).catch(function(error) {
+				console.log(error);
+			});
 	}
 
 	/**
