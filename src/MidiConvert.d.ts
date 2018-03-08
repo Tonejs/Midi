@@ -47,7 +47,7 @@ export interface MIDI {
 	toJSON(): MIDI,
 }
 
-export function parse(raw: ArrayBuffer): MIDI;
+export function parse(raw: string): MIDI;
 export function load(url: string, data?: any, method?: 'GET'|'POST'): Promise<MIDI>;
 export function create(): MIDI;
 export function fromJSON(json: object): MIDI;
