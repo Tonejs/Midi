@@ -21,6 +21,9 @@ export interface Track {
   controlChanges: {
     [key: number]: ControlChange
   }
+
+  patch(id: number): Track
+  note(midi: number, time: number, duration?: number, velocity?: number)
 }
 
 export interface ControlChange {
@@ -43,6 +46,8 @@ export interface MIDI {
 
   tracks: Array<Track>
 
+  encode(): string
+  track(name?: string): Track
   toJSON(): MIDI
 }
 
