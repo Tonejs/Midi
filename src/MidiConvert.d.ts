@@ -45,6 +45,7 @@ export interface MIDI {
 	},
 
 	toJSON(): MIDI,
+	encode(): string,
 }
 
 export function parse(raw: ArrayBuffer|string): MIDI;
