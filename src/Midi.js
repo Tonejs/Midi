@@ -2,6 +2,8 @@ import * as Decoder from 'midi-file-parser'
 import * as Encoder from 'jsmidgen'
 import * as Util from './Util'
 import {Track} from './Track'
+import {Control} from './Control'
+import {BinaryInsert} from './BinaryInsert'
 import {parseHeader} from './Header'
 
 /**
@@ -84,6 +86,9 @@ class Midi {
 		//replace the previous tracks
 		this.tracks = []
 
+		// Tempo changes
+		const tempoChanges = []
+
 		midiData.tracks.forEach((trackData, i) => {
 
 			const track = new Track()
@@ -107,6 +112,10 @@ class Midi {
 					track.cc(event.controllerType, absoluteTime, event.value / 127)
 				} else if (event.type === 'meta' && event.subtype === 'instrumentName'){
 					track.instrument = event.text
+				} else if (event.type === 'meta' && event.subtype === 'setTempo'){
+					const newBpm = 60 / (event.microsecondsPerBeat / 1000000)
+					const st = new Control(null, absoluteTime, newBpm)
+					BinaryInsert(tempoChanges, st)
 				} else if (event.type === 'channel' && event.subtype === 'programChange'){
 					track.patch(event.programNumber)
 					track.channelNumber = event.channel
@@ -118,6 +127,9 @@ class Midi {
 				this.header.name = track.name;
 			}
 		})
+
+		// Apply tempo changes
+		this.applyTempoChanges(tempoChanges, this.header.bpm);
 
 		return this
 	}
@@ -232,6 +244,52 @@ class Midi {
 		midi.header = this.header
 		midi.tracks = this.tracks.map((t) => t.slice(startTime, endTime))
 		return midi
+	}
+
+	/**
+	 * Apply tempo changes to the song
+	 * @param {Array} changes All tempo changes
+	 * @param {Number} bpm Initial song BPM
+	 * @returns {Midi} this
+	 */
+	applyTempoChanges(changes, bpm){
+		if (changes.length === 0){
+			return this
+		}
+
+		this.tracks.forEach((track) => {
+			if (track.notes.length === 0){
+				return
+			}
+
+			let oldTime = 0
+			let newTime = 0
+			let index = 0
+			let speed = 1
+
+			track.notes.forEach((note) => {
+				// Note before actual control: continue
+				if (note.time < changes[index].time){
+					return
+				} else {
+					oldTime = changes[index].time
+					speed = bpm / changes[index].value
+				}
+
+				// Note after next control
+				while (changes[index + 1] && (note.time >= changes[index + 1].time)){
+					newTime += (changes[index + 1].time - oldTime) * speed
+					index++
+					oldTime = changes[index].time
+					speed = bpm / changes[index].value
+				}
+
+				note.time = (note.time - oldTime) * speed + newTime
+				note.duration *= speed
+			})
+		})
+
+		return this
 	}
 
 	/**
