@@ -27,7 +27,7 @@ class Midi {
 
 		return midi
 	}
-	
+
 	constructor(){
 
 		this.header = {
@@ -83,42 +83,60 @@ class Midi {
 
 		this.header = parseHeader(midiData)
 
-		//replace the previous tracks
-		this.tracks = []
-
 		// Tempo changes
 		const tempoChanges = []
 
-		midiData.tracks.forEach((trackData, i) => {
+		// Tracks and channel instruments
+		const tracks = []
+		const channelInstruments = []
+
+		midiData.tracks.forEach((trackData) => {
 
 			const track = new Track()
-			track.id = i
-			this.tracks.push(track)
+			tracks.push(track)
 
+			let channel = -1
+			let instrument = -1
 			let absoluteTime = 0
 			trackData.forEach((event) => {
 				absoluteTime += Util.ticksToSeconds(event.deltaTime, this.header)
+				if (event.channel && track.channelNumber === -1) {
+					track.channelNumber = event.channel
+				}
+
 				if (event.type === 'meta' && event.subtype === 'trackName'){
 					track.name = Util.cleanName(event.text)
 				} else if (event.subtype === 'noteOn'){
-					track.noteOn(event.noteNumber, absoluteTime, event.velocity / 127)
-
 					if (track.channelNumber === -1) {
 						track.channelNumber = event.channel
 					}
+					channel = event.channel
+					track.noteOn(event.noteNumber, absoluteTime, event.velocity / 127, channel, (channelInstruments[channel] === undefined)?-1:channelInstruments[channel])
 				} else if (event.subtype === 'noteOff'){
-					track.noteOff(event.noteNumber, absoluteTime)
+					track.noteOff(event.noteNumber, absoluteTime, event.channel)
 				} else if (event.subtype === 'controller' && event.controllerType){
-					track.cc(event.controllerType, absoluteTime, event.value / 127)
+					track.cc(event.controllerType, absoluteTime, event.value / 127, channel, (channelInstruments[channel] === undefined)?-1:channelInstruments[channel])
 				} else if (event.type === 'meta' && event.subtype === 'instrumentName'){
-					track.instrument = event.text
+					channel = event.channel || channel
+					const instrumentTrack = new Track()
+					instrumentTrack.channelNumber = channel
+					instrumentTrack.instrument = event.text
+					instrument = instrumentTrack.instrumentNumber
+					if (track.instrumentNumber === -1) {
+						track.patch(instrument)
+					}
+					channelInstruments[channel] = instrument
 				} else if (event.type === 'meta' && event.subtype === 'setTempo'){
 					const newBpm = 60 / (event.microsecondsPerBeat / 1000000)
 					const st = new Control(null, absoluteTime, newBpm)
 					BinaryInsert(tempoChanges, st)
 				} else if (event.type === 'channel' && event.subtype === 'programChange'){
-					track.patch(event.programNumber)
-					track.channelNumber = event.channel
+					if (track.instrumentNumber === -1) {
+						track.patch(event.programNumber)
+					}
+					instrument = event.programNumber
+					channel = event.channel
+					channelInstruments[channel] = instrument
 				}
 			})
 
@@ -126,6 +144,69 @@ class Midi {
 			if (!this.header.name && !track.length && track.name) {
 				this.header.name = track.name;
 			}
+		})
+
+		//replace the previous tracks
+		this.tracks = []
+
+		// Split mixed tracks into 1 track per channel and instrument
+		tracks.forEach((mixedTrack) => {
+			const subTracks = []
+			const getSubtrack = (channel, instrument) => {
+				if (subTracks[channel] === undefined) {
+					subTracks[channel] = []
+				}
+				if (subTracks[channel][instrument] === undefined) {
+					subTracks[channel][instrument] = new Track(mixedTrack.name, instrument, channel)
+					subTracks[channel][instrument].midiType = midiData.header.formatType
+				}
+				return subTracks[channel][instrument]
+			}
+
+			// Add notes to sub tracks
+			mixedTrack.notes.forEach((note) => {
+				if (note.channel === -1) {
+					note.channel = mixedTrack.channelNumber
+				}
+				if (note.instrument === -1) {
+					note.instrument = mixedTrack.instrumentNumber
+					if (note.instrument === -1) {
+						note.instrument = 0
+					}
+				}
+				getSubtrack(note.channel, note.instrument).notes.push(note)
+			})
+
+			// Add controls to sub tracks
+			Object.keys(mixedTrack.controlChanges).forEach((controlType) => {
+				mixedTrack.controlChanges[controlType].forEach((cc) => {
+					if (cc.channel === -1) {
+						cc.channel = mixedTrack.channelNumber
+					}
+					if (cc.instrument === -1) {
+						cc.instrument = mixedTrack.instrumentNumber
+						// Drums track without proper instrument set
+						if (cc.instrument === -1) {
+							cc.instrument = 0
+						}
+					}
+					const trackCc = getSubtrack(cc.channel, cc.instrument).controlChanges
+					if (trackCc[controlType] === undefined) {
+						trackCc[controlType] = []
+					}
+					trackCc[controlType].push(cc)
+				})
+			})
+
+			// Insert sub tracks
+			let trackId = 0
+			subTracks.forEach((channelTracks) => {
+				channelTracks.forEach((track) => {
+					track.id = trackId
+					this.tracks.push(track)
+					trackId++
+				})
+			})
 		})
 
 		// Apply tempo changes

@@ -15,7 +15,7 @@ class Track {
 		var track = new Track(json.name, json.instrumentNumber, json.channelNumber )
 
 		track.id = json.id
-		
+
 		if (json.notes) {
 			json.notes.forEach((note) => {
 				var newNote = Note.fromJSON(note)
@@ -29,7 +29,7 @@ class Track {
 
 		return track
 	}
-	
+
 	constructor(name, instrumentNumber=-1, channel=-1){
 
 		/**
@@ -61,6 +61,12 @@ class Track {
 		 * @type {Number}
 		 */
 		this.instrumentNumber = instrumentNumber
+
+		/**
+		 * MIDI type
+		 * @type {Number}
+		 */
+		this.midiType = 1
 	}
 
 	note(midi, time, duration=0, velocity=1){
@@ -75,10 +81,12 @@ class Track {
 	 *                                  Pitch Notation like ('C#4')
 	 * @param  {Number} time     The time in seconds
 	 * @param  {Number} velocity The velocity value 0-1
+	 * @param  {Number} channel
+	 * @param  {Number} instrument
 	 * @return {Track} this
 	 */
-	noteOn(midi, time, velocity=1){
-		const note = new Note(midi, time, 0, velocity)
+	noteOn(midi, time, velocity=1, channel, instrument){
+		const note = new Note(midi, time, 0, velocity, channel, instrument)
 		BinaryInsert(this.notes, note)
 		return this
 	}
@@ -88,12 +96,13 @@ class Track {
 	 * noteOn event with the same pitch.
 	 * @param  {String|Number} midi The midi number or note name.
 	 * @param  {Number} time The time of the event in seconds
+	 * @param  {Number} channel
 	 * @return {Track} this
 	 */
-	noteOff(midi, time){
+	noteOff(midi, time, channel){
 		for (let i = 0; i < this.notes.length; i++){
 			let note = this.notes[i]
-			if (note.match(midi) && note.duration === 0){
+			if (note.match(midi) && note.channel === channel && note.duration === 0){
 				note.noteOff = time
 				break;
 			}
@@ -106,13 +115,15 @@ class Track {
 	 * @param  {Number} num The CC number
 	 * @param  {Number} time The time of the event in seconds
 	 * @param  {Number} value The value of the CC
+	 * @param  {Number} channel
+	 * @param  {Number} instrument
 	 * @return {Track} this
 	 */
-	cc(num, time, value){
+	cc(num, time, value, channel, instrument){
 		if (!this.controlChanges.hasOwnProperty(num)){
 			this.controlChanges[num] = []
 		}
-		const cc = new Control(num, time, value)
+		const cc = new Control(num, time, value, channel, instrument)
 		BinaryInsert(this.controlChanges[num], cc)
 		return this
 	}
@@ -229,7 +240,11 @@ class Track {
 	 * @type {Boolean}
 	 */
 	get isPercussion() {
-		return [0x9, 0xA].includes(this.channelNumber)
+		if (this.midiType === 2) {
+			return [0x9, 0xA].includes(this.channelNumber)
+		} else {
+			return [0x9].includes(this.channelNumber)
+		}
 	}
 
 	/**
@@ -337,8 +352,13 @@ class Track {
 		if (this.notes.length)
 			ret.notes = this.notes.map((n) => n.toJSON())
 
-		if (Object.keys(this.controlChanges).length)
-			ret.controlChanges = this.controlChanges
+		if (Object.keys(this.controlChanges).length) {
+			ret.controlChanges = {}
+			Object.keys(this.controlChanges).forEach((controlType) => {
+				ret.controlChanges[controlType] = []
+				this.controlChanges[controlType].forEach((cc) => ret.controlChanges[controlType].push(cc.toJSON()))
+			})
+		}
 
 		return ret
 	}

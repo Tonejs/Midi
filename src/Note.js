@@ -11,8 +11,8 @@ class Note{
 		var note = new Note(json.midi, json.time, json.duration, json.velocity)
 		return note
 	}
-	
-	constructor(midi, time, duration=0, velocity=1){
+
+	constructor(midi, time, duration=0, velocity=1, channel, instrument){
 
 		/**
 		 * The MIDI note number
@@ -43,6 +43,18 @@ class Note{
 		 * @type {Number}
 		 */
 		this.velocity = velocity
+
+		/**
+		 * The channel
+		 * @type {Number}
+		 */
+		this.channel = channel
+
+		/**
+		 * The instrument number
+		 * @type {Number}
+		 */
+		this.instrument = instrument
 	}
 
 	/**

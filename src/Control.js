@@ -15,13 +15,17 @@ const channelNames = {
 }
 
 class Control{
-	constructor(number, time, value){
+	constructor(number, time, value, channel = -1, instrument = -1){
 
 		this.number = number
 
 		this.time = time
 
 		this.value = value
+
+		this.channel = channel
+
+		this.instrument = instrument
 	}
 
 	/**
@@ -32,6 +36,18 @@ class Control{
 	get name(){
 		if (channelNames.hasOwnProperty(this.number)){
 			return channelNames[this.number]
+		}
+	}
+
+	/**
+	 * Convert the control change to JSON
+	 * @returns {Object}
+	 */
+	toJSON(){
+		return {
+			number : this.number,
+			time : this.time,
+			value : this.value
 		}
 	}
 }
