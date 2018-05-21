@@ -46,6 +46,7 @@ export interface MIDI {
 
 	toJSON(): MIDI,
 	encode(): string,
+  toArray(): Uint8Array,
 }
 
 export function parse(raw: ArrayBuffer|string): MIDI;
