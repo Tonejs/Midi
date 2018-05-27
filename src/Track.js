@@ -297,9 +297,9 @@ class Track {
 			trackEncoder.instrument(channelNumber, this.instrumentNumber)
 		}
 
-		Merge(this.noteOns, (noteOn) => {
+		Merge(this.noteOns.sort((a, b) => a.time - b.time), (noteOn) => {
 			trackEncoder.addNoteOn(channelNumber, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127))
-		}, this.noteOffs, (noteOff) => {
+		}, this.noteOffs.sort((a, b) => a.time - b.time), (noteOff) => {
 			trackEncoder.addNoteOff(channelNumber, noteOff.name, getDeltaTime(noteOff.time))
 		})
 	}
