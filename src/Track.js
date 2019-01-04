@@ -3,6 +3,7 @@ import {Control} from './Control'
 import {Merge} from './Merge'
 import {Note} from './Note'
 import {instrumentByPatchID, instrumentFamilyByID, drumKitByPatchID} from './instrumentMaps'
+import * as Encoder from 'jsmidgen';
 
 class Track {
 /**
@@ -15,7 +16,7 @@ class Track {
 		var track = new Track(json.name, json.instrumentNumber, json.channelNumber )
 
 		track.id = json.id
-		
+
 		if (json.notes) {
 			json.notes.forEach((note) => {
 				var newNote = Note.fromJSON(note)
@@ -29,7 +30,7 @@ class Track {
 
 		return track
 	}
-	
+
 	constructor(name, instrumentNumber=-1, channel=-1){
 
 		/**
@@ -295,6 +296,28 @@ class Track {
 
 		if (this.instrumentNumber !== -1) {
 			trackEncoder.instrument(channelNumber, this.instrumentNumber)
+		}
+
+		const controlChangeKeys = Object.keys(this.controlChanges);
+
+		if (controlChangeKeys.length) {
+			const NB_MIDI_MESSAGES = 127;
+			let time = 0;
+
+			for (let key of controlChangeKeys) {
+				for (let control of this.controlChanges[key]) {
+					let midiEvent = new Encoder.Event({
+						type: Encoder.Event.CONTROLLER,
+						channel: channelNumber,
+						param1: 64,
+						param2: control.value * NB_MIDI_MESSAGES,
+						time: control.time - time
+					});
+					time += control.time - time;
+
+					trackEncoder.events.push(midiEvent)
+				}
+			}
 		}
 
 		Merge(this.noteOns.sort((a, b) => a.time - b.time), (noteOn) => {
