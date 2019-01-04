@@ -309,7 +309,7 @@ class Track {
 					let midiEvent = new Encoder.Event({
 						type: Encoder.Event.CONTROLLER,
 						channel: channelNumber,
-						param1: 64,
+						param1: control.number,
 						param2: control.value * NB_MIDI_MESSAGES,
 						time: control.time - time
 					});
