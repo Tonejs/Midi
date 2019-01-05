@@ -1,9 +1,9 @@
-import {BinaryInsert} from './BinaryInsert'
-import {Control} from './Control'
-import {Merge} from './Merge'
-import {Note} from './Note'
-import {instrumentByPatchID, instrumentFamilyByID, drumKitByPatchID} from './instrumentMaps'
 import * as Encoder from 'jsmidgen';
+import { BinaryInsert } from './BinaryInsert';
+import { Control } from './Control';
+import { drumKitByPatchID, instrumentByPatchID, instrumentFamilyByID } from './instrumentMaps';
+import { Merge } from './Merge';
+import { Note } from './Note';
 
 class Track {
 /**
@@ -279,7 +279,7 @@ class Track {
 	/**
 	 * Write the output to the stream
 	 */
-	encode(trackEncoder, header){
+	encode (trackEncoder, header) {
 
 		const ticksPerSecond = header.PPQ / (60 / header.bpm)
 		let lastEventTime = 0
@@ -287,7 +287,7 @@ class Track {
 		// unset, `channelNumber` defaults to -1, but that's not a valid MIDI channel
 		const channelNumber = Math.max(0, this.channelNumber)
 
-		function getDeltaTime(time){
+		function getDeltaTime (time) {
 			const ticks = Math.floor(ticksPerSecond * time)
 			const delta = Math.max(ticks - lastEventTime, 0)
 			lastEventTime = ticks
@@ -299,32 +299,32 @@ class Track {
 		}
 
 		const controlChangeKeys = Object.keys(this.controlChanges);
+		const controlChangesMergeInfo = [];
+		const NB_MIDI_MESSAGES = 127;
 
-		if (controlChangeKeys.length) {
-			const NB_MIDI_MESSAGES = 127;
-			let time = 0;
+		for (let key of controlChangeKeys) {
+			let array = this.controlChanges[ key ].sort((a, b) => a.time - b.time);
 
-			for (let key of controlChangeKeys) {
-				for (let control of this.controlChanges[key]) {
-					let midiEvent = new Encoder.Event({
-						type: Encoder.Event.CONTROLLER,
-						channel: channelNumber,
-						param1: control.number,
-						param2: control.value * NB_MIDI_MESSAGES,
-						time: control.time - time
-					});
-					time += control.time - time;
+			let encoderCallback = (control) => {
+				let midiEvent = new Encoder.Event({
+					type: Encoder.Event.CONTROLLER,
+					channel: channelNumber,
+					param1: control.number,
+					param2: control.value * NB_MIDI_MESSAGES,
+					time: getDeltaTime(control.time)
+				});
 
-					trackEncoder.events.push(midiEvent)
-				}
-			}
+				trackEncoder.events.push(midiEvent)
+			};
+
+			controlChangesMergeInfo.push(array, encoderCallback);
 		}
 
 		Merge(this.noteOns.sort((a, b) => a.time - b.time), (noteOn) => {
 			trackEncoder.addNoteOn(channelNumber, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127))
 		}, this.noteOffs.sort((a, b) => a.time - b.time), (noteOff) => {
 			trackEncoder.addNoteOff(channelNumber, noteOff.name, getDeltaTime(noteOff.time))
-		})
+		}, ...controlChangesMergeInfo);
 	}
 
 	/**
@@ -367,4 +367,5 @@ class Track {
 	}
 }
 
-export {Track}
+export { Track };
+
