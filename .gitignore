@@ -6,3 +6,4 @@ coverage/**
 
 TODO.txt
 **.js.map
+/nbproject/private/

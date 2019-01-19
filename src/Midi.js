@@ -98,10 +98,22 @@ class Midi {
 			let channel = -1
 			let instrument = -1
 			let absoluteTime = 0
+
+			const channelCC = []
+			const channelPitchBendRange = []
+
 			trackData.forEach((event) => {
 				absoluteTime += Util.ticksToSeconds(event.deltaTime, this.header)
 				if (event.channel && track.channelNumber === -1) {
 					track.channelNumber = event.channel
+				}
+
+				// Keep track of current channel ControlChange
+				if (event.type === 'channel' && event.subtype === 'controller' && event.controllerType){
+					if (channelCC[event.channel] === undefined){
+						channelCC[event.channel] = {}
+					}
+					channelCC[event.channel][event.controllerType] = event.value
 				}
 
 				if (event.type === 'meta' && event.subtype === 'trackName'){
@@ -111,11 +123,19 @@ class Midi {
 						track.channelNumber = event.channel
 					}
 					channel = event.channel
-					track.noteOn(event.noteNumber, absoluteTime, event.velocity / 127, channel, (channelInstruments[channel] === undefined)?-1:channelInstruments[channel])
+					instrument = (channelInstruments[channel] === undefined)?-1:channelInstruments[channel]
+					track.noteOn(event.noteNumber, absoluteTime, event.velocity / 127, channel, instrument)
 				} else if (event.subtype === 'noteOff'){
 					track.noteOff(event.noteNumber, absoluteTime, event.channel)
 				} else if (event.subtype === 'controller' && event.controllerType){
-					track.cc(event.controllerType, absoluteTime, event.value / 127, channel, (channelInstruments[channel] === undefined)?-1:channelInstruments[channel])
+					channel = event.channel
+					instrument = (channelInstruments[channel] === undefined)?-1:channelInstruments[channel]
+					track.cc(event.controllerType, absoluteTime, event.value / 127, channel, instrument)
+
+					// Change pitch bend range
+					if (event.controllerType === 6 && channelCC[event.channel] && !channelCC[event.channel][100] && channelCC[event.channel][101] === 0) {
+						channelPitchBendRange[event.channel] = event.value
+					}
 				} else if (event.type === 'meta' && event.subtype === 'instrumentName'){
 					channel = event.channel || channel
 					const instrumentTrack = new Track()
@@ -137,6 +157,12 @@ class Midi {
 					instrument = event.programNumber
 					channel = event.channel
 					channelInstruments[channel] = instrument
+				} else if (event.type === 'channel' && event.subtype === 'pitchBend'){
+					let pitchBendRange = channelPitchBendRange[event.channel] || 2
+					let pitchBendValue = pitchBendRange * (event.value - 8192) / 8192
+					channel = event.channel
+					instrument = (channelInstruments[channel] === undefined)?-1:channelInstruments[channel]
+					track.cc(event.subtype, absoluteTime, pitchBendValue, channel, instrument)
 				}
 			})
 
@@ -148,6 +174,7 @@ class Midi {
 
 		//replace the previous tracks
 		this.tracks = []
+		let trackId = 0
 
 		// Split mixed tracks into 1 track per channel and instrument
 		tracks.forEach((mixedTrack) => {
@@ -199,7 +226,6 @@ class Midi {
 			})
 
 			// Insert sub tracks
-			let trackId = 0
 			subTracks.forEach((channelTracks) => {
 				channelTracks.forEach((track) => {
 					track.id = trackId
@@ -338,8 +364,8 @@ class Midi {
 			return this
 		}
 
-		this.tracks.forEach((track) => {
-			if (track.notes.length === 0){
+		const applyTempo = function(elements) {
+			if (elements.length === 0){
 				return
 			}
 
@@ -348,9 +374,9 @@ class Midi {
 			let index = 0
 			let speed = 1
 
-			track.notes.forEach((note) => {
+			elements.forEach((element) => {
 				// Note before actual control: continue
-				if (note.time < changes[index].time){
+				if (element.time < changes[index].time){
 					return
 				} else {
 					oldTime = changes[index].time
@@ -358,15 +384,25 @@ class Midi {
 				}
 
 				// Note after next control
-				while (changes[index + 1] && (note.time >= changes[index + 1].time)){
+				while (changes[index + 1] && (element.time >= changes[index + 1].time)){
 					newTime += (changes[index + 1].time - oldTime) * speed
 					index++
 					oldTime = changes[index].time
 					speed = bpm / changes[index].value
 				}
 
-				note.time = (note.time - oldTime) * speed + newTime
-				note.duration *= speed
+				element.time = (element.time - oldTime) * speed + newTime
+
+				if (element.duration !== undefined) {
+					element.duration *= speed
+				}
+			})
+		}
+
+		this.tracks.forEach((track) => {
+			applyTempo(track.notes)
+			Object.keys(track.controlChanges).forEach(function(k) {
+				applyTempo(track.controlChanges[k]);
 			})
 		})
 
