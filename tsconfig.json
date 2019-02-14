@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": false,
+		"noEmit" : true,
+		"checkJs": true,
+		"allowJs": true,
+		"target" : "es5",
+		"lib" : ["es2015", "es2017", "dom"],
+		"types": [
+			"node",
+			"mocha"
+		]
+	},
+	"include": [
+		"src/*.js",
+		"test/*.js"
+	],
+	"exclude": [
+		"node_modules",
+		"**/*.spec.ts"
+	]
+}

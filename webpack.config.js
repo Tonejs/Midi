@@ -1,38 +1,29 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
-	'context': __dirname,
-	entry: {
-		'MidiConvert': './src/MidiConvert.js',
+	context : __dirname,
+	entry : {
+		Midi : './src/Midi.js',
 	},
-	output: {
-		path: path.resolve(__dirname, "build"),
-		filename: '[name].js',
+	output : {
+		path : path.resolve(__dirname, 'build'),
+		filename : '[name].js',
 		sourceMapFilename : '[file].map',
-		library : 'MidiConvert',
+		library : 'Midi',
+		libraryExport : 'Midi',
 		libraryTarget : 'umd'
 	},
-	module: {
-	  rules: [
-	    {
-	      test: /\.js$/,
-	      exclude: /(node_modules|bower_components)/,
-	      use: {
-	        loader: 'babel-loader',
-	        options: {
-	          presets: [
-	          	[
-	          	'es2015',
-		            {
-	                "modules": false
-		            }
-	            ],
-						]
-	        }
-	      }
-	    }
-	  ]
+	module : {
+		rules : [
+			{
+				test : /\.js$/,
+				exclude : /(node_modules)/,
+				use : {
+					loader : 'babel-loader',
+				}
+			}
+		]
 	},
-	devtool: '#source-map'
-};
+	devtool : '#source-map'
+}
