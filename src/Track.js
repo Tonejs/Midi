@@ -1,371 +1,172 @@
-import * as Encoder from 'jsmidgen';
-import { BinaryInsert } from './BinaryInsert';
-import { Control } from './Control';
-import { drumKitByPatchID, instrumentByPatchID, instrumentFamilyByID } from './instrumentMaps';
-import { Merge } from './Merge';
-import { Note } from './Note';
+import { Note } from './Note'
+import { ControlChange } from './ControlChange'
+import { insert } from './BinarySearch'
+import { Header } from './Header'
+import { Instrument } from './Instrument'
+import { ControlChanges } from './ControlChanges'
 
-class Track {
+const privateHeaderMap = new WeakMap()
+
 /**
-	 * Convert JSON to Track object
-	 * @param {object} json
-	 * @static
-	 * @returns {Track}
+ * @typedef MidiEvent
+ * @property {string} type
+ * @property {number=} velocity
+ * @property {number} absoluteTime
+ * @property {number=} noteNumber
+ * @property {string=} text
+ * @property {number=} controllerType
+ * @property {number} value
+ */
+
+/**
+ * @typedef {Array<MidiEvent>} TrackData
+ */
+
+/**
+ * A Track is a collection of notes and controlChanges
+ */
+export class Track {
+	/**
+	 * @param {TrackData} trackData
+	 * @param {Header} header
 	 */
-	static fromJSON(json){
-		var track = new Track(json.name, json.instrumentNumber, json.channelNumber )
+	constructor(trackData, header){
 
-		track.id = json.id
+		privateHeaderMap.set(this, header)
 
-		if (json.notes) {
-			json.notes.forEach((note) => {
-				var newNote = Note.fromJSON(note)
-				track.notes.push(newNote)
-			})
+		/** @type {string} */
+		this.name = ''
+
+		if (trackData){
+			const nameEvent = trackData.find(e => e.type === 'trackName')
+			this.name = nameEvent ? nameEvent.text : ''
 		}
 
-		if (json.controlChanges) {
-			track.controlChanges = json.controlChanges
-		}
-
-		return track
-	}
-
-	constructor(name, instrumentNumber=-1, channel=-1){
-
-		/**
-		 * The name of the track
-		 * @type {String}
-		 */
-		this.name = name
-
-		/**
-		 * The MIDI channel of the track
-		 * @type {number}
-		 */
-		this.channelNumber = channel
-
-		/**
-		 * The note events
-		 * @type {Array}
-		 */
+		/** @type {Instrument} */
+		this.instrument = new Instrument(trackData, this)
+		
+		/** @type {Array<Note>} */
 		this.notes = []
 
-		/**
-		 * The control changes
-		 * @type {Object}
-		 */
-		this.controlChanges = {}
+		/** @type {number} */
+		this.channel = 0
 
-		/**
-		 * The MIDI patch ID of the instrument. -1 if none is set.
-		 * @type {Number}
-		 */
-		this.instrumentNumber = instrumentNumber
-	}
+		/** @type {Object<string,Array<ControlChange>>} */
+		this.controlChanges = ControlChanges()
 
-	note(midi, time, duration=0, velocity=1){
-		const note = new Note(midi, time, duration, velocity)
-		BinaryInsert(this.notes, note)
-		return this
-	}
-
-	/**
-	 * Add a note on event
-	 * @param  {Number|String} midi     The midi note as either a midi number or
-	 *                                  Pitch Notation like ('C#4')
-	 * @param  {Number} time     The time in seconds
-	 * @param  {Number} velocity The velocity value 0-1
-	 * @return {Track} this
-	 */
-	noteOn(midi, time, velocity=1){
-		const note = new Note(midi, time, 0, velocity)
-		BinaryInsert(this.notes, note)
-		return this
-	}
-
-	/**
-	 * Add a note off event. Go through and find an unresolved
-	 * noteOn event with the same pitch.
-	 * @param  {String|Number} midi The midi number or note name.
-	 * @param  {Number} time The time of the event in seconds
-	 * @return {Track} this
-	 */
-	noteOff(midi, time){
-		for (let i = 0; i < this.notes.length; i++){
-			let note = this.notes[i]
-			if (note.match(midi) && note.duration === 0){
-				note.noteOff = time
-				break;
+		if (trackData){
+			const noteOns = trackData.filter(event => event.type === 'noteOn')
+			const noteOffs = trackData.filter(event => event.type === 'noteOff')
+			while (noteOns.length){
+				const currentNote = noteOns.shift()
+				//find the corresponding note off
+				const offIndex = noteOffs.findIndex(note => note.noteNumber === currentNote.noteNumber)
+				if (offIndex !== -1){
+					//once it's got the note off, add it
+					const noteOff = noteOffs.splice(offIndex, 1)[0]
+					this.addNote({
+						midi : currentNote.noteNumber,
+						ticks : currentNote.absoluteTime,
+						velocity : currentNote.velocity / 127,
+						durationTicks : noteOff.absoluteTime - currentNote.absoluteTime,
+						noteOffVelocity : noteOff.velocity / 127
+					})
+				}
 			}
-		}
-		return this
-	}
 
-	/**
-	 * Add a CC event
-	 * @param  {Number} num The CC number
-	 * @param  {Number} time The time of the event in seconds
-	 * @param  {Number} value The value of the CC
-	 * @return {Track} this
-	 */
-	cc(num, time, value){
-		if (!this.controlChanges.hasOwnProperty(num)){
-			this.controlChanges[num] = []
-		}
-		const cc = new Control(num, time, value)
-		BinaryInsert(this.controlChanges[num], cc)
-		return this
-	}
-
-	/**
-	 * Sets instrumentNumber.
-	 * For a list of possible values, see the [General MIDI Instrument Patch Map](https://www.midi.org/specifications/item/gm-level-1-sound-set)
-	 * @param  {Number} id The Patch ID for this instrument, as specified in the General MIDI Instrument Patch Map
-	 */
-	patch(id){
-		this.instrumentNumber = id
-		return this
-	}
-
-	/**
-	 * Sets channelNumber.
-	 * @param  {Number} id The MIDI channel number, between 0 and 0xF.  0x9 and 0xA are percussion
-	 */
-	channel(id){
-		this.channelNumber = id
-		return this
-	}
-
-	/**
-	 * An array of all the note on events
-	 * @type {Array<Object>}
-	 * @readOnly
-	 */
-	get noteOns(){
-		const noteOns = []
-		this.notes.forEach((note) => {
-			noteOns.push({
-				time : note.noteOn,
-				midi : note.midi,
-				name : note.name,
-				velocity : note.velocity
+			const controlChanges = trackData.filter(event => event.type === 'controller')
+			controlChanges.forEach(event => {
+				this.addCC({
+					number : event.controllerType,
+					value : event.value / 127,
+					ticks : event.absoluteTime
+				})
 			})
-		})
-		return noteOns
-	}
 
-	/**
-	 * An array of all the noteOff events
-	 * @type {Array<Object>}
-	 * @readOnly
-	 */
-	get noteOffs(){
-		const noteOffs = []
-		this.notes.forEach((note) => {
-			noteOffs.push({
-				time : note.noteOff,
-				midi : note.midi,
-				name : note.name
-			})
-		})
-		return noteOffs
-	}
-
-	/**
-	 * The length in seconds of the track
-	 * @type {Number}
-	 */
-	get length() {
-		return this.notes.length
-	}
-
-	/**
-	 * The time of the first event in seconds
-	 * @type {Number}
-	 */
-	get startTime() {
-		if (this.notes.length){
-			let firstNote = this.notes[0]
-			return firstNote.noteOn
-		} else {
-			return 0
 		}
+		
 	}
 
 	/**
-	 * The time of the last event in seconds
-	 * @type {Number}
+	 * @typedef NoteParameters
+	 * @property {number=} time
+	 * @property {number=} ticks
+	 * @property {number=} duration
+	 * @property {number=} durationTicks
+	 * @property {number=} midi
+	 * @property {string=} pitch
+	 * @property {number=} octave
+	 * @property {string=} name
+	 * @property {number=} noteOffVelocity
+	 * @property {number} [velocity=1]
+	 * @property {number} [channel=1]
 	 */
-	get duration() {
-		if (this.notes.length){
-			let lastNote = this.notes[this.notes.length - 1]
-			return lastNote.noteOff
-		} else {
-			return 0
-		}
-	}
 
 	/**
-	 * The name of the midi instrument
-	 * @type {String}
+	 * Add a note to the notes array
+	 * @param {NoteParameters} props The note properties to add
+	 * @returns {Track} this
 	 */
-	get instrument() {
-		if (this.isPercussion){
-			return drumKitByPatchID[this.instrumentNumber]
-		} else {
-			return instrumentByPatchID[this.instrumentNumber]
-		}
-	}
-	set instrument(inst) {
-		const index = instrumentByPatchID.indexOf(inst)
-		if (index !== -1){
-			this.instrumentNumber = index
-		}
-	}
-
-
-	/**
-	 * Whether or not this is a percussion track
-	 * @type {Boolean}
-	 */
-	get isPercussion() {
-		return [0x9, 0xA].includes(this.channelNumber)
-	}
-
-	/**
-	 * The family that the instrument belongs to
-	 * @type {String}
-	 * @readOnly
-	 */
-	get instrumentFamily() {
-		if (this.isPercussion){
-			return 'drums'
-		} else {
-			return instrumentFamilyByID[Math.floor(this.instrumentNumber / 8)]
-		}
-	}
-
-	/**
-	 * Scale the timing of all the events in the track
-	 * @param {Number} amount The amount to scale all the values
-	 */
-	scale(amount){
-		this.notes.forEach((note) => {
-			note.time *= amount
-			note.duration *= amount
-		})
+	addNote(props={}){
+		const header = privateHeaderMap.get(this)
+		const note = new Note({ 
+			midi : 0,
+			ticks : 0, 
+			velocity : 1,
+		}, { 
+			ticks : 0, 
+			velocity : 0
+		}, header)
+		Object.assign(note, props)
+		insert(this.notes, note, 'ticks')
 		return this
 	}
 
 	/**
-	 * Slice returns a new track with only events that occured between startTime and endTime.
-	 * Modifies this track.
-	 * @param {Number} startTime
-	 * @param {Number} endTime
-	 * @returns {Track}
+	 * @typedef CCParameters
+	 * @property {number=} time
+	 * @property {number=} ticks
+	 * @property {number} value
+	 * @property {number} number
 	 */
-	slice(startTime=0, endTime=this.duration){
-		// get the index before the startTime
-		const noteStartIndex = Math.max(this.notes.findIndex((note) => note.time >= startTime), 0)
-		const noteEndIndex = this.notes.findIndex((note) => note.noteOff >= endTime) + 1
-		const track = new Track(this.name)
-		track.notes = this.notes.slice(noteStartIndex, noteEndIndex)
-		//shift the start time
-		track.notes.forEach((note) => note.time = note.time - startTime)
-		return track
+	
+	/**
+	 * Add a control change to the track
+	 * @param {CCParameters} props
+	 * @returns {Track} this
+	 */
+	addCC(props){
+		const header = privateHeaderMap.get(this)
+		const cc = new ControlChange({
+			controllerType : props.number
+		}, header)
+		delete props.number
+		Object.assign(cc, props)
+		if (!Array.isArray(this.controlChanges[cc.number])){
+			this.controlChanges[cc.number] = []
+		}
+		insert(this.controlChanges[cc.number], cc, 'ticks')
+		return this
 	}
 
 	/**
-	 * Write the output to the stream
-	 */
-	encode (trackEncoder, header) {
-
-		const ticksPerSecond = header.PPQ / (60 / header.bpm)
-		let lastEventTime = 0
-
-		// unset, `channelNumber` defaults to -1, but that's not a valid MIDI channel
-		const channelNumber = Math.max(0, this.channelNumber)
-
-		function getDeltaTime (time) {
-			const ticks = Math.floor(ticksPerSecond * time)
-			const delta = Math.max(ticks - lastEventTime, 0)
-			lastEventTime = ticks
-			return delta
-		}
-
-		if (this.instrumentNumber !== -1) {
-			trackEncoder.instrument(channelNumber, this.instrumentNumber)
-		}
-
-		const controlChangeKeys = Object.keys(this.controlChanges);
-		const controlChangesMergeInfo = [];
-		const NB_MIDI_MESSAGES = 127;
-
-		for (let key of controlChangeKeys) {
-			let array = this.controlChanges[ key ].sort((a, b) => a.time - b.time);
-
-			let encoderCallback = (control) => {
-				let midiEvent = new Encoder.Event({
-					type: Encoder.Event.CONTROLLER,
-					channel: channelNumber,
-					param1: control.number,
-					param2: control.value * NB_MIDI_MESSAGES,
-					time: getDeltaTime(control.time)
-				});
-
-				trackEncoder.events.push(midiEvent)
-			};
-
-			controlChangesMergeInfo.push(array, encoderCallback);
-		}
-
-		Merge(this.noteOns.sort((a, b) => a.time - b.time), (noteOn) => {
-			trackEncoder.addNoteOn(channelNumber, noteOn.name, getDeltaTime(noteOn.time), Math.floor(noteOn.velocity * 127))
-		}, this.noteOffs.sort((a, b) => a.time - b.time), (noteOff) => {
-			trackEncoder.addNoteOff(channelNumber, noteOff.name, getDeltaTime(noteOff.time))
-		}, ...controlChangesMergeInfo);
-	}
-
-	/**
-	 *  Convert all of the fields to JSON
-	 *  @return  {Object}
+	 * @returns {Object}
 	 */
 	toJSON(){
 
-		const ret = {
-			startTime: this.startTime,
-			duration: this.duration,
-			length: this.length,
-			notes: [],
-			controlChanges: {},
+		//convert all the CCs to JSON
+		const controlChanges = {}
+		for (let i = 0; i < 127; i++){
+			if (this.controlChanges.hasOwnProperty(i)){
+				controlChanges[i] = this.controlChanges[i].map(c => c.toJSON())
+			}
 		}
-
-		if (typeof this.id !== 'undefined')
-			ret.id = this.id
-
-		ret.name = this.name
-
-		if (this.instrumentNumber !== -1){
-			ret.instrumentNumber = this.instrumentNumber
-			ret.instrument = this.instrument
-			ret.instrumentFamily = this.instrumentFamily
+		return {
+			name : this.name,
+			channel : this.channel,
+			instrument : this.instrument.toJSON(),
+			notes : this.notes.map(n => n.toJSON()),
+			controlChanges, 
 		}
-
-		if (this.channelNumber !== -1){
-			ret.channelNumber = this.channelNumber
-			ret.isPercussion = this.isPercussion
-		}
-
-		if (this.notes.length)
-			ret.notes = this.notes.map((n) => n.toJSON())
-
-		if (Object.keys(this.controlChanges).length)
-			ret.controlChanges = this.controlChanges
-
-		return ret
 	}
 }
-
-export { Track };
-

@@ -1,109 +1,206 @@
-import * as Util from './Util'
+import { Header } from './Header'
+import { search } from './BinarySearch'
 
-class Note{
+/**
+ * @param {number} midi 
+ * @returns {string}
+ */
+function midiToPitch(midi){
+	const octave = Math.floor(midi / 12) - 1
+	return midiToPitchClass(midi) + octave.toString()
+}
+
+/**
+ * @param {number} midi 
+ * @returns {string}
+ */
+function midiToPitchClass(midi){
+	const scaleIndexToNote = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+	const note = midi % 12
+	return scaleIndexToNote[note]
+}
+
+/**
+ * @param {string} pitch 
+ * @returns {number}
+ */
+function pitchClassToMidi(pitch){
+	const scaleIndexToNote = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+	return scaleIndexToNote.indexOf(pitch)
+}
+
+/**
+ * @type {function}
+ */
+const pitchToMidi = (function(){
+	const regexp = /^([a-g]{1}(?:b|#|x|bb)?)(-?[0-9]+)/i
+	const noteToScaleIndex = {
+		cbb : -2, cb : -1, c : 0, 'c#' : 1, cx : 2,
+		dbb : 0, db : 1, d : 2, 'd#' : 3, dx : 4,
+		ebb : 2, eb : 3, e : 4, 'e#' : 5, ex : 6,
+		fbb : 3, fb : 4, f : 5, 'f#' : 6, fx : 7,
+		gbb : 5, gb : 6, g : 7, 'g#' : 8, gx : 9,
+		abb : 7, ab : 8, a : 9, 'a#' : 10, ax : 11,
+		bbb : 9, bb : 10, b : 11, 'b#' : 12, bx : 13,
+	}
+	return (note) => {
+		const split = regexp.exec(note)
+		const pitch = split[1]
+		const octave = split[2]
+		const index = noteToScaleIndex[pitch.toLowerCase()]
+		return index + (parseInt(octave) + 1) * 12
+	}
+}())
+
+/**
+ * @typedef NoteOnEvent
+ * @property {number} ticks
+ * @property {number} velocity
+ * @property {number} midi
+ */
+
+/**
+ * @typedef NoteOffEvent
+ * @property {number} ticks
+ * @property {number} velocity
+ */
+
+/**
+ * @private
+ * @type {WeakMap<Note, Header>}
+ */
+const privateHeaderMap = new WeakMap()
+
+/**
+ * A Note consists of a noteOn and noteOff event
+ */
+export class Note {
 	/**
-	 * Convert JSON to Note object
-	 * @param {object} json
-	 * @static
-	 * @returns {Note}
+	 * @param {NoteOnEvent} noteOn
+	 * @param {NoteOffEvent} noteOff
+	 * @param {Header} header
 	 */
-	static fromJSON(json) {
-		var note = new Note(json.midi, json.time, json.duration, json.velocity)
-		return note
-	}
-	
-	constructor(midi, time, duration=0, velocity=1){
+	constructor(noteOn, noteOff, header){
+
+		privateHeaderMap.set(this, header)
+
+		/** 
+		 * The notes midi value
+		 * @type {number} 
+		 */
+		this.midi = noteOn.midi
 
 		/**
-		 * The MIDI note number
-		 * @type {Number}
+		 * The normalized velocity (0-1)
+		 * @type {number}
 		 */
-		if (Util.isNumber(midi)){
-			this.midi = midi
-		} else if (Util.isPitch(midi)){
-			this.name = midi
-		} else {
-			throw new Error('the midi value must either be in Pitch Notation (e.g. C#4) or a midi value')
-		}
+		this.velocity = noteOn.velocity
 
 		/**
-		 * The note on time in seconds
-		 * @type {Number}
+		 * The velocity of the note off
+		 * @type {number}
 		 */
-		this.time = time
+		this.noteOffVelocity = noteOff.velocity
 
 		/**
-		 * The duration in seconds
-		 * @type {Number}
+		 * The start time in ticks
+		 * @type {number}
 		 */
-		this.duration = duration
+		this.ticks = noteOn.ticks
 
 		/**
-		 * The velocity 0-1
-		 * @type {Number}
+		 * The duration in ticks
+		 * @type {number}
 		 */
-		this.velocity = velocity
+		this.durationTicks = noteOff.ticks - noteOn.ticks
 	}
 
 	/**
-	 * If the note is the same as the given note
-	 * @param {String|Number} note
-	 * @return {Boolean}
-	 */
-	match(note){
-		if (Util.isNumber(note)){
-			return this.midi === note
-		} else if (Util.isPitch(note)){
-			return this.name.toLowerCase() === note.toLowerCase()
-		}
-	}
-
-	/**
-	 * The note in Scientific Pitch Notation
-	 * @type {String}
+	 * The note name and octave in scientific pitch notation, e.g. "C4"
+	 * @type {string}
 	 */
 	get name(){
-		return Util.midiToPitch(this.midi)
+		return midiToPitch(this.midi)
 	}
-	set name(name){
-		this.midi = Util.pitchToMidi(name)
+
+	set name(n){
+		this.midi = pitchToMidi(n)
 	}
 
 	/**
-	 * Alias for time
-	 * @type {Number}
+	 * The notes octave number
+	 * @type {number}
 	 */
-	get noteOn(){
-		return this.time
+	get octave(){
+		return Math.floor(this.midi / 12) - 1
 	}
-	set noteOn(t){
-		this.time = t
+
+	set octave(o){
+		const diff = o - this.octave
+		this.midi += diff * 12
 	}
 
 	/**
-	 * The note off time
-	 * @type {Number}
+	 * The pitch class name. e.g. "A"
+	 * @type {string}
 	 */
-	get noteOff(){
-		return this.time + this.duration
+	get pitch(){
+		return midiToPitchClass(this.midi)
 	}
-	set noteOff(time){
-		this.duration = time - this.time
+
+	set pitch(p){
+		this.midi = 12 * (this.octave+1) + pitchClassToMidi(p)
 	}
 
 	/**
-	 * Convert the note to JSON
-	 * @returns {Object}
+	 * The duration of the segment in seconds
+	 * @type {number}
 	 */
+	get duration(){
+		const header = privateHeaderMap.get(this)
+		return header.ticksToSeconds(this.ticks + this.durationTicks) - header.ticksToSeconds(this.ticks)
+	}
+
+	set duration(d){
+		const header = privateHeaderMap.get(this)
+		const noteEndTicks = header.secondsToTicks(this.time + d)
+		this.durationTicks = noteEndTicks - this.ticks
+	}
+
+	/**
+	 * The time of the event in seconds
+	 * @type {number}
+	 */
+	get time(){
+		const header = privateHeaderMap.get(this)
+		return header.ticksToSeconds(this.ticks)
+	}
+	
+	set time(t){
+		const header = privateHeaderMap.get(this)
+		this.ticks = header.secondsToTicks(t)
+	}
+
+	/**
+	 * The number of measures (and partial measures) to this beat. 
+	 * Takes into account time signature changes
+	 * @type {number}
+	 * @readonly
+	 */
+	get bars(){
+		const header = privateHeaderMap.get(this)
+		return header.ticksToMeasures(this.ticks)
+	}
+
 	toJSON(){
 		return {
-			name : this.name,
-			midi : this.midi,
 			time : this.time,
+			midi : this.midi,
+			name : this.name,
 			velocity : this.velocity,
-			duration : this.duration
+			duration : this.duration,
+			ticks : this.ticks,
+			durationTicks : this.durationTicks,
 		}
 	}
 }
-
-export {Note}
