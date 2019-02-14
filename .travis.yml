@@ -1,11 +1,4 @@
-sudo: required
+sudo: false
 dist: trusty
 language: node_js
-node_js: "6"
-cache: yarn
-before_script:
-- yarn
-script:
-- yarn run test
-group: stable
-os: linux
+node_js: "10"
