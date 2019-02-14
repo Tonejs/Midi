@@ -2,4 +2,19 @@ sudo: false
 dist: trusty
 language: node_js
 node_js: "10"
-after_success: npm run codecov
+script: 
+  - npm test
+  - npm run tsc
+after_success: 
+  - npm run tsd
+  - npm run codecov
+before_deploy: npm run increment
+deploy:
+- provider: npm
+  skip_cleanup: true
+  email: yotammann@gmail.com
+  api_key: $NPM_TOKEN
+  on:
+    repo: Tonejs/MidiConvert
+    # don't publish on cron or PRs
+    condition: $TRAVIS_EVENT_TYPE != cron && $TRAVIS_EVENT_TYPE != pull_request
