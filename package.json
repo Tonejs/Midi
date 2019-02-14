@@ -1,16 +1,17 @@
 {
-  "name": "midiconvert",
-  "version": "0.4.5",
-  "description": "Convert binary midi into Tone.js-friendly JSON",
+  "name": "@tonejs/midi",
+  "version": "1.0.0",
+  "description": "Convert binary midi into JSON",
   "main": "build/MidiConvert.js",
   "module": "src/MidiConvert.js",
   "types": "src/MidiConvert.d.ts",
   "scripts": {
-    "clean": "rm -rf ./build/*; mkdir -p ./build/",
-    "pretest": "yarn run clean; $( yarn bin )/webpack",
-    "test": "$( yarn bin )/nyc $( yarn bin )/mocha ./test/test.js",
-    "posttest": "$( yarn bin )/nyc report --reporter=json && $( yarn bin )/codecov -f coverage/*.json",
-    "build": "yarn run clean; $( yarn bin )/webpack -p"
+    "lint": "eslint src/*.js",
+    "watch": "webpack -w --mode=development",
+    "test:watch": "nyc --reporter=html mocha --watch --timeout=10000 --require @babel/polyfill --require @babel/register ./test/Header.js",
+    "test": "nyc --reporter=html mocha --timeout=10000 --require @babel/polyfill --require @babel/register ./test/*.js",
+    "tsc": "tsc",
+    "tsdoc": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./src/*.js"
   },
   "repository": {
     "type": "git",
@@ -22,18 +23,30 @@
     "url": "https://github.com/Tonejs/MidiConvert/issues"
   },
   "homepage": "https://tonejs.github.com/MidiConvert/",
-  "dependencies": {
-    "jsmidgen": "^0.1.5",
-    "midi-file-parser": "^1.0.0"
-  },
   "devDependencies": {
-    "babel-core": "^6.17.0",
-    "babel-loader": "7",
-    "babel-preset-es2015": "6.24.1",
-    "chai": "^3.3.0",
-    "codecov": "^1.0.1",
-    "mocha": "^3.2.0",
-    "nyc": "^10.0.0",
-    "webpack": "2"
+    "@babel/core": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.9.3",
+    "array-flatten": "^2.1.2",
+    "babel-loader": "^8.0.5",
+    "chai": "^4.2.0",
+    "codecov": "^3.2.0",
+    "eslint": "^5.13.0",
+    "glob": "^7.1.3",
+    "http-server": "^0.11.1",
+    "jsdoc": "^3.5.5",
+    "mocha": "^5.2.0",
+    "node-fetch": "^2.3.0",
+    "nyc": "^13.3.0",
+    "tsd-jsdoc": "^2.1.3",
+    "typescript": "^3.3.3",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "midi-file": "^1.1.1"
   }
 }
