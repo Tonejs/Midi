@@ -27,7 +27,7 @@ describe('matches pre-parsed midi', async () => {
 			
 			midi.tracks.slice(0, truth.length).forEach((track) => {
 				let misses = 0
-				const noteLimit = 100
+				const noteLimit = 30
 				// const truthTrack = truth[trackIndex].slice(0, noteLimit)
 				track.notes.slice(0, noteLimit).forEach(note => {
 					// @ts-ignore
