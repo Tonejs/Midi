@@ -8,8 +8,9 @@
   "scripts": {
     "lint": "eslint src/*.js",
     "watch": "webpack -w --mode=development",
-    "test:watch": "nyc --reporter=html mocha --watch --timeout=10000 --require @babel/polyfill --require @babel/register ./test/Header.js",
-    "test": "nyc --reporter=html mocha --timeout=10000 --require @babel/polyfill --require @babel/register ./test/*.js",
+    "test:watch": "nyc mocha --watch --timeout=10000 --require @babel/polyfill --require @babel/register ./test/Header.js",
+    "test": "nyc mocha --timeout=10000 --require @babel/polyfill --require @babel/register ./test/*.js",
+    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "tsc": "tsc",
     "tsdoc": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./src/*.js"
   },
