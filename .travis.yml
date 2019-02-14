@@ -2,3 +2,4 @@ sudo: false
 dist: trusty
 language: node_js
 node_js: "10"
+after_success: npm run codecov
