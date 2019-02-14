@@ -9,3 +9,4 @@ TODO.txt
 .DS_Store
 build
 coverage.lcov
+index.d.ts
