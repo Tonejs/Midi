@@ -6,3 +6,5 @@ coverage/**
 
 TODO.txt
 **.js.map
+.DS_Store
+build
