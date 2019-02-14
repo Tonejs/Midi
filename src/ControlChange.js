@@ -32,6 +32,9 @@ const privateCCNumberMap = new WeakMap()
  * @property {number=} absoluteTime
  */
 
+/**
+  * Represents a control change event
+  */
 export class ControlChange {
 	/**
 	 * @param {ControlChangeEvent} event
