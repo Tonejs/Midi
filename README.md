@@ -1,9 +1,11 @@
-# MidiConvert #
+[![Build Status](https://travis-ci.org/Tonejs/Midi.svg?branch=master)](https://travis-ci.org/Tonejs/Midi)
+[![codecov](https://codecov.io/gh/Tonejs/Midi/branch/master/graph/badge.svg)](https://codecov.io/gh/Tonejs/Midi)
 
-[![Build Status](https://travis-ci.org/Tonejs/MidiConvert.svg?branch=master)](https://travis-ci.org/Tonejs/MidiConvert)
-[![codecov](https://codecov.io/gh/Tonejs/MidiConvert/branch/master/graph/badge.svg)](https://codecov.io/gh/Tonejs/MidiConvert)
+## Installation
 
-## [DEMO](https://tonejs.github.io/MidiConvert/)
+`npm install @tonejs/midi`
+
+## [DEMO](https://tonejs.github.io/Midi/)
 
 Midi makes it straightforward to read and write MIDI files with Javascript. It uses [midi-file](https://github.com/carter-thaxton/midi-file) for parsing and writing. 
 
@@ -11,6 +13,29 @@ Midi makes it straightforward to read and write MIDI files with Javascript. It u
 ```javascript
 // load a midi file in the browser
 const midi = await Midi.fromUrl("path/to/midi.mid")
+//the file name decoded from the first track
+const name = midi.name
+//get the tracks
+midi.tracks.forEach(track => {
+  //tracks have notes and controlChanges
+
+  //notes are an array
+  const notes = track.notes
+  notes.forEach(note => {
+    //note.midi, note.time, note.duration, note.name
+  })
+
+  //the control changes are an object
+  //the keys are the CC number
+  track.controlChanges[64]
+  //they are also aliased to the CC number's common name (if it has one)
+  track.controlChanges.sustain.forEach(cc => {
+    // cc.ticks, cc.value, cc.time
+  })
+
+  //the track also has a channel and instrument
+  //track.instrument.name
+})
 ```
 
 ### Format
@@ -25,7 +50,9 @@ The data parsed from the midi file looks like this:
                                       // which is usually the song name
     tempos: TempoEvent[],             // the tempo, e.g. 120
     timeSignatures: TimeSignatureEvent[],  // the time signature, e.g. [4, 4],
+
     PPQ: Number                       // the Pulses Per Quarter of the midi file
+                                      // this is read only
   },
 
   duration: Number,                   // the time until the last note finishes

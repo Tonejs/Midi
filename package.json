@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Tonejs/MidiConvert.git"
+    "url": "https://github.com/Tonejs/Midi.git"
   },
   "author": "Yotam Mann",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tonejs/MidiConvert/issues"
+    "url": "https://github.com/Tonejs/Midi/issues"
   },
-  "homepage": "https://tonejs.github.com/MidiConvert/",
+  "homepage": "https://tonejs.github.com/Midi/",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/polyfill": "^7.2.5",
