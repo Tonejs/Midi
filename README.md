@@ -5,14 +5,12 @@
 
 ## [DEMO](https://tonejs.github.io/MidiConvert/)
 
-MidiConvert makes it straightforward to work with MIDI files in Javascript. It uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) to decode MIDI files and [jsmidgen](https://github.com/dingram/jsmidgen) to encode MIDI files.
+Midi makes it straightforward to read and write MIDI files with Javascript. It uses [midi-file](https://github.com/carter-thaxton/midi-file) for parsing and writing. 
 
 
 ```javascript
-// load a midi file
-MidiConvert.load("path/to/midi.mid", function(midi) {
-  console.log(midi)
-})
+// load a midi file in the browser
+const midi = await Midi.fromUrl("path/to/midi.mid")
 ```
 
 ### Format
@@ -25,31 +23,33 @@ The data parsed from the midi file looks like this:
   header: {
     name: String,                     // the name of the first empty track, 
                                       // which is usually the song name
-    bpm: Number,                      // the tempo, e.g. 120
-    timeSignature: [Number, Number],  // the time signature, e.g. [4, 4],
+    tempos: TempoEvent[],             // the tempo, e.g. 120
+    timeSignatures: TimeSignatureEvent[],  // the time signature, e.g. [4, 4],
     PPQ: Number                       // the Pulses Per Quarter of the midi file
   },
 
-  startTime: Number,                  // the time before the first note plays
   duration: Number,                   // the time until the last note finishes
 
   // an array of midi tracks
   tracks: [
     {
-      id: Number,                     // the position of this track in the array
       name: String,                   // the track name if one was given
+
+      channel: Number,                // channel
+                                      // the ID for this channel; 9 and 10 are
+                                      // reserved for percussion
       notes: [
         {
           midi: Number,               // midi number, e.g. 60
           time: Number,               // time in seconds
-          note: String,               // note name, e.g. "C4"
+          ticks: Number,              // time in ticks
+          name: String,               // note name, e.g. "C4",
+          pitch: String,              // the pitch class, e.g. "C",
+          octave : Number,            // the octave, e.g. 4
           velocity: Number,           // normalized 0-1 velocity
-          duration: Number,           // duration between noteOn and noteOff
+          duration: Number,           // duration in seconds between noteOn and noteOff
         }
       ],
-
-      startTime: Number,              // the time before the first note plays
-      duration: Number,               // the time until the last note finishes
 
       // midi control changes
       controlChanges: {
@@ -57,23 +57,19 @@ The data parsed from the midi file looks like this:
         '91': [
           {
             number: Number,           // the cc number
+            ticks: Number,            // time in ticks
             time: Number,             // time in seconds
             value: Number,            // normalized 0-1
           }
         ],
       },
 
-      isPercussion: Boolean,          // true if this track is on a percussion
-                                      // channel
-      channelNumber: Number,          // the ID for this channel; 9 and 10 are
-                                      // reserved for percussion
-
-      instrumentNumber: Number,       // the ID for this instrument, as defined
-                                      // by the MIDI spec
-      instrumentFamily: String,       // the name of this instrument's family,
-                                      // as defined by the MIDI spec
-      instrument: String,             // the instrument name, as defined by the
-                                      // MIDI spec
+      instrument: {                   // and object representing the program change events
+        number : Number,              // the instrument number 0-127
+        family: String,               // the family of instruments, read only.
+        name : String,                // the name of the instrument
+        percussion: Boolean,          // if the instrument is a percussion instrument
+      },          
     }
   ]
 }
@@ -84,11 +80,8 @@ The data parsed from the midi file looks like this:
 If you are using Node.js or have the raw binary string from the midi file, just use the `parse` method:
 
 ```javascript
-fs.readFile("test.mid", "binary", function(err, midiBlob) {
-  if (!err) {
-    var midi = MidiConvert.parse(midiBlob)
-  }
-})
+const midiData = fs.readFileSync("test.mid")
+const midi = new Midi(midiData)
 ```
 
 ### Encoding Midi
@@ -97,45 +90,29 @@ You can also create midi files from scratch or by modifying an existing file.
 
 ```javascript
 // create a new midi file
-var midi = MidiConvert.create()
+var midi = new Midi()
 // add a track
-midi.track()
-  // select an instrument by its MIDI patch number
-  .patch(32)
-  // chain note events: note, time, duration
-  .note(60, 0, 2)
-  .note(63, 1, 2)
-  .note(60, 2, 2)
-
-// write the output
-fs.writeFileSync("output.mid", midi.encode(), "binary")
-```
-
-### Tone.Part
-
-The note data can be easily passed into [Tone.Part](http://tonejs.github.io/docs/#Part)
-
-```javascript
-var synth = new Tone.PolySynth(8).toMaster()
-
-MidiConvert.load("path/to/midi.mid", function(midi) {
-
-  // make sure you set the tempo before you schedule the events
-  Tone.Transport.bpm.value = midi.header.bpm
-
-  // pass in the note events from one of the tracks as the second argument to Tone.Part 
-  var midiPart = new Tone.Part(function(time, note) {
-
-    //use the events to play the synth
-    synth.triggerAttackRelease(note.name, note.duration, time, note.velocity)
-
-  }, midi.tracks[0].notes).start()
-
-  // start the transport to hear the events
-  Tone.Transport.start()
+const track = midi.addTrack()
+track.addNote({
+  midi : 60,
+  time : 0,
+  duration: 0.2
 })
+.addNote({
+  name : 'C5',
+  time : 0.3,
+  duration: 0.1
+})
+.addCC({
+  number : 64,
+  value : 127,
+  time : 0.2
+})
+ 
+// write the output
+fs.writeFileSync("output.mid", new Buffer(midi.toArray()))
 ```
 
 ### Acknowledgment
 
-MidiConvert uses [midi-file-parser](https://github.com/NHQ/midi-file-parser) which is ported from [jasmid](https://github.com/gasman/jasmid) for decoding MIDI data and and [jsmidgen](https://github.com/dingram/jsmidgen) for encoding MIDI data.
+Thank you [midi-file](https://github.com/carter-thaxton/midi-file)!
