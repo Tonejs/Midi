@@ -6,15 +6,23 @@
   "module": "src/Midi.js",
   "types": "index.d.ts",
   "scripts": {
+    "build" : "webpack -p --mode=production",
+    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "increment": "node scripts/increment_version.js",
     "lint": "eslint src/*.js",
     "watch": "webpack -w --mode=development",
     "test:watch": "nyc mocha --watch --timeout=10000 --require @babel/polyfill --require @babel/register ./test/Header.js",
     "test": "nyc mocha --timeout=10000 --require @babel/polyfill --require @babel/register ./test/*.js",
-    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "increment": "node scripts/increment_version.js",
     "tsc": "tsc",
     "tsd": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./src/*.js && mv out/types.d.ts ./index.d.ts"
   },
+  "files": [
+    "./build/*",
+    "./src/*",
+    "LICENSE.md",
+    "README.md",
+    "index.d.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Tonejs/Midi.git"
