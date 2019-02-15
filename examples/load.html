@@ -2,119 +2,63 @@
 <html>
 <head>
 	<title>MidiConvert</title>
-	<script type="text/javascript" src="../build/MidiConvert.js"></script>
-	<script type="text/javascript" src="https://tonejs.github.io/build/Tone.js"></script>
-	<script type="text/javascript" src="https://tonejs.github.io/Logo/build/Logo.js"></script>
+	<script type="text/javascript" src="../build/Midi.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/tone@13.4.9"></script>
+	<script type="text/javascript" src="https://unpkg.com/@tonejs/ui@0.0.8"></script>
 </head>
 <body>
-	<style type="text/css">
-
-		body {
-			font-family: "Roboto Mono", monospace;
-			text-align: center;
-			margin: 0px;
-		}
-
-		#Topbar {
-			width: calc(100% - 6px);
-			height: 35px;
-			background-color: black;
-			position: absolute;
-			left: 3px;
-			top: 3px;
-		}
-
-		#Topbar #TonejsLogo{
-			margin-top: 3px;
-		}
-
-		button {
-			width: 100px;
-			left: 50%;
-			margin-left: -50px;
+	<style>
+		#Status {
+			color: gray;
 			height: 40px;
-			text-align: center;
-			position: absolute;
-			top: 150px;
-			pointer-events: none;
-			opacity: 0.4;
 		}
-
-		button.active {
-			pointer-events: initial;
-			opacity: 1;
-		}
-
-		#Description {
-			position: absolute;
-			width: 100%;
-			height: 40px;
-			font-size: 20px;
-			bottom: 0px;
-		}
-
 	</style>
-	<div id="Topbar"></div>
+	<tone-top-bar></tone-top-bar>
 
-	<div id="Description">Load and parse Bach's <i>Prelude in C</i></div>
-
-	<button>START</button>
+	<tone-content>
+		<div id="Description">Load and play Bach's <i>Prelude in C</i></div>
+		<div id="Status">Loading...</div>
+		<tone-play-toggle disabled>Loading...</tone-play-toggle>
+	</tone-content>
 
 	<script type="text/javascript">
 
-		var synth = new Tone.PolySynth(8, Tone.Synth, {
-			"oscillator": {
-				"type": "sine3"
-			},
-			"envelope": {
-				"attack": 0.03,
-				"decay": 0.1,
-				"sustain": 0.2,
-				"release": 0.6
-			}
-		}).toMaster();
+		Midi.fromUrl("./bach_846.mid").then(midi => {
 
-		function playNote(time, event){
-			synth.triggerAttackRelease(event.name, event.duration, time, event.velocity);
-		}
+			document.querySelector('tone-play-toggle').removeAttribute('disabled')
+			document.querySelector('#Status').textContent = ''
 
-		var button = document.querySelector("button");
-		button.addEventListener("click", function(){
-			if (Tone.Transport.state === "started"){
-				Tone.Transport.stop();
-				button.textContent = "START";
-			} else {
-				Tone.Transport.start("+0.1", 0);
-				button.textContent = "STOP";
-			}
-		});
-
-		MidiConvert.load("../test/midi/bwv-846.mid").then(function(midi){
-			
-			// play right and left hand with a poly synth
-			var rightHand = midi.get("Piano right").notes;
-			var leftHand = midi.get("Piano left").notes;
-
-			// make sure you set the tempo before you schedule the events
-			Tone.Transport.bpm.value = midi.bpm;
-			Tone.Transport.timeSignature = midi.timeSignature;
-
-			var rightHandPart = new Tone.Part(playNote, rightHand).start(0);
-			var leftHandPart = new Tone.Part(playNote, leftHand).start(0);
-
-			button.classList.add("active")
-		});
-
-	</script>
-
-	
-	<script type="text/javascript">
-
-		var logo = new Logo({
-			"width" : 130,
-			"height" : 30,
-			"container" : "#Topbar"
-		});
+			//synth playback
+			const synths = []
+			document.querySelector('tone-play-toggle').addEventListener('play', (e) => {
+				const playing = e.detail
+				if (playing) {
+					const now = Tone.now() + 0.5
+					midi.tracks.forEach(track => {
+						//create a synth for each track
+						const synth = new Tone.PolySynth(10, Tone.Synth, {
+							envelope: {
+								attack: 0.02,
+								decay: 0.1,
+								sustain: 0.3,
+								release: 1
+							}
+						}).toMaster()
+						synths.push(synth)
+						//schedule all of the events
+						track.notes.forEach(note => {
+							synth.triggerAttackRelease(note.name, note.duration, note.time + now, note.velocity)
+						})
+					})
+				} else {
+					//dispose the synth and make a new one
+					while (synths.length) {
+						const synth = synths.shift()
+						synth.dispose()
+					}
+				}
+			})
+		})
 
 	</script>
 

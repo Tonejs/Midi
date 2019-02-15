@@ -2,40 +2,25 @@
 <html>
 <head>
 	<title>MidiConvert</title>
-	<script type="text/javascript" src="./build/MidiConvert.js"></script>
-	<script type="text/javascript" src="https://tonejs.github.io/Logo/build/Logo.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/tone@13.4.9/build/Tone.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/@tonejs/ui@0.0.8/build/tonejs-ui.js"></script>
+	<script type="text/javascript" src="./build/Midi.js"></script>
 </head>
 <body>
 	<style type="text/css">
 
 		body {
-			font-family: "Roboto Mono", monospace;
 			text-align: center;
 			margin: 0px;
 		}
 
-		#Topbar {
-			width: calc(100% - 6px);
-			height: 35px;
-			background-color: black;
-			position: absolute;
-			left: 3px;
-			top: 3px;
-		}
-
-		#Topbar #TonejsLogo{
-			margin-top: 3px;
-		}
-
 		#FileDrop{
-			position: absolute;
-			width: 500px;
-			height: 200px;
-			margin-left: -250px;
+			position: relative;
+			width: 100%;
+			height: 100px;
 			border: 2px dashed black;
-			left: 50%;
-			margin-top: 70px;
 			color: black;
+			margin: 20px auto;
 		}
 
 		#FileDrop.Hover{
@@ -55,15 +40,16 @@
 		#FileDrop #Text {
 			position: absolute;
 			width: 100%;
-			height: 100%;
-			line-height: 200px;
+			height: 20px;
+			line-height: 20px;
 			left: 0px;
-			top: 0px;
+			top: 50%;
+			transform: translate(0, -50%);
 			text-align: center;
 		}
 
 		textarea {
-			font-family: "Roboto Mono" monospace;
+			font-family: monospace;
 			height: 300px;
 			width: 100%;
 			display: inline-block;
@@ -72,113 +58,111 @@
 		}
 
 		#Results {
-			position: absolute;
-			width: 500px;
-			margin-left: -250px;
-			top: 300px;
-			left: 50%;
-			position: absolute;
+			position: relative;
+			width: 100%;
+			margin: 10px auto;
 		}
 
 		#Description {
-			position: absolute;
+			position: relative;
 			width: 100%;
+			text-align: center;
 			height: 40px;
-			font-size: 20px;
-			bottom: 0px;
+			font-size: 16px;
+			margin: 10px auto;
+			font-family: sans-serif;
 		}
 
-		#Settings {
-			background-color: black;
-			left: 20px;
-			top: 70px;
-			width: 125px;
-			height: auto;
-			padding-bottom: 10px;
-			position: absolute;
-		}
-
-		#Settings span {
-			width: 60px;
-			float: left;
-			color: white;
-			font-size: 12px;
-			text-align: left;
-			margin-left: 10px;
-			margin-top: 10px;
-		}
-
-		#Settings input {
-			width: 30px;
-			float: left;
-			margin-left: 10px;
+		tone-play-toggle {
 			margin-top: 10px;
 		}
 
 	</style>
-	<div id="Topbar"></div>
-	<div id="FileDrop">
-		<div id="Text">
-			Drop a midi file here
+	<tone-top-bar></tone-top-bar>
+	<tone-content>
+		<div id="Description">Parse a MIDI file into a Tone.js-friendly JSON format.</div>
+		<div id="FileDrop">
+			<div id="Text">
+				Drop a midi file here
+			</div>
+			<input type="file" accept="audio/midi">
 		</div>
-		<input type="file" accept="audio/midi">
-	</div>
-	<div id="Results">
-		<textarea id="ResultsText"></textarea>
-	</div>
+		<div id="Results">
+			<textarea id="ResultsText" placeholder="json output..."></textarea>
+		</div>
+		<tone-play-toggle disabled></tone-play-toggle>
+	</tone-content>
 
-	<div id="Description">Parse a MIDI file into a Tone.js-friendly JSON format.</div>
-
-	<a href="https://github.com/Tonejs/MidiConvert" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#7F33ED; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
 	<script type="text/javascript">
-
-		var logo = new Logo({
-			"width" : 130,
-			"height" : 30,
-			"container" : "#Topbar"
-		});
 
 
 		if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
 			document.querySelector("#FileDrop #Text").textContent = "Reading files not supported by this browser";
 		} else {
 
-			var fileDrop = document.querySelector("#FileDrop")
+			const fileDrop = document.querySelector("#FileDrop")
 
-			fileDrop.addEventListener("dragenter", function(){
-				fileDrop.classList.add("Hover");
-			})
+			fileDrop.addEventListener("dragenter", () => fileDrop.classList.add("Hover"))
 
-			fileDrop.addEventListener("dragleave", function(){
-				fileDrop.classList.remove("Hover");
-			});
+			fileDrop.addEventListener("dragleave", () => fileDrop.classList.remove("Hover"))
 
-			fileDrop.addEventListener("drop", function(){
-				fileDrop.classList.remove("Hover");
-			});
+			fileDrop.addEventListener("drop", () => fileDrop.classList.remove("Hover"))
 
-			document.querySelector("#FileDrop input").addEventListener("change", function(e){
+			document.querySelector("#FileDrop input").addEventListener("change", e => {
 				//get the files
-				var files = e.target.files;
+				const files = e.target.files
 				if (files.length > 0){
-					var file = files[0];
-					document.querySelector("#FileDrop #Text").textContent = file.name;
-					parseFile(file);
+					const file = files[0]
+					document.querySelector("#FileDrop #Text").textContent = file.name
+					parseFile(file)
 				}
-			});
+			})
 		}
+
+		let currentMidi = null
 
 		function parseFile(file){
 			//read the file
-			var reader = new FileReader();
+			const reader = new FileReader()
 			reader.onload = function(e){
-				
-				var partsData = MidiConvert.parse(e.target.result);
-				document.querySelector("#ResultsText").value = JSON.stringify(partsData, undefined, 2);
-			};
-			reader.readAsBinaryString(file);
+				const midi = new Midi(e.target.result)
+				document.querySelector("#ResultsText").value = JSON.stringify(midi, undefined, 2)
+				document.querySelector('tone-play-toggle').removeAttribute('disabled')
+				currentMidi = midi
+			}
+			reader.readAsArrayBuffer(file)
 		}
+
+		const synths = []
+		document.querySelector('tone-play-toggle').addEventListener('play', (e) => {
+			const playing = e.detail
+			if (playing && currentMidi){
+				const now = Tone.now() + 0.5
+				currentMidi.tracks.forEach(track => {
+					//create a synth for each track
+					const synth = new Tone.PolySynth(10, Tone.Synth, {
+						envelope : {
+							attack : 0.02,
+							decay : 0.1,
+							sustain : 0.3,
+							release : 1
+						}
+					}).toMaster()
+					synths.push(synth)
+					//schedule all of the events
+					track.notes.forEach(note => {
+						synth.triggerAttackRelease(note.name, note.duration, note.time + now, note.velocity)
+					})
+				})
+			} else {
+				//dispose the synth and make a new one
+				while(synths.length){
+					const synth = synths.shift()
+					synth.dispose()
+				}
+			}
+		})
 
 	</script>
 
