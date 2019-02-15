@@ -14,25 +14,30 @@ export class Midi {
 	 * @param {string} url The url to fetch
 	 * @returns {Promise<Midi>}
 	 */
-	static async fromUrl(url){
-		const response = await fetch(url)
-		if (response.ok){
-			const arrayBuffer = await response.arrayBuffer()
-			return new Midi(new Uint8Array(arrayBuffer))
-		} else {
-			throw new Error(`could not load ${url}`)
-		}
+	static fromUrl(url){
+		return fetch(url).then(response => {
+			if (response.ok){
+				return response.arrayBuffer()
+			} else {
+				throw new Error(`could not load ${url}`)
+			}
+		}).then(arrayBuffer => {
+			return new Midi(arrayBuffer)
+		})
 	}
 
 	/**
 	 * Parse the midi data
-	 * @param {ArrayLike<number>} [midiArray] An array-like object
+	 * @param {(ArrayLike<number>|ArrayBuffer)} [midiArray] An array-like object
 	 */
 	constructor(midiArray){
 		
 		//parse the midi data if there is any
 		let midiData = null
 		if (midiArray){
+			if (midiArray instanceof ArrayBuffer){
+				midiArray = new Uint8Array(midiArray)
+			}
 			midiData = parseMidi(midiArray)
 			
 			//add the absolute times to each of the tracks
