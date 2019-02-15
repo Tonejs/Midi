@@ -10,3 +10,4 @@ TODO.txt
 build
 coverage.lcov
 index.d.ts
+out/
