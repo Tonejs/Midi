@@ -9,14 +9,14 @@ after_success:
   - npm run tsd
   - npm run codecov
 before_deploy: 
- - npm run increment
- - npm run build
+  - npm run increment
+  - npm run build
 deploy:
-- provider: npm
-  skip_cleanup: true
-  email: yotammann@gmail.com
-  api_key: $NPM_TOKEN
-  on:
-    repo: Tonejs/Midi
-    # don't publish on cron or PRs
-    condition: $TRAVIS_EVENT_TYPE != cron && $TRAVIS_EVENT_TYPE != pull_request
+  - provider: npm
+    skip_cleanup: true
+    email: yotammann@gmail.com
+    api_key: $NPM_TOKEN
+    on:
+      repo: Tonejs/Midi
+      # don't publish on cron or PRs
+      condition: $TRAVIS_EVENT_TYPE != cron && $TRAVIS_EVENT_TYPE != pull_request
