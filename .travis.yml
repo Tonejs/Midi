@@ -15,6 +15,6 @@ deploy:
   email: yotammann@gmail.com
   api_key: $NPM_TOKEN
   on:
-    repo: Tonejs/MidiConvert
+    repo: Tonejs/Midi
     # don't publish on cron or PRs
     condition: $TRAVIS_EVENT_TYPE != cron && $TRAVIS_EVENT_TYPE != pull_request
