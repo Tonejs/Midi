@@ -102,10 +102,18 @@ export class Midi {
 		return track
 	}
 
+	/**
+	 * Encode the midi as a Uint8Array.
+	 * @returns {Uint8Array}
+	 */
 	toArray(){
 		return encode(this)
 	}
 
+	/**
+	 * Convert the midi object to JSON.
+	 * @returns {Object}
+	 */
 	toJSON(){
 		return {
 			header : this.header.toJSON(),
