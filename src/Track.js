@@ -150,6 +150,20 @@ export class Track {
 	}
 
 	/**
+	 * The end time of the last event in the track
+	 * @type {number}
+	 * @readonly
+	 */
+	get duration(){
+		const lastNote = this.notes[this.notes.length-1]
+		if (lastNote){
+			return lastNote.time + lastNote.duration
+		} else {
+			return 0
+		}
+	}
+
+	/**
 	 * @returns {Object}
 	 */
 	toJSON(){

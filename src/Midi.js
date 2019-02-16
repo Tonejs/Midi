@@ -86,10 +86,8 @@ export class Midi {
 	 */
 	get duration(){
 		//get the max of the last note of all the tracks
-		const noteTracks = this.tracks.filter(t => t.notes.length)
-		const lastNotes = noteTracks.map(t => t.notes[t.notes.length-1])
-		const lastNoteEnd = lastNotes.map(n => n.time + n.duration)
-		return Math.max(...lastNoteEnd)
+		const durations = this.tracks.map(t => t.duration)
+		return Math.max(...durations)
 	}
 
 	/**
