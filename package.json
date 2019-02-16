@@ -1,12 +1,12 @@
 {
   "name": "@tonejs/midi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Convert binary midi into JSON",
   "main": "build/Midi.js",
   "module": "src/Midi.js",
   "types": "index.d.ts",
   "scripts": {
-    "build" : "webpack -p --mode=production",
+    "build": "webpack -p --mode=production",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "increment": "node scripts/increment_version.js",
     "lint": "eslint src/*.js",
