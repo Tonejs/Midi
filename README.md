@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/Tonejs/Midi.svg?branch=master)](https://travis-ci.org/Tonejs/Midi)
-[![codecov](https://codecov.io/gh/Tonejs/Midi/branch/master/graph/badge.svg)](https://codecov.io/gh/Tonejs/Midi)
+[![codecov](https://codecov.io/gh/Tonejs/MidiConvert/branch/master/graph/badge.svg)](https://codecov.io/gh/Tonejs/Midi)
 
 ## Installation
 
