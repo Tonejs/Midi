@@ -1,6 +1,6 @@
 {
   "name": "@tonejs/midi",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Convert binary midi into JSON",
   "main": "build/Midi.js",
   "module": "src/Midi.js",

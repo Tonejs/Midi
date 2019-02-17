@@ -1,4 +1,5 @@
 import { search } from './BinarySearch'
+// eslint-disable-next-line no-unused-vars
 import { Midi } from './Midi'
 
 const privatePPQMap = new WeakMap()
@@ -21,7 +22,7 @@ const privatePPQMap = new WeakMap()
 export class Header {
 	/**
 	 * 
-	 * @param {*} midiData 
+	 * @param {*} [midiData] 
 	 */
 	constructor(midiData){
 		//look through all the tracks for tempo changes
@@ -160,6 +161,9 @@ export class Header {
 		}
 	}
 
+	/**
+	 * @returns {Object}
+	 */
 	toJSON(){
 		return {
 			name : this.name,
@@ -173,5 +177,18 @@ export class Header {
 			}),
 			timeSignatures : this.timeSignatures,
 		}
+	}
+
+	/**
+	 * @param {Object} json
+	 */
+	fromJSON(json){
+		this.name = json.name
+		//clone all the attributes
+		this.tempos = json.tempos.map(t => Object.assign({}, t))
+		this.timeSignatures = json.timeSignatures.map(t => Object.assign({}, t))
+		this.meta = json.meta.map(t => Object.assign({}, t))
+		privatePPQMap.set(this, json.ppq)
+		this.update()
 	}
 }

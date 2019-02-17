@@ -1,4 +1,5 @@
 import { instrumentByPatchID, instrumentFamilyByID, drumKitByPatchID } from './InstrumentMaps'
+// eslint-disable-next-line no-unused-vars
 import { Track } from './Track'
 
 const privateTrackMap = new WeakMap()
@@ -57,11 +58,21 @@ export class Instrument {
 		return [9, 10].includes(track.channel)
 	}
 
+	/**
+	 * @returns {Object}
+	 */
 	toJSON(){
 		return {
 			number : this.number,
 			name : this.name,
 			family : this.family
 		}
+	}
+
+	/**
+	 * @param {Object} json 
+	 */
+	fromJSON(json){
+		this.number = json.number
 	}
 }

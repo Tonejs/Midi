@@ -47,9 +47,9 @@ context('Midi', () => {
 			expect(midi.duration).to.be.closeTo(143, 0.5)
 		})
 
-		it('has a duration', () => {
+		it('has a duration in ticks', () => {
 			const midi = new Midi(readFileSync(resolve(__dirname, './midi/debussy/childrens_corner_1.mid')))
-			expect(midi.duration).to.be.closeTo(143, 0.5)
+			expect(midi.durationTicks).to.equal(144240)
 		})
 	})
 
@@ -83,6 +83,24 @@ context('Midi', () => {
 			}
 			expect(threwError).to.be.true
 			
+		})
+	})
+
+	context('clone', () => {
+
+		it('can clone a midi file', () => {
+			const midi = new Midi(readFileSync(resolve(__dirname, './midi/bach/bach_846.mid')))
+			const clone = midi.clone()
+			expect(midi.toJSON()).to.deep.equal(clone.toJSON())
+		})
+
+		it('changes to the clone dont change the original', () => {
+			const original = new Midi(readFileSync(resolve(__dirname, './midi/bach/bach_846.mid')))
+			const clone = original.clone()
+			//change the clone
+			clone.tracks[0].notes[0].ticks = 111
+			//shouldnt affect the original
+			expect(original.tracks[0].notes[0].ticks).to.not.equal(111)
 		})
 	})
 })

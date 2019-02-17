@@ -1,9 +1,10 @@
 import { Note } from './Note'
 import { ControlChange } from './ControlChange'
 import { insert } from './BinarySearch'
-import { Header } from './Header'
 import { Instrument } from './Instrument'
 import { ControlChanges } from './ControlChanges'
+// eslint-disable-next-line no-unused-vars
+import { Header } from './Header'
 
 const privateHeaderMap = new WeakMap()
 
@@ -161,6 +162,47 @@ export class Track {
 		} else {
 			return 0
 		}
+	}
+
+	/**
+	 * The end time of the last event in the track in ticks
+	 * @type {number}
+	 * @readonly
+	 */
+	get durationTicks(){
+		const lastNote = this.notes[this.notes.length - 1]
+		if (lastNote){
+			return lastNote.ticks + lastNote.durationTicks
+		} else {
+			return 0
+		}
+	}
+
+	/**
+	 * @param {Object} json 
+	 */
+	fromJSON(json){
+		this.name = json.name
+		this.channel = json.channel
+		this.instrument = new Instrument(undefined, this)
+		this.instrument.fromJSON(json.instrument)
+		for (let number in json.controlChanges){
+			json.controlChanges[number].forEach(cc => {
+				this.addCC({
+					number : cc.number,
+					value : cc.value,
+					ticks : cc.ticks
+				})
+			})
+		}
+		json.notes.forEach(n => {
+			this.addNote({
+				ticks : n.ticks,
+				durationTicks : n.durationTicks,
+				velocity : n.velocity,
+				midi : n.midi
+			})
+		})
 	}
 
 	/**

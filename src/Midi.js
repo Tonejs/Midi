@@ -81,13 +81,23 @@ export class Midi {
 	}
 
 	/**
-	 * The total length of the file
+	 * The total length of the file in seconds
 	 * @type {number}
 	 */
 	get duration(){
 		//get the max of the last note of all the tracks
 		const durations = this.tracks.map(t => t.duration)
 		return Math.max(...durations)
+	}
+
+	/**
+	 * The total length of the file in ticks
+	 * @type {number}
+	 */
+	get durationTicks(){
+		//get the max of the last note of all the tracks
+		const durationTicks = this.tracks.map(t => t.durationTicks)
+		return Math.max(...durationTicks)
 	}
 
 	/**
@@ -117,5 +127,30 @@ export class Midi {
 			header : this.header.toJSON(),
 			tracks : this.tracks.map(track => track.toJSON())
 		}
+	}
+
+	/**
+	 * Parse a JSON representation of the object. Will overwrite the current
+	 * tracks and header.
+	 * @param {Object} json 
+	 */
+	fromJSON(json){
+		this.header = new Header()
+		this.header.fromJSON(json.header)
+		this.tracks = json.tracks.map(trackJSON => {
+			const track = new Track(undefined, this.header)
+			track.fromJSON(trackJSON)
+			return track
+		})
+	}
+
+	/**
+	 * Clone the entire object midi object
+	 * @returns {Midi}
+	 */
+	clone(){
+		const midi = new Midi()
+		midi.fromJSON(this.toJSON())
+		return midi
 	}
 }
