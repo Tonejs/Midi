@@ -22,7 +22,16 @@ export const controlChangeIds = Object.keys(controlChangeNames).reduce(function(
 	return obj
 }, {})
 
-const privateHeaderMap = new Map()
+/**
+ * @private
+ * @type {WeakMap<ControlChange, Header>}
+ */
+const privateHeaderMap = new WeakMap()
+
+/**
+ * @private
+ * @type {WeakMap<ControlChange, number>}
+ */
 const privateCCNumberMap = new WeakMap()
 
 /**

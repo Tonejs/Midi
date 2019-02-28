@@ -6,6 +6,10 @@ import { ControlChanges } from './ControlChanges'
 // eslint-disable-next-line no-unused-vars
 import { Header } from './Header'
 
+/**
+ * @private
+ * @type {WeakMap<Track, Header>}
+ */
 const privateHeaderMap = new WeakMap()
 
 /**
