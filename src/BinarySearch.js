@@ -1,5 +1,8 @@
 /**
  * Return the index of the element at or before the given property
+ * @param {Array} array
+ * @param {*} value
+ * @param {string} prop
  */
 function search(array, value, prop='ticks'){
 	let beginning = 0
