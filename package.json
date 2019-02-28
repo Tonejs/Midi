@@ -14,7 +14,7 @@
     "test:watch": "nyc mocha --watch --timeout=10000 --require @babel/polyfill --require @babel/register ./test/Header.js",
     "test": "nyc mocha --timeout=10000 --require @babel/polyfill --require @babel/register ./test/*.js",
     "tsc": "tsc",
-    "tsd": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./src/*.js && mv out/types.d.ts ./index.d.ts"
+    "tsd": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./src/*.js && mv out/types.d.ts ./index.d.ts && echo 'export = Midi;' >> ./index.d.ts && echo 'export as namespace Midi;' >> ./index.d.ts"
   },
   "files": [
     "./build/*",
