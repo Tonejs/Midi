@@ -58,12 +58,12 @@ export class Midi {
 
 		//parse the midi data
 		if (midiArray){
-			if (midiData.header.format === 1){
-				//format 1 all of the tracks comes after the first one which contains the relevant data
-				this.tracks = midiData.tracks.slice(1).map(trackData => new Track(trackData, this.header))
-			} else {
-				//format 0, everything is on the same track
-				this.tracks = midiData.tracks.map(trackData => new Track(trackData, this.header))
+			//format 0, everything is on the same track
+			this.tracks = midiData.tracks.map(trackData => new Track(trackData, this.header))
+
+			//if it's format 1 and there are no notes on the first track, remove it
+			if (midiData.header.format === 1 && this.tracks[0].duration === 0){
+				this.tracks.shift()
 			}
 		}
 	}
