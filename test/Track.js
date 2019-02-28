@@ -127,6 +127,20 @@ context('Track', () => {
 		})
 	})
 
+	describe('Non-standard Format 1', () => {
+
+		const midi = new Midi(readFileSync(resolve(__dirname, './midi/joplin/TheEntertainer.mid')))
+
+		it('has 2 track', () => {
+			expect(midi.tracks.length).to.equal(2)
+		})
+
+		it('tracks have notes', () => {
+			expect(midi.tracks[0].notes).to.have.length(1387)
+			expect(midi.tracks[1].notes).to.have.length(1229)
+		})
+	})
+
 	describe('can add note to beethoven symphony 7', () => {
 
 		const midi = new Midi(readFileSync(resolve(__dirname, './midi/beethoven/symphony_7_2.mid')))
