@@ -12,7 +12,8 @@ module.exports = {
 		sourceMapFilename : '[file].map',
 		library : 'Midi',
 		libraryExport : 'Midi',
-		libraryTarget : 'umd'
+		libraryTarget : 'umd',
+		globalObject: "typeof self !== 'undefined' ? self : this"
 	},
 	module : {
 		rules : [
