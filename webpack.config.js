@@ -4,7 +4,7 @@ var webpack = require('webpack')
 module.exports = {
 	context : __dirname,
 	entry : {
-		Midi : './src/Midi.js',
+		Midi : './src/Midi.ts',
 	},
 	output : {
 		path : path.resolve(__dirname, 'build'),
@@ -15,16 +15,17 @@ module.exports = {
 		libraryTarget : 'umd',
 		globalObject: "typeof self !== 'undefined' ? self : this"
 	},
+	resolve : {
+		extensions: ['.ts', '.js']
+	},
 	module : {
 		rules : [
 			{
-				test : /\.js$/,
-				exclude : /(node_modules)/,
-				use : {
-					loader : 'babel-loader',
-				}
+				test: /\.ts$/,
+				use: 'ts-loader',
+				exclude: /(node_modules)/,
 			}
 		]
 	},
-	devtool : '#source-map'
+	devtool: 'inline-source-map'
 }

@@ -8,6 +8,8 @@ TODO.txt
 **.js.map
 .DS_Store
 build
+dist
 coverage.lcov
 index.d.ts
 out/
+.vscode

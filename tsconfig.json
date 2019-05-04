@@ -1,10 +1,12 @@
 {
 	"compilerOptions": {
 		"noImplicitAny": false,
-		"noEmit" : true,
-		"checkJs": true,
-		"allowJs": true,
+		"outDir": "dist",
+		"module": "commonjs",
+		"sourceMap": true,
 		"target" : "es5",
+		"declaration": true,
+		// "noUnusedLocals": true,
 		"lib" : ["es2015", "es2017", "dom"],
 		"types": [
 			"node",
@@ -12,11 +14,10 @@
 		]
 	},
 	"include": [
-		"src/*.js",
-		"test/*.js"
+		"./src/*.ts",
+		// "test/*.js", 
 	],
 	"exclude": [
-		"node_modules",
-		"**/*.spec.ts"
+		// "node_modules"
 	]
 }
