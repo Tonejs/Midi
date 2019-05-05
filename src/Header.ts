@@ -188,6 +188,7 @@ export class Header {
 	 */
 	toJSON(): HeaderJSON {
 		return {
+			keySignatures : this.keySignatures,
 			meta : this.meta,
 			name : this.name,
 			ppq : this.ppq,
@@ -221,4 +222,5 @@ export interface HeaderJSON {
 	meta: MetaEvent[];
 	tempos: TempoEvent[];
 	timeSignatures: TimeSignatureEvent[];
+	keySignatures: KeySignatureEvent[];
 }
