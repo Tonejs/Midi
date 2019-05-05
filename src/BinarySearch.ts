@@ -1,7 +1,7 @@
 /**
  * Return the index of the element at or before the given property
  */
-export function search(array: any[], value: any, prop= "ticks") {
+export function search(array: any[], value: any, prop= "ticks"): number {
 	let beginning = 0;
 	const len = array.length;
 	let end = len;

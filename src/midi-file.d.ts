@@ -14,22 +14,22 @@ interface MidiChannelEvent extends MidiEvent {
 }
 
 interface MidiNoteEvent extends MidiChannelEvent {
-	type : string;
-	velocity: number;	
+	type: string;
+	velocity: number;
 	noteNumber: number;
 	running?: boolean;
 }
 
 interface MidiNoteOnEvent extends MidiNoteEvent {
-	type : "noteOn";
+	type: "noteOn";
 }
 
 interface MidiNoteOffEvent extends MidiNoteEvent {
 	type: "noteOff";
 }
 
-interface MidiControllerEvent extends MidiChannelEvent{
-	type : "controller";
+interface MidiControllerEvent extends MidiChannelEvent {
+	type: "controller";
 	controllerType: number;
 	value: number;
 }
@@ -86,23 +86,23 @@ interface MidiKeySignatureEvent extends MidiMetaEvent {
 	scale: number;
 }
 
-type MidiTrackEvent = MidiTimeSignatureEvent | MidiTempoEvent | MidiTrackNameEvent | 
-	MidiEndOfTrackEvent | MidiNoteOnEvent | MidiNoteOffEvent | MidiControllerEvent | 
-	MidiInstrumentEvent | MidiKeySignatureEvent | MidiTextEvent
+type MidiTrackEvent = MidiTimeSignatureEvent | MidiTempoEvent | MidiTrackNameEvent |
+	MidiEndOfTrackEvent | MidiNoteOnEvent | MidiNoteOffEvent | MidiControllerEvent |
+	MidiInstrumentEvent | MidiKeySignatureEvent | MidiTextEvent;
 
-export type MidiTrackData = MidiTrackEvent[]
+export type MidiTrackData = MidiTrackEvent[];
 
-export type MidiData = {
+export interface MidiData {
 	header: {
 		format: number;
 		ticksPerBeat: number;
 		numTracks: number;
 	};
 	tracks: MidiTrackData[];
-};
+}
 
 //////////////////////////////////////////////////////////
 // EXPORTED METHODS
 //////////////////////////////////////////////////////////
-export function parseMidi(midiArray: ArrayLike<number> | ArrayBuffer) : MidiData
-export function writeMidi(midiData: MidiData) : ArrayBuffer
+export function parseMidi(midiArray: ArrayLike<number> | ArrayBuffer): MidiData;
+export function writeMidi(midiData: MidiData): ArrayBuffer;

@@ -16,6 +16,7 @@ export interface ControlChangesJSON {
  */
 export function createControlChanges(): ControlChanges {
 	return new Proxy({}, {
+		// tslint:disable-next-line: typedef
 		get(target, handler) {
 			if (target[handler]) {
 				return target[handler];
@@ -23,6 +24,7 @@ export function createControlChanges(): ControlChanges {
 				return target[controlChangeIds[handler]];
 			}
 		},
+		// tslint:disable-next-line: typedef
 		set(target, handler, value) {
 			if (controlChangeIds.hasOwnProperty(handler)) {
 				target[controlChangeIds[handler]] = value;
@@ -33,4 +35,3 @@ export function createControlChanges(): ControlChanges {
 		},
 	});
 }
-

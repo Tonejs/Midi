@@ -9,6 +9,7 @@
     "build": "tsc && webpack -p --mode=production",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "increment": "node scripts/increment_version.js",
+    "lint": "tslint src/*.ts --fix",
     "watch": "webpack -w --mode=development",
     "test": "nyc mocha --timeout=10000 --require ts-node/register ./test/*.ts"
   },

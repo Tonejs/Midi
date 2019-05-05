@@ -45,7 +45,7 @@ const privateCCNumberMap = new WeakMap<ControlChange, number>();
 /**
  * Represents a control change event
  */
-export class ControlChange {
+export class ControlChange implements ControlChangeInterface {
 
 	/**
 	 * The number value of the event
@@ -116,4 +116,11 @@ export interface ControlChangeJSON {
 	value: number;
 	time: number;
 	ticks: number;
+}
+
+export interface ControlChangeInterface {
+	time: number;
+	ticks: number;
+	value: number;
+	number: number;
 }

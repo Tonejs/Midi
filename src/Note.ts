@@ -32,6 +32,7 @@ function pitchClassToMidi(pitch: string): number {
 const pitchToMidi: (note: string) => number = (function() {
 	const regexp = /^([a-g]{1}(?:b|#|x|bb)?)(-?[0-9]+)/i;
 	const noteToScaleIndex = {
+		// tslint:disable-next-line: object-literal-sort-keys
 		"cbb" : -2, "cb" : -1, "c" : 0, "c#" : 1, "cx" : 2,
 		"dbb" : 0, "db" : 1, "d" : 2, "d#" : 3, "dx" : 4,
 		"ebb" : 2, "eb" : 3, "e" : 4, "e#" : 5, "ex" : 6,
@@ -45,29 +46,16 @@ const pitchToMidi: (note: string) => number = (function() {
 		const pitch = split[1];
 		const octave = split[2];
 		const index = noteToScaleIndex[pitch.toLowerCase()];
-		return index + (parseInt(octave) + 1) * 12;
+		return index + (parseInt(octave, 10) + 1) * 12;
 	};
 }());
-
-/**
- * @typedef NoteOnEvent
- * @property {number} ticks
- * @property {number} velocity
- * @property {number} midi
- */
-
-/**
- * @typedef NoteOffEvent
- * @property {number} ticks
- * @property {number} velocity
- */
 
 const privateHeaderMap = new WeakMap<Note, Header>();
 
 /**
  * A Note consists of a noteOn and noteOff event
  */
-export class Note {
+export class Note implements NoteInterface {
 
 	/**
 	 * The notes midi value
@@ -94,12 +82,7 @@ export class Note {
 	 */
 	durationTicks: number;
 
-	/**
-	 * @param {NoteOnEvent} noteOn
-	 * @param {NoteOffEvent} noteOff
-	 * @param {Header} header
-	 */
-	constructor(noteOn, noteOff, header) {
+	constructor(noteOn: NoteOnEvent, noteOff: NoteOffEvent, header: Header) {
 
 		privateHeaderMap.set(this, header);
 
@@ -206,4 +189,28 @@ export interface NoteJSON {
 	duration: number;
 	ticks: number;
 	durationTicks: number;
+}
+
+export interface NoteOnEvent {
+	ticks: number;
+	velocity: number;
+	midi: number;
+}
+
+export interface NoteOffEvent {
+	ticks: number;
+	velocity: number;
+}
+
+export interface NoteInterface {
+	time: number;
+	ticks: number;
+	duration: number;
+	durationTicks: number;
+	midi: number;
+	pitch: string;
+	octave: number;
+	name: string;
+	noteOffVelocity: number;
+	velocity: number;
 }

@@ -1,10 +1,10 @@
 import { insert } from "./BinarySearch";
-import { ControlChange } from "./ControlChange";
+import { ControlChange, ControlChangeInterface } from "./ControlChange";
 import { ControlChangesJSON, createControlChanges } from "./ControlChanges";
 import { Header } from "./Header";
 import { Instrument, InstrumentJSON } from "./Instrument";
 import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent } from "./midi-file";
-import { Note, NoteJSON } from "./Note";
+import { Note, NoteInterface, NoteJSON } from "./Note";
 
 const privateHeaderMap = new WeakMap<Track, Header>();
 
@@ -90,7 +90,7 @@ export class Track {
 	 * Add a note to the notes array
 	 * @param props The note properties to add
 	 */
-	addNote(props: Partial<NoteParameters> = {}): this {
+	addNote(props: Partial<NoteInterface> = {}): this {
 		const header = privateHeaderMap.get(this);
 		const note = new Note({
 			midi : 0,
@@ -109,7 +109,7 @@ export class Track {
 	 * Add a control change to the track
 	 * @param props
 	 */
-	addCC(props: Partial<ControlChangeParameters>): this {
+	addCC(props: Partial<ControlChangeInterface>): this {
 		const header = privateHeaderMap.get(this);
 		const cc = new ControlChange({
 			controllerType : props.number,
@@ -204,25 +204,4 @@ export interface TrackJSON {
 	channel: number;
 	instrument: InstrumentJSON;
 	controlChanges: ControlChangesJSON;
-}
-
-interface NoteParameters {
-	time: number;
-	ticks: number;
-	duration: number;
-	durationTicks: number;
-	midi: number;
-	pitch: string;
-	octave: number;
-	name: string;
-	noteOffVelocity: number;
-	velocity: number;
-	channel: number;
-}
-
-interface ControlChangeParameters {
-	time: number;
-	ticks: number;
-	value: number;
-	number: number;
 }
