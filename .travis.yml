@@ -4,9 +4,8 @@ language: node_js
 node_js: "10"
 script: 
   - npm test
-  - npm run tsc
+  - npm run lint
 after_success: 
-  - npm run tsd
   - npm run codecov
 before_deploy: 
   - npm run increment
