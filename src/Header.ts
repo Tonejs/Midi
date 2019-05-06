@@ -210,6 +210,7 @@ export class Header {
 		// clone all the attributes
 		this.tempos = json.tempos.map(t => Object.assign({}, t));
 		this.timeSignatures = json.timeSignatures.map(t => Object.assign({}, t));
+		this.keySignatures = json.keySignatures.map(t => Object.assign({}, t));
 		this.meta = json.meta.map(t => Object.assign({}, t));
 		privatePPQMap.set(this, json.ppq);
 		this.update();
