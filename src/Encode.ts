@@ -7,7 +7,7 @@ import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
 	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "./midi-file";
 import { Note } from "./Note";
 import { Track } from "./Track";
-// @ts-ignore
+// tslint:disable-next-line: no-var-requires
 const flatten = require("array-flatten");
 
 function encodeNote(note: Note, channel: number): [MidiNoteOnEvent, MidiNoteOffEvent] {

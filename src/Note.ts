@@ -29,6 +29,7 @@ function pitchClassToMidi(pitch: string): number {
 /**
  * Convert a pitch to a midi number
  */
+// tslint:disable-next-line: only-arrow-functions typedef
 const pitchToMidi: (note: string) => number = (function() {
 	const regexp = /^([a-g]{1}(?:b|#|x|bb)?)(-?[0-9]+)/i;
 	const noteToScaleIndex = {

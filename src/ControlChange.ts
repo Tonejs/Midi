@@ -104,23 +104,23 @@ export class ControlChange implements ControlChangeInterface {
 	toJSON(): ControlChangeJSON {
 		return {
 			number : this.number,
-			value : this.value,
-			time : this.time,
 			ticks : this.ticks,
+			time : this.time,
+			value : this.value,
 		};
 	}
 }
 
 export interface ControlChangeJSON {
 	number: number;
-	value: number;
-	time: number;
 	ticks: number;
+	time: number;
+	value: number;
 }
 
 export interface ControlChangeInterface {
-	time: number;
-	ticks: number;
-	value: number;
 	number: number;
+	ticks: number;
+	time: number;
+	value: number;
 }
