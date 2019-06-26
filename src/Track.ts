@@ -1,9 +1,9 @@
+import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent } from "midi-file"
 import { insert } from "./BinarySearch";
 import { ControlChange, ControlChangeInterface } from "./ControlChange";
 import { ControlChangesJSON, createControlChanges } from "./ControlChanges";
 import { Header } from "./Header";
 import { Instrument, InstrumentJSON } from "./Instrument";
-import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent } from "./midi-file";
 import { Note, NoteInterface, NoteJSON } from "./Note";
 
 const privateHeaderMap = new WeakMap<Track, Header>();

@@ -4,7 +4,7 @@ import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatu
 import { Midi } from "./Midi";
 import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
 	MidiInstrumentEvent, MidiKeySignatureEvent, MidiNoteOffEvent,
-	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "./midi-file";
+	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "midi-file"
 import { Note } from "./Note";
 import { Track } from "./Track";
 // tslint:disable-next-line: no-var-requires
