@@ -4,6 +4,7 @@
   "description": "Convert binary midi into JSON",
   "main": "build/Midi.js",
   "module": "dist/Midi.js",
+  "jsnext:main": "dist/Midi.js",
   "scripts": {
     "build": "tsc && webpack -p --mode=production",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
@@ -37,7 +38,6 @@
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.9.3",
-    "array-flatten": "^2.1.2",
     "chai": "^4.2.0",
     "codecov": "^3.2.0",
     "glob": "^7.1.3",
@@ -53,8 +53,9 @@
     "typescript": "^3.4.5",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3"
-  },
-  "dependencies": {
+},
+"dependencies": {
+    "array-flatten": "^2.1.2",
     "midi-file": "^1.1.1"
   },
   "nyc": {
