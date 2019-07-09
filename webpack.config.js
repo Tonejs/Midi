@@ -10,7 +10,6 @@ module.exports = {
 		filename : '[name].js',
 		sourceMapFilename : '[file].map',
 		library : 'Midi',
-		libraryExport : 'Midi',
 		libraryTarget : 'umd',
 		globalObject: "typeof self !== 'undefined' ? self : this"
 	},
