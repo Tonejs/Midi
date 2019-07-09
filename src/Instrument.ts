@@ -1,5 +1,5 @@
+import { MidiInstrumentEvent, MidiTrackData } from "midi-file";
 import { drumKitByPatchID, instrumentByPatchID, instrumentFamilyByID } from "./InstrumentMaps";
-import { MidiInstrumentEvent, MidiTrackData } from "midi-file"
 import { Track } from "./Track";
 
 const privateTrackMap = new WeakMap<Instrument, Track>();

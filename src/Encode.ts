@@ -1,10 +1,10 @@
 import { writeMidi } from "midi-file";
+import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
+	MidiInstrumentEvent, MidiKeySignatureEvent, MidiNoteOffEvent,
+	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "midi-file";
 import { ControlChange } from "./ControlChange";
 import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatureEvent } from "./Header";
 import { Midi } from "./Midi";
-import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
-	MidiInstrumentEvent, MidiKeySignatureEvent, MidiNoteOffEvent,
-	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "midi-file"
 import { Note } from "./Note";
 import { Track } from "./Track";
 // tslint:disable-next-line: no-var-requires
