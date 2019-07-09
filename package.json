@@ -3,8 +3,7 @@
   "version": "2.0.0",
   "description": "Convert binary midi into JSON",
   "main": "build/Midi.js",
-  "module": "src/Midi.js",
-  "types": "dist/Midi.d.ts",
+  "module": "dist/Midi.js",
   "scripts": {
     "build": "tsc && webpack -p --mode=production",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
