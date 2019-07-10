@@ -37,6 +37,17 @@ context("Header", () => {
 			expect(midi.header.timeSignatures).to.have.length(1);
 			expect(midi.header.timeSignatures[0].timeSignature).to.deep.equal([2, 4]);
 		});
+
+		it ("can set the tempo with setTempo", () => {
+			const firstNoteTicks = midi.tracks[0].notes[0].ticks;
+			const firstNoteTime = midi.tracks[0].notes[0].time;
+			expect(midi.header.tempos).to.have.length(4);
+			midi.header.setTempo(80);
+			expect(midi.header.tempos).to.have.length(1);
+			expect(midi.header.tempos[0].bpm).to.equal(80);
+			expect(firstNoteTicks).to.equal(midi.tracks[0].notes[0].ticks);
+			expect(firstNoteTime).to.not.equal(midi.tracks[0].notes[0].time);
+		});
 	});
 
 	describe("parses debussy claire de lune", () => {

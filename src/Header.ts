@@ -6,7 +6,7 @@ const privatePPQMap = new WeakMap<Header, number>();
 export interface TempoEvent {
 	ticks: number;
 	bpm: number;
-	time?: number;
+	readonly time?: number;
 }
 
 export interface TimeSignatureEvent {
@@ -111,6 +111,7 @@ export class Header {
 			const lastBPM = index > 0 ? this.tempos[index - 1].bpm : this.tempos[0].bpm;
 			const beats = (event.ticks / this.ppq) - lastEventBeats;
 			const elapsedSeconds = (60 / lastBPM) * beats;
+			// @ts-ignore
 			event.time = elapsedSeconds + currentTime;
 			currentTime = event.time;
 			lastEventBeats += beats;
@@ -213,6 +214,19 @@ export class Header {
 		this.keySignatures = json.keySignatures.map(t => Object.assign({}, t));
 		this.meta = json.meta.map(t => Object.assign({}, t));
 		privatePPQMap.set(this, json.ppq);
+		this.update();
+	}
+
+	/**
+	 * Update the tempo of the midi to a single tempo. Will remove and replace
+	 * any other tempos currently set and update all of the event timing.
+	 * @param bpm The tempo in beats per second
+	 */
+	setTempo(bpm: number): void {
+		this.tempos = [{
+			bpm,
+			ticks: 0,
+		}];
 		this.update();
 	}
 }
