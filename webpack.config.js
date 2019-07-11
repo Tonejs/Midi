@@ -8,8 +8,6 @@ module.exports = {
 	output : {
 		path : path.resolve(__dirname, 'build'),
 		filename : '[name].js',
-		sourceMapFilename : '[file].map',
-		library : 'Midi',
 		libraryTarget : 'umd',
 		globalObject: "typeof self !== 'undefined' ? self : this"
 	},
