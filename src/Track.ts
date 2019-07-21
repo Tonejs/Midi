@@ -204,7 +204,9 @@ export class Track {
 			this.addPitchbend({
 				ticks : pb.ticks,
 				value : pb.value,
-				time : pb.time
+				time : pb.time,
+				channel : pb.channel,
+				semitones : pb.semitones
 			})
 		})
 	}

@@ -37,6 +37,7 @@ interface MidiControllerEvent extends MidiChannelEvent {
 interface MidiPitchbendEvent extends MidiChannelEvent {
 	type: "pitchBend";
 	value: number;
+	channel: number;
 }
 
 interface MidiInstrumentEvent extends MidiChannelEvent {
