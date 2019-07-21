@@ -54,8 +54,8 @@
     "typescript": "^3.4.5",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3"
-},
-"dependencies": {
+  },
+  "dependencies": {
     "array-flatten": "^2.1.2",
     "midi-file": "^1.1.1"
   },

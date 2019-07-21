@@ -1,10 +1,11 @@
-import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent } from "midi-file";
+import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent, MidiPitchbendEvent } from "midi-file";
 import { insert } from "./BinarySearch";
 import { ControlChange, ControlChangeInterface } from "./ControlChange";
 import { ControlChangesJSON, createControlChanges } from "./ControlChanges";
 import { Header } from "./Header";
 import { Instrument, InstrumentJSON } from "./Instrument";
 import { Note, NoteInterface, NoteJSON } from "./Note";
+import { PitchbendChange, PitchbendChangeInterface, PitchbendChangeJSON } from "./PitchbendChange";
 
 const privateHeaderMap = new WeakMap<Track, Header>();
 
@@ -27,6 +28,11 @@ export class Track {
 	 * The track's note events
 	 */
 	notes: Note[] = [];
+
+	/**
+	 * The track's pitch bend events
+	 */
+	pitchbends: PitchbendChange[] = [];
 
 	/**
 	 * The channel number of the track. Applies this channel
@@ -82,6 +88,11 @@ export class Track {
 				});
 			});
 
+			const pitchbendChanges = trackData.filter(event => event.type === "pitchBend") as MidiPitchbendEvent[];
+			pitchbendChanges.forEach(event => {
+				this.addPitchbend(event)
+			})
+
 			// const endOfTrack = trackData.find(event => event.type === "endOfTrack");
 		}
 	}
@@ -120,6 +131,21 @@ export class Track {
 			this.controlChanges[cc.number] = [];
 		}
 		insert(this.controlChanges[cc.number], cc, "ticks");
+		return this;
+	}
+
+	/**
+	 * Add a pitchbend to the pitchbendchanges array
+	 * @param props The pitchbend properties to add
+	 */
+	addPitchbend(props: Partial<PitchbendChangeInterface> = {}): this {
+		console.log('adding PB attempt!');
+		const header = privateHeaderMap.get(this);
+		const pb = new PitchbendChange(
+			props, header
+		);
+		Object.assign(pb, props);
+		insert(this.pitchbends, pb, "ticks");
 		return this;
 	}
 
@@ -174,6 +200,13 @@ export class Track {
 				velocity : n.velocity,
 			});
 		});
+		json.pitchbends.forEach(pb => {
+			this.addPitchbend({
+				ticks : pb.ticks,
+				value : pb.value,
+				time : pb.time
+			})
+		})
 	}
 
 	/**
@@ -194,6 +227,7 @@ export class Track {
 			instrument : this.instrument.toJSON(),
 			name : this.name,
 			notes : this.notes.map(n => n.toJSON()),
+			pitchbends : this.pitchbends.map(n => n.toJSON())
 		};
 	}
 }
@@ -204,4 +238,5 @@ export interface TrackJSON {
 	channel: number;
 	instrument: InstrumentJSON;
 	controlChanges: ControlChangesJSON;
+	pitchbends: PitchbendChangeJSON[];
 }

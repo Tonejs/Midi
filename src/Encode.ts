@@ -1,8 +1,9 @@
 import { writeMidi } from "midi-file";
 import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
 	MidiInstrumentEvent, MidiKeySignatureEvent, MidiNoteOffEvent,
-	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "midi-file";
+	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent, MidiPitchbendEvent } from "midi-file";
 import { ControlChange } from "./ControlChange";
+import { PitchbendChange } from "./PitchbendChange";
 import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatureEvent } from "./Header";
 import { Midi } from "./Midi";
 import { Note } from "./Note";
@@ -55,6 +56,29 @@ function encodeControlChanges(track: Track): MidiControllerEvent[] {
 	}
 	return controlChanges;
 }
+
+/*
+function encodePitchbendChange(pb: PitchbendChange, channel: number): MidiPitchbendEvent {
+	return {
+		absoluteTime: pb.ticks,
+		channel,
+		deltaTime: 0,
+		type: "pitchBend",
+		value: pb.value,
+	};
+}
+
+function encodePitchbendChanges(track: Track): MidiPitchbendEvent[] {
+	const pitchbendChanges: MidiPitchbendEvent[] = [];
+	for (let i = 0; i < 127; i++) {
+		if (track.pitchbendChanges.hasOwnProperty(i)) {
+			track.pitchbendChanges.forEach((pb: PitchbendChange) => {
+				pitchbendChanges.push(encodePitchbendChange(pb, track.channel));
+			});
+		}
+	}
+	return pitchbendChanges;
+}*/
 
 function encodeInstrument(track: Track): MidiInstrumentEvent {
 	return {
@@ -162,6 +186,8 @@ export function encode(midi: Midi): Uint8Array {
 					...encodeNotes(track),
 					// and the control changes
 					...encodeControlChanges(track),
+					// and the pitchbend changes (unimplemented)
+					//...encodePitchbendChanges(track)
 				];
 			}),
 		],
