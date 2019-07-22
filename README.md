@@ -9,6 +9,31 @@
 
 Midi makes it straightforward to read and write MIDI files with Javascript. It uses [midi-file](https://github.com/carter-thaxton/midi-file) for parsing and writing. 
 
+## Import
+
+Node.js:
+
+```javascript
+const { Midi } = require('@tonejs/midi')
+```
+
+Typescript / ES6
+
+```javascript
+import { Midi } from '@tonejs/midi'
+```
+
+Browser
+
+```html
+<script src="https://unpkg.com/@tonejs/midi"></script>
+```
+```javascript
+const midi = new Midi()
+```
+
+## Basic Example
+
 
 ```javascript
 // load a midi file in the browser
