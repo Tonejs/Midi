@@ -39,7 +39,7 @@ export function search(array: any[], value: any, prop= "ticks"): number {
  * Does a binary search to insert the note
  * in the correct spot in the array
  */
-export function insert(array: any[], event: object, prop: string = "ticks"): void {
+export function insert(array: any[], event: object, prop = "ticks"): void {
 	if (array.length) {
 		const index = search(array, event[prop], prop);
 		array.splice(index + 1, 0, event);

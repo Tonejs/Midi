@@ -1,4 +1,5 @@
 import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent } from "midi-file";
+
 import { insert } from "./BinarySearch";
 import { ControlChange, ControlChangeInterface } from "./ControlChange";
 import { ControlChangesJSON, createControlChanges } from "./ControlChanges";
@@ -16,7 +17,7 @@ export class Track {
 	/**
 	 * The name of the track
 	 */
-	name: string = "";
+	name = "";
 
 	/**
 	 * The instrument associated with the track
@@ -48,9 +49,9 @@ export class Track {
 			this.name = nameEvent ? nameEvent.text : "";
 		}
 
-		/** @type {Instrument} */
 		this.instrument = new Instrument(trackData, this);
 
+		// defaults to 0
 		this.channel = 0;
 
 		if (trackData) {
@@ -58,17 +59,19 @@ export class Track {
 			const noteOffs = trackData.filter(event => event.type === "noteOff") as MidiNoteOffEvent[];
 			while (noteOns.length) {
 				const currentNote = noteOns.shift();
+				// set the channel based on the note
+				this.channel = currentNote.channel;
 				// find the corresponding note off
 				const offIndex = noteOffs.findIndex(note => note.noteNumber === currentNote.noteNumber);
 				if (offIndex !== -1) {
 					// once it's got the note off, add it
 					const noteOff = noteOffs.splice(offIndex, 1)[0];
 					this.addNote({
-						durationTicks : noteOff.absoluteTime - currentNote.absoluteTime,
-						midi : currentNote.noteNumber,
-						noteOffVelocity : noteOff.velocity / 127,
-						ticks : currentNote.absoluteTime,
-						velocity : currentNote.velocity / 127,
+						durationTicks: noteOff.absoluteTime - currentNote.absoluteTime,
+						midi: currentNote.noteNumber,
+						noteOffVelocity: noteOff.velocity / 127,
+						ticks: currentNote.absoluteTime,
+						velocity: currentNote.velocity / 127,
 					});
 				}
 			}
@@ -76,9 +79,9 @@ export class Track {
 			const controlChanges = trackData.filter(event => event.type === "controller") as MidiControllerEvent[];
 			controlChanges.forEach(event => {
 				this.addCC({
-					number : event.controllerType,
-					ticks : event.absoluteTime,
-					value : event.value / 127,
+					number: event.controllerType,
+					ticks: event.absoluteTime,
+					value: event.value / 127,
 				});
 			});
 
@@ -93,12 +96,12 @@ export class Track {
 	addNote(props: Partial<NoteInterface> = {}): this {
 		const header = privateHeaderMap.get(this);
 		const note = new Note({
-			midi : 0,
-			ticks : 0,
-			velocity : 1,
+			midi: 0,
+			ticks: 0,
+			velocity: 1,
 		}, {
-			ticks : 0,
-			velocity : 0,
+			ticks: 0,
+			velocity: 0,
 		}, header);
 		Object.assign(note, props);
 		insert(this.notes, note, "ticks");
@@ -112,7 +115,7 @@ export class Track {
 	addCC(props: Partial<ControlChangeInterface>): this {
 		const header = privateHeaderMap.get(this);
 		const cc = new ControlChange({
-			controllerType : props.number,
+			controllerType: props.number,
 		}, header);
 		delete props.number;
 		Object.assign(cc, props);
@@ -159,19 +162,19 @@ export class Track {
 			if (json.controlChanges[number]) {
 				json.controlChanges[number].forEach(cc => {
 					this.addCC({
-						number : cc.number,
-						ticks : cc.ticks,
-						value : cc.value,
+						number: cc.number,
+						ticks: cc.ticks,
+						value: cc.value,
 					});
 				});
 			}
 		}
 		json.notes.forEach(n => {
 			this.addNote({
-				durationTicks : n.durationTicks,
-				midi : n.midi,
-				ticks : n.ticks,
-				velocity : n.velocity,
+				durationTicks: n.durationTicks,
+				midi: n.midi,
+				ticks: n.ticks,
+				velocity: n.velocity,
 			});
 		});
 	}
@@ -189,11 +192,11 @@ export class Track {
 			}
 		}
 		return {
-			channel : this.channel,
+			channel: this.channel,
 			controlChanges,
-			instrument : this.instrument.toJSON(),
-			name : this.name,
-			notes : this.notes.map(n => n.toJSON()),
+			instrument: this.instrument.toJSON(),
+			name: this.name,
+			notes: this.notes.map(n => n.toJSON()),
 		};
 	}
 }

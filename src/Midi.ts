@@ -121,8 +121,8 @@ export class Midi {
 	 */
 	toJSON(): MidiJSON {
 		return {
-			header : this.header.toJSON(),
-			tracks : this.tracks.map(track => track.toJSON()),
+			header: this.header.toJSON(),
+			tracks: this.tracks.map(track => track.toJSON()),
 		};
 	}
 

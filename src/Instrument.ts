@@ -12,7 +12,7 @@ export class Instrument {
 	/**
 	 * The instrument number
 	 */
-	number: number = 0;
+	number = 0;
 
 	/**
 	 * @param {Array} [trackData]
@@ -72,9 +72,9 @@ export class Instrument {
 	 */
 	toJSON(): InstrumentJSON {
 		return {
-			family : this.family,
-			name : this.name,
-			number : this.number,
+			family: this.family,
+			name: this.name,
+			number: this.number,
 		};
 	}
 
