@@ -60,6 +60,12 @@ context("Track", () => {
 			expect(midi.tracks[0].notes).to.have.length(404);
 			expect(midi.tracks[1].notes).to.have.length(420);
 		});
+
+		it("parses midi drum beat", () => {
+			const drumMidi = new Midi(readFileSync(resolve(__dirname, "./midi/beat.mid")));
+			expect(drumMidi.tracks.length).to.equal(1);
+			expect(drumMidi.tracks[0].channel).to.equal(9);
+		});
 	});
 
 	describe("control changes on debussy claire de lune", () => {
@@ -150,10 +156,10 @@ context("Track", () => {
 			expect(firstTrack.notes).to.have.length(404);
 
 			firstTrack.addNote({
-				midi : 60,
-				time : 200,
-				velocity : 0.4,
-				duration : 0.5,
+				midi: 60,
+				time: 200,
+				velocity: 0.4,
+				duration: 0.5,
 			});
 
 			expect(firstTrack.notes).to.have.length(405);
@@ -199,9 +205,9 @@ context("Track", () => {
 		it("can add values", () => {
 			const track = midi.addTrack();
 			track.addCC({
-				number : 64,
-				value : 0,
-				time : 10,
+				number: 64,
+				value: 0,
+				time: 10,
 			});
 
 			expect(track.controlChanges.sustain).to.have.length(1);
