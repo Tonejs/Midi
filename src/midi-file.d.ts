@@ -1,108 +1,111 @@
-//////////////////////////////////////////////////////////
-// THE EVENT TYPES
-//////////////////////////////////////////////////////////
+declare module "midi-file" {
 
-interface MidiEvent {
-	type: string;
-	deltaTime: number;
-	absoluteTime: number;
-}
+	// ////////////////////////////////////////////////////////
+	// THE EVENT TYPES
+	// ////////////////////////////////////////////////////////
 
-interface MidiChannelEvent extends MidiEvent {
-	channel: number;
-	meta?: false;
-}
+	interface MidiEvent {
+		type: string;
+		deltaTime: number;
+		absoluteTime: number;
+	}
 
-interface MidiNoteEvent extends MidiChannelEvent {
-	type: string;
-	velocity: number;
-	noteNumber: number;
-	running?: boolean;
-}
+	interface MidiChannelEvent extends MidiEvent {
+		channel: number;
+		meta?: false;
+	}
 
-interface MidiNoteOnEvent extends MidiNoteEvent {
-	type: "noteOn";
-}
+	interface MidiNoteEvent extends MidiChannelEvent {
+		type: string;
+		velocity: number;
+		noteNumber: number;
+		running?: boolean;
+	}
 
-interface MidiNoteOffEvent extends MidiNoteEvent {
-	type: "noteOff";
-}
+	interface MidiNoteOnEvent extends MidiNoteEvent {
+		type: "noteOn";
+	}
 
-interface MidiControllerEvent extends MidiChannelEvent {
-	type: "controller";
-	controllerType: number;
-	value: number;
-}
+	interface MidiNoteOffEvent extends MidiNoteEvent {
+		type: "noteOff";
+	}
 
-interface MidiInstrumentEvent extends MidiChannelEvent {
-	type: "programChange";
-	programNumber: number;
-}
+	interface MidiControllerEvent extends MidiChannelEvent {
+		type: "controller";
+		controllerType: number;
+		value: number;
+	}
 
-//////////////////////////////////////////////////////////
-// META EVENTS
-//////////////////////////////////////////////////////////
+	interface MidiInstrumentEvent extends MidiChannelEvent {
+		type: "programChange";
+		programNumber: number;
+	}
 
-interface MidiMetaEvent extends MidiEvent {
-	meta: true;
-	type: string;
-}
+	// ////////////////////////////////////////////////////////
+	// META EVENTS
+	// ////////////////////////////////////////////////////////
 
-interface MidiTimeSignatureEvent extends MidiMetaEvent {
-	type: "timeSignature";
-	numerator: number;
-	denominator: number;
-	thirtyseconds: number;
-	metronome: number;
-}
+	interface MidiMetaEvent extends MidiEvent {
+		meta: true;
+		type: string;
+	}
 
-interface MidiTempoEvent extends MidiMetaEvent {
-	type: "setTempo";
-	microsecondsPerBeat: number;
-}
+	interface MidiTimeSignatureEvent extends MidiMetaEvent {
+		type: "timeSignature";
+		numerator: number;
+		denominator: number;
+		thirtyseconds: number;
+		metronome: number;
+	}
 
-interface MidiTrackNameEvent extends MidiMetaEvent {
-	type: "trackName";
-	text: string;
-}
+	interface MidiTempoEvent extends MidiMetaEvent {
+		type: "setTempo";
+		microsecondsPerBeat: number;
+	}
 
-interface MidiEndOfTrackEvent extends MidiMetaEvent {
-	type: "endOfTrack";
-}
+	interface MidiTrackNameEvent extends MidiMetaEvent {
+		type: "trackName";
+		text: string;
+	}
 
-interface MidiCopyrightEvent extends MidiMetaEvent {
-	type: "copyrightNotice";
-	text: string;
-}
+	interface MidiEndOfTrackEvent extends MidiMetaEvent {
+		type: "endOfTrack";
+	}
 
-interface MidiTextEvent extends MidiMetaEvent {
-	type: "text" | "marker" | "lyrics" | "cuePoint";
-	text: string;
-}
+	interface MidiCopyrightEvent extends MidiMetaEvent {
+		type: "copyrightNotice";
+		text: string;
+	}
 
-interface MidiKeySignatureEvent extends MidiMetaEvent {
-	type: "keySignature";
-	key: number;
-	scale: number;
-}
+	interface MidiTextEvent extends MidiMetaEvent {
+		type: "text" | "marker" | "lyrics" | "cuePoint";
+		text: string;
+	}
 
-type MidiTrackEvent = MidiTimeSignatureEvent | MidiTempoEvent | MidiTrackNameEvent |
+	interface MidiKeySignatureEvent extends MidiMetaEvent {
+		type: "keySignature";
+		key: number;
+		scale: number;
+	}
+
+	type MidiTrackEvent = MidiTimeSignatureEvent | MidiTempoEvent | MidiTrackNameEvent |
 	MidiEndOfTrackEvent | MidiNoteOnEvent | MidiNoteOffEvent | MidiControllerEvent |
 	MidiInstrumentEvent | MidiKeySignatureEvent | MidiTextEvent;
 
-export type MidiTrackData = MidiTrackEvent[];
+	export type MidiTrackData = MidiTrackEvent[];
 
-export interface MidiData {
-	header: {
-		format: number;
-		ticksPerBeat: number;
-		numTracks: number;
-	};
-	tracks: MidiTrackData[];
+	export interface MidiData {
+		header: {
+			format: number;
+			ticksPerBeat: number;
+			numTracks: number;
+		};
+		tracks: MidiTrackData[];
+	}
+
+	// //////////////////////////////////////////////////////
+	// EXPORTED METHODS
+	// //////////////////////////////////////////////////////
+	export function parseMidi(midiArray: ArrayLike<number> | ArrayBuffer): MidiData;
+	export function writeMidi(midiData: MidiData): ArrayBuffer;
 }
-
-//////////////////////////////////////////////////////////
-// EXPORTED METHODS
-//////////////////////////////////////////////////////////
-export function parseMidi(midiArray: ArrayLike<number> | ArrayBuffer): MidiData;
-export function writeMidi(midiData: MidiData): ArrayBuffer;
