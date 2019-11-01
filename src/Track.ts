@@ -62,7 +62,7 @@ export class Track {
 				// set the channel based on the note
 				this.channel = currentNote.channel;
 				// find the corresponding note off
-				const offIndex = noteOffs.findIndex(note => note.noteNumber === currentNote.noteNumber);
+				const offIndex = noteOffs.findIndex(note => note.noteNumber === currentNote.noteNumber && note.absoluteTime >= currentNote.absoluteTime);
 				if (offIndex !== -1) {
 					// once it's got the note off, add it
 					const noteOff = noteOffs.splice(offIndex, 1)[0];
