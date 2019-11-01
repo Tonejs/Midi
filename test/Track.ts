@@ -147,6 +147,18 @@ context("Track", () => {
 		});
 	});
 
+	describe("Tchaikovsky symphony", () => {
+		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/tchaikovsky_seasons.mid")));
+
+		it("doesn't have negative durations", () => {
+			midi.tracks.forEach(track => {
+				track.notes.forEach(note => {
+					expect(note.duration).to.be.gte(0);
+				});
+			});
+		});
+	});
+
 	describe("can add note to beethoven symphony 7", () => {
 
 		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/beethoven/symphony_7_2.mid")));
