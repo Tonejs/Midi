@@ -44,7 +44,7 @@ context("Track", () => {
 		});
 
 		it("can get the set percussion", () => {
-			midi.tracks[0].channel = 10;
+			midi.tracks[0].channel = 9;
 			expect(midi.tracks[0].instrument.family).to.equal("drums");
 			midi.tracks[0].instrument.number = 0;
 			expect(midi.tracks[0].instrument.name).to.equal("standard kit");
