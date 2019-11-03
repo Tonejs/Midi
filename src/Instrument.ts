@@ -64,7 +64,7 @@ export class Instrument {
 	 */
 	get percussion(): boolean {
 		const track = privateTrackMap.get(this);
-		return [9, 10].includes(track.channel);
+		return track.channel === 9;
 	}
 
 	/**
