@@ -153,7 +153,7 @@ export class Midi {
 /**
  * The MIDI data in JSON format
  */
-interface MidiJSON {
+export interface MidiJSON {
 	header: HeaderJSON;
 	tracks: TrackJSON[];
 }
