@@ -22,5 +22,12 @@
 	],
 	"exclude": [
 		// "node_modules"
-	]
+	],
+	"typedocOptions": {
+		"exclude" : ["./src/Encode.ts", "./src/BinarySearch.ts", "./src/InstrumentMaps.ts"],
+		"mode": "file",
+		"excludeNotExported" : true,
+		"out": "docs",
+		"theme" : "minimal"
+    }
 }

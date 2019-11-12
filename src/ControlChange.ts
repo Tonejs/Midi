@@ -1,15 +1,17 @@
 import { Header } from "./Header";
 import { MidiControllerEvent } from "midi-file";
 
-export type ControlChangeName = "modulationWheel" | "breath" | "footController" | "portamentoTime"
-| "volume" | "balance" | "pan" | "sustain" | "portamentoTime" | "sostenuto" | "softPedal"
-| "legatoFootswitch" | "portamentoControl";
+/**
+ * @hidden
+ */
+export type ControlChangeName = "modulationWheel" | "breath" | "footController" | "portamentoTime" | "volume" | "balance" | "pan" | "sustain" | "portamentoTime" | "sostenuto" | "softPedal" | "legatoFootswitch" | "portamentoControl";
 
 interface ControlChangeMap {
 	[key: number]: ControlChangeName;
 }
 /**
  * A map of values to control change names
+ * @hidden
  */
 export const controlChangeNames: ControlChangeMap = {
 	1: "modulationWheel",
@@ -27,7 +29,10 @@ export const controlChangeNames: ControlChangeMap = {
 	84: "portamentoControl",
 };
 
-// swap the keys and values
+/**
+ * swap the keys and values
+ * @hidden
+ */
 export const controlChangeIds = Object.keys(controlChangeNames).reduce((obj, key) => {
 	obj[controlChangeNames[key]] = key;
 	return obj;
@@ -35,13 +40,6 @@ export const controlChangeIds = Object.keys(controlChangeNames).reduce((obj, key
 
 const privateHeaderMap = new WeakMap<ControlChange, Header>();
 const privateCCNumberMap = new WeakMap<ControlChange, number>();
-
-/**
- * @typedef ControlChangeEvent
- * @property {number} controllerType
- * @property {number=} value
- * @property {number=} absoluteTime
- */
 
 /**
  * Represents a control change event

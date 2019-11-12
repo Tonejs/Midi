@@ -1,5 +1,6 @@
 /**
  * Return the index of the element at or before the given property
+ * @hidden
  */
 export function search(array: any[], value: any, prop= "ticks"): number {
 	let beginning = 0;
@@ -38,6 +39,7 @@ export function search(array: any[], value: any, prop= "ticks"): number {
 /**
  * Does a binary search to insert the note
  * in the correct spot in the array
+ * @hidden
  */
 export function insert(array: any[], event: object, prop = "ticks"): void {
 	if (array.length) {

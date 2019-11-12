@@ -129,7 +129,7 @@ export const instrumentByPatchID = [
 	"gunshot",
 ];
 
-export const instrumentFamilyByID = [
+export const InstrumentFamilyByID = [
 	"piano",
 	"chromatic percussion",
 	"organ",
@@ -148,7 +148,7 @@ export const instrumentFamilyByID = [
 	"sound effects",
 ];
 
-export const drumKitByPatchID = {
+export const DrumKitByPatchID = {
 	0: "standard kit",
 	8: "room kit",
 	16: "power kit",

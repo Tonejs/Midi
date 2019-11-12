@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsc && webpack -p --mode=production",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "docs": "typedoc",
     "increment": "node scripts/increment_version.js",
     "lint": "eslint --ext ts ./src",
     "lint:fix": "npm run lint -- --fix",
@@ -54,6 +55,7 @@
     "source-map-support": "^0.5.12",
     "ts-loader": "^5.4.5",
     "ts-node": "^8.1.0",
+    "typedoc": "^0.15.0",
     "typescript": "^3.7.2",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3"

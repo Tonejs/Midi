@@ -27,6 +27,9 @@ export interface KeySignatureEvent {
 	scale: string;
 }
 
+/**
+ * @hidden
+ */
 export const keySignatureKeys = ["Cb", "Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#"];
 
 /** The parsed midi file header */

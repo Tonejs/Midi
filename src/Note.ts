@@ -238,4 +238,7 @@ type TimeDescription = {
 	durationTicks?: number;
 }
 
+/**
+ * @hidden
+ */
 export type NoteConstructorInterface = PitchDescription & VelocityDescription & TimeDescription

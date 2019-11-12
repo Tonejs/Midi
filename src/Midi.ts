@@ -77,8 +77,7 @@ export class Midi {
 	get name(): string {
 		return this.header.name;
 	}
-
-	set name(n: string) {
+	set name(n) {
 		this.header.name = n;
 	}
 

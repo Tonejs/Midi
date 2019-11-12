@@ -1,4 +1,4 @@
-import { writeMidi, MidiPitchBendEvent } from "midi-file";
+import { MidiPitchBendEvent, writeMidi } from "midi-file";
 import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
 	MidiInstrumentEvent, MidiKeySignatureEvent, MidiNoteOffEvent,
 	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "midi-file";

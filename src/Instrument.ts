@@ -1,7 +1,10 @@
 import { MidiInstrumentEvent, MidiTrackData } from "midi-file";
-import { drumKitByPatchID, instrumentByPatchID, instrumentFamilyByID } from "./InstrumentMaps";
+import { DrumKitByPatchID, instrumentByPatchID, InstrumentFamilyByID } from "./InstrumentMaps";
 import { Track } from "./Track";
 
+/**
+ * @hidden
+ */
 const privateTrackMap = new WeakMap<Instrument, Track>();
 
 /**
@@ -35,7 +38,7 @@ export class Instrument {
 	 */
 	get name(): string {
 		if (this.percussion) {
-			return drumKitByPatchID[this.number];
+			return DrumKitByPatchID[this.number];
 		} else {
 			return instrumentByPatchID[this.number];
 		}
@@ -55,7 +58,7 @@ export class Instrument {
 		if (this.percussion) {
 			return "drums";
 		} else {
-			return instrumentFamilyByID[Math.floor(this.number / 8)];
+			return InstrumentFamilyByID[Math.floor(this.number / 8)];
 		}
 	}
 
