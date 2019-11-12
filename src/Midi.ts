@@ -157,3 +157,6 @@ export interface MidiJSON {
 	header: HeaderJSON;
 	tracks: TrackJSON[];
 }
+
+export type TrackJSON = TrackJSON;
+export type HeaderJSON = HeaderJSON;
