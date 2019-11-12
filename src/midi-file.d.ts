@@ -1,8 +1,8 @@
-//////////////////////////////////////////////////////////
-// THE EVENT TYPES
-//////////////////////////////////////////////////////////
-
 declare module "midi-file" {
+
+	// ////////////////////////////////////////////////////////
+	// THE EVENT TYPES
+	// ////////////////////////////////////////////////////////
 
 	export interface MidiEvent {
 		type: string;
@@ -36,19 +36,14 @@ declare module "midi-file" {
 		value: number;
 	}
 
-	export interface MidiPitchBendEvent extends MidiChannelEvent {
-		type: "pitchBend";
-		value: number;
-	}
-
 	export interface MidiInstrumentEvent extends MidiChannelEvent {
 		type: "programChange";
 		programNumber: number;
 	}
 
-	//////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////
 	// META EVENTS
-	//////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////
 
 	export interface MidiMetaEvent extends MidiEvent {
 		meta: true;
@@ -93,9 +88,12 @@ declare module "midi-file" {
 		scale: number;
 	}
 
-	export type MidiTrackEvent = MidiTimeSignatureEvent | MidiTempoEvent | MidiTrackNameEvent |
-		MidiEndOfTrackEvent | MidiNoteOnEvent | MidiNoteOffEvent | MidiControllerEvent | MidiPitchBendEvent |
-		MidiInstrumentEvent | MidiKeySignatureEvent | MidiTextEvent;
+	export interface MidiPitchBendEvent extends MidiChannelEvent {
+		type: "pitchBend";
+		value: number;
+	}
+
+	export type MidiTrackEvent = MidiTimeSignatureEvent | MidiTempoEvent | MidiTrackNameEvent | MidiEndOfTrackEvent | MidiNoteOnEvent | MidiNoteOffEvent | MidiControllerEvent | MidiPitchBendEvent | MidiInstrumentEvent | MidiKeySignatureEvent | MidiTextEvent;
 
 	export type MidiTrackData = MidiTrackEvent[];
 
@@ -108,9 +106,9 @@ declare module "midi-file" {
 		tracks: MidiTrackData[];
 	}
 
-	//////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////
 	// EXPORTED METHODS
-	//////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////
 	export function parseMidi(midiArray: ArrayLike<number> | ArrayBuffer): MidiData;
 	export function writeMidi(midiData: MidiData): ArrayBuffer;
 }

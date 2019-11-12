@@ -4,6 +4,7 @@
 		"outDir": "dist",
 		"module": "commonjs",
 		"sourceMap": true,
+		"esModuleInterop": true,
 		"target" : "es5",
 		"declaration": true,
 		// "noUnusedLocals": true,
@@ -13,9 +14,11 @@
 			"mocha"
 		]
 	},
+	"files": [
+		"./src/midi-file.d.ts"
+	],
 	"include": [
-		"./src/*.ts",
-		// "test/*.js", 
+		"./src/*.ts"
 	],
 	"exclude": [
 		// "node_modules"

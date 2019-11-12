@@ -1,4 +1,4 @@
-import { MidiControllerEvent, MidiPitchBendEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent } from "midi-file";
+import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiPitchBendEvent, MidiTrackData, MidiTrackNameEvent } from "midi-file";
 import { insert } from "./BinarySearch";
 import { ControlChange, ControlChangeInterface } from "./ControlChange";
 import { ControlChangesJSON, createControlChanges } from "./ControlChanges";
@@ -6,7 +6,7 @@ import { PitchBend, PitchBendInterface, PitchBendJSON } from "./PitchBend";
 
 import { Header } from "./Header";
 import { Instrument, InstrumentJSON } from "./Instrument";
-import { Note, NoteInterface, NoteJSON } from "./Note";
+import { Note, NoteConstructorInterface, NoteJSON } from "./Note";
 
 const privateHeaderMap = new WeakMap<Track, Header>();
 
@@ -18,7 +18,7 @@ export class Track {
 	/**
 	 * The name of the track
 	 */
-	name: string = "";
+	name = "";
 
 	/**
 	 * The instrument associated with the track
@@ -41,7 +41,9 @@ export class Track {
 	 */
 	controlChanges = createControlChanges();
 
-	/** The pitch bend events */	
+	/** 
+	 * The pitch bend events
+	 */
 	pitchBends: PitchBend[] = []
 
 	constructor(trackData: MidiTrackData, header: Header) {
@@ -53,9 +55,9 @@ export class Track {
 			this.name = nameEvent ? nameEvent.text : "";
 		}
 
-		/** @type {Instrument} */
 		this.instrument = new Instrument(trackData, this);
 
+		// defaults to 0
 		this.channel = 0;
 
 		if (trackData) {
@@ -63,17 +65,19 @@ export class Track {
 			const noteOffs = trackData.filter(event => event.type === "noteOff") as MidiNoteOffEvent[];
 			while (noteOns.length) {
 				const currentNote = noteOns.shift();
+				// set the channel based on the note
+				this.channel = currentNote.channel;
 				// find the corresponding note off
-				const offIndex = noteOffs.findIndex(note => note.noteNumber === currentNote.noteNumber);
+				const offIndex = noteOffs.findIndex(note => note.noteNumber === currentNote.noteNumber && note.absoluteTime >= currentNote.absoluteTime);
 				if (offIndex !== -1) {
 					// once it's got the note off, add it
 					const noteOff = noteOffs.splice(offIndex, 1)[0];
 					this.addNote({
-						durationTicks : noteOff.absoluteTime - currentNote.absoluteTime,
-						midi : currentNote.noteNumber,
-						noteOffVelocity : noteOff.velocity / 127,
-						ticks : currentNote.absoluteTime,
-						velocity : currentNote.velocity / 127,
+						durationTicks: noteOff.absoluteTime - currentNote.absoluteTime,
+						midi: currentNote.noteNumber,
+						noteOffVelocity: noteOff.velocity / 127,
+						ticks: currentNote.absoluteTime,
+						velocity: currentNote.velocity / 127,
 					});
 				}
 			}
@@ -81,17 +85,18 @@ export class Track {
 			const controlChanges = trackData.filter(event => event.type === "controller") as MidiControllerEvent[];
 			controlChanges.forEach(event => {
 				this.addCC({
-					number : event.controllerType,
-					ticks : event.absoluteTime,
-					value : event.value / 127,
+					number: event.controllerType,
+					ticks: event.absoluteTime,
+					value: event.value / 127,
 				});
 			});
 
 			const pitchBends = trackData.filter(event => event.type === "pitchBend") as MidiPitchBendEvent[];
 			pitchBends.forEach(event => {
-				this.addPitchBend({					
-					ticks : event.absoluteTime,
-					value : event.value,
+				this.addPitchBend({
+					ticks: event.absoluteTime,
+					// scale the value between -2^13 to 2^13 to -2 to 2
+					value: event.value / Math.pow(2, 13),
 				});
 			});
 
@@ -103,15 +108,15 @@ export class Track {
 	 * Add a note to the notes array
 	 * @param props The note properties to add
 	 */
-	addNote(props: Partial<NoteInterface> = {}): this {
+	addNote(props: NoteConstructorInterface): this {
 		const header = privateHeaderMap.get(this);
 		const note = new Note({
-			midi : 0,
-			ticks : 0,
-			velocity : 1,
+			midi: 0,
+			ticks: 0,
+			velocity: 1,
 		}, {
-			ticks : 0,
-			velocity : 0,
+			ticks: 0,
+			velocity: 0,
 		}, header);
 		Object.assign(note, props);
 		insert(this.notes, note, "ticks");
@@ -122,10 +127,10 @@ export class Track {
 	 * Add a control change to the track
 	 * @param props
 	 */
-	addCC(props: Partial<ControlChangeInterface>): this {
+	addCC(props: Omit<ControlChangeInterface, "ticks"> | Omit<ControlChangeInterface, "time">): this {
 		const header = privateHeaderMap.get(this);
 		const cc = new ControlChange({
-			controllerType : props.number,
+			controllerType: props.number,
 		}, header);
 		delete props.number;
 		Object.assign(cc, props);
@@ -138,12 +143,11 @@ export class Track {
 
 	/**
 	 * Add a control change to the track
-	 * @param props
 	 */
-	addPitchBend(props: Partial<PitchBendInterface>): this {
+	addPitchBend(props: Omit<PitchBendInterface, "ticks"> | Omit<PitchBendInterface, "time">): this {
 		const header = privateHeaderMap.get(this);
-		const pb = new PitchBend({}, header);		
-		Object.assign(pb, props);		
+		const pb = new PitchBend({}, header);
+		Object.assign(pb, props);
 		insert(this.pitchBends, pb, "ticks");
 		return this;
 	}
@@ -184,19 +188,19 @@ export class Track {
 			if (json.controlChanges[number]) {
 				json.controlChanges[number].forEach(cc => {
 					this.addCC({
-						number : cc.number,
-						ticks : cc.ticks,
-						value : cc.value,
+						number: cc.number,
+						ticks: cc.ticks,
+						value: cc.value,
 					});
 				});
 			}
 		}
 		json.notes.forEach(n => {
 			this.addNote({
-				durationTicks : n.durationTicks,
-				midi : n.midi,
-				ticks : n.ticks,
-				velocity : n.velocity,
+				durationTicks: n.durationTicks,
+				midi: n.midi,
+				ticks: n.ticks,
+				velocity: n.velocity,
 			});
 		});
 	}
@@ -214,12 +218,12 @@ export class Track {
 			}
 		}
 		return {
-			channel : this.channel,
+			channel: this.channel,
 			controlChanges,
 			pitchBends: this.pitchBends.map(pb => pb.toJSON()),
-			instrument : this.instrument.toJSON(),
-			name : this.name,
-			notes : this.notes.map(n => n.toJSON()),
+			instrument: this.instrument.toJSON(),
+			name: this.name,
+			notes: this.notes.map(n => n.toJSON()),
 		};
 	}
 }

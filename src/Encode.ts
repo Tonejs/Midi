@@ -8,8 +8,7 @@ import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatu
 import { Midi } from "./Midi";
 import { Note } from "./Note";
 import { Track } from "./Track";
-// tslint:disable-next-line: no-var-requires
-const flatten = require("array-flatten");
+import flatten from "array-flatten";
 
 function encodeNote(note: Note, channel: number): [MidiNoteOnEvent, MidiNoteOffEvent] {
 	return [{
@@ -31,7 +30,7 @@ function encodeNote(note: Note, channel: number): [MidiNoteOnEvent, MidiNoteOffE
 }
 
 function encodeNotes(track: Track): Array<MidiNoteOnEvent | MidiNoteOffEvent> {
-	return flatten(track.notes.map(note => encodeNote(note, track.channel)));
+	return flatten(track.notes.map(note => encodeNote(note, track.channel))) as unknown as Array<MidiNoteOnEvent | MidiNoteOffEvent>;
 }
 
 function encodeControlChange(cc: ControlChange, channel: number): MidiControllerEvent {
@@ -147,20 +146,20 @@ function encodeText(textEvent: MetaEvent): MidiTextEvent {
  */
 export function encode(midi: Midi): Uint8Array {
 	const midiData: MidiData = {
-		header : {
-			format : 1,
-			numTracks : midi.tracks.length + 1,
-			ticksPerBeat : midi.header.ppq,
+		header: {
+			format: 1,
+			numTracks: midi.tracks.length + 1,
+			ticksPerBeat: midi.header.ppq,
 		},
-		tracks : [
+		tracks: [
 			[
 				// the name data
 				{
 					absoluteTime: 0,
 					deltaTime: 0,
-					meta : true,
-					text : midi.header.name,
-					type : "trackName",
+					meta: true,
+					text: midi.header.name,
+					type: "trackName",
 				} as MidiTrackNameEvent,
 				...midi.header.keySignatures.map(keySig => encodeKeySignature(keySig)),
 				// and all the meta events (cloned for safety)
@@ -199,9 +198,9 @@ export function encode(midi: Midi): Uint8Array {
 		});
 		// end of track
 		track.push({
-			deltaTime : 0,
-			meta : true,
-			type : "endOfTrack",
+			deltaTime: 0,
+			meta: true,
+			type: "endOfTrack",
 		} as MidiEndOfTrackEvent);
 		return track;
 	});

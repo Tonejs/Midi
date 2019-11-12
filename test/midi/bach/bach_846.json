@@ -1513,214 +1513,215 @@
 				"7": [
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.7874015748031497
 					}
 				],
 				"10": [
 					{
 						"number": 10,
-						"value": 0.5039370078740157,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.5039370078740157
 					}
 				],
 				"91": [
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 1920,
 						"time": 3.2311085,
-						"ticks": 1920
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 3840,
 						"time": 6.394017,
-						"ticks": 3840
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 5760,
 						"time": 9.560101249999997,
-						"ticks": 5760
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 7680,
 						"time": 12.713363999999997,
-						"ticks": 7680
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 9600,
 						"time": 15.889377749999996,
-						"ticks": 9600
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 11520,
 						"time": 19.045871499999997,
-						"ticks": 11520
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 13440,
 						"time": 22.206388250000003,
-						"ticks": 13440
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 15360,
 						"time": 25.3669615,
-						"ticks": 15360
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 17280,
 						"time": 28.58243125,
-						"ticks": 17280
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 19200,
 						"time": 31.80852025,
-						"ticks": 19200
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 21120,
 						"time": 34.96804050000001,
-						"ticks": 21120
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 23040,
 						"time": 38.14290458333334,
-						"ticks": 23040
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 24960,
 						"time": 41.32284908333335,
-						"ticks": 24960
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 26880,
 						"time": 44.500878083333355,
-						"ticks": 26880
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 28800,
 						"time": 47.664132833333355,
-						"ticks": 28800
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 30720,
 						"time": 50.86405633333336,
-						"ticks": 30720
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 32640,
 						"time": 54.08695983333336,
-						"ticks": 32640
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 34560,
 						"time": 57.308435833333355,
-						"ticks": 34560
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 36480,
 						"time": 60.552275083333356,
-						"ticks": 36480
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 38400,
 						"time": 63.75689008333335,
-						"ticks": 38400
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 40320,
 						"time": 66.94913683333336,
-						"ticks": 40320
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 42240,
 						"time": 70.22153483333335,
-						"ticks": 42240
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 44160,
 						"time": 73.37649358333333,
-						"ticks": 44160
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 46080,
 						"time": 76.58149683333332,
-						"ticks": 46080
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 48000,
 						"time": 79.76602283333331,
-						"ticks": 48000
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 49920,
 						"time": 82.91873358333329,
-						"ticks": 49920
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 51840,
 						"time": 86.0772538333333,
-						"ticks": 51840
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 53760,
 						"time": 89.3046043333333,
-						"ticks": 53760
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 55680,
 						"time": 92.59111808333331,
-						"ticks": 55680
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 57600,
 						"time": 95.7675890833333,
-						"ticks": 57600
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 59520,
 						"time": 98.99954108333331,
-						"ticks": 59520
+						"value": 1
 					}
 				]
 			},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -5471,636 +5472,637 @@
 				"7": [
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.7874015748031497
 					}
 				],
 				"10": [
 					{
 						"number": 10,
-						"value": 0.5039370078740157,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.5039370078740157
 					}
 				],
 				"64": [
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 1930,
 						"time": 3.2480003958333334,
-						"ticks": 1930
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 2026,
 						"time": 3.4101625958333335,
-						"ticks": 2026
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 3849,
 						"time": 6.4091176687499996,
-						"ticks": 3849
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 3925,
 						"time": 6.536634427083333,
-						"ticks": 3925
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 5769,
 						"time": 9.574903887499998,
-						"ticks": 5769
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 5859,
 						"time": 9.722930262499997,
-						"ticks": 5859
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 7688,
 						"time": 12.726877516666663,
-						"ticks": 7688
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 7786,
 						"time": 12.89241809583333,
-						"ticks": 7786
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 9607,
 						"time": 15.900815662499996,
-						"ticks": 9607
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 9680,
 						"time": 16.020096749999997,
-						"ticks": 9680
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 11520,
 						"time": 19.045871499999997,
-						"ticks": 11520
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 11633,
 						"time": 19.23420483333333,
-						"ticks": 11633
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 13453,
 						"time": 22.228200327083336,
-						"ticks": 13453
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 13511,
 						"time": 22.32551574791667,
-						"ticks": 13511
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 15370,
 						"time": 25.383408874999997,
-						"ticks": 15370
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 15473,
 						"time": 25.5528168375,
-						"ticks": 15473
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 17290,
 						"time": 28.5994380625,
-						"ticks": 17290
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 17360,
 						"time": 28.71848575,
-						"ticks": 17360
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 19209,
 						"time": 31.8234209125,
-						"ticks": 19209
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 19299,
 						"time": 31.9724275375,
-						"ticks": 19299
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 21127,
 						"time": 34.97962990416667,
-						"ticks": 21127
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 21211,
 						"time": 35.11870275416668,
-						"ticks": 21211
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 23053,
 						"time": 38.165474018750004,
-						"ticks": 23053
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 23181,
 						"time": 38.38600604583334,
-						"ticks": 23181
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 24969,
 						"time": 41.33784908333335,
-						"ticks": 24969
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 25101,
 						"time": 41.55784908333335,
-						"ticks": 25101
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 26894,
 						"time": 44.52421141666669,
-						"ticks": 26894
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 27028,
 						"time": 44.747544750000024,
-						"ticks": 27028
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 28810,
 						"time": 47.68091135416669,
-						"ticks": 28810
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 28976,
 						"time": 47.95943480000002,
-						"ticks": 28976
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 30727,
 						"time": 50.875801297916695,
-						"ticks": 30727
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 30840,
 						"time": 51.06539858333336,
-						"ticks": 30840
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 32651,
 						"time": 54.10541620625003,
-						"ticks": 32651
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 32739,
 						"time": 54.25306718958336,
-						"ticks": 32739
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 34570,
 						"time": 57.32567720833335,
-						"ticks": 34570
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 34680,
 						"time": 57.515332333333355,
-						"ticks": 34680
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 36490,
 						"time": 60.56894175000002,
-						"ticks": 36490
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 36571,
 						"time": 60.70394175000002,
-						"ticks": 36571
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 38409,
 						"time": 63.77189008333335,
-						"ticks": 38409
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 38527,
 						"time": 63.96855675000002,
-						"ticks": 38527
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 40332,
 						"time": 66.96954500833336,
-						"ticks": 40332
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 40411,
 						"time": 67.10389882708336,
-						"ticks": 40411
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 42247,
 						"time": 70.23304799583335,
-						"ticks": 42247
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 42360,
 						"time": 70.41890333333335,
-						"ticks": 42360
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 44167,
 						"time": 73.38839835208333,
-						"ticks": 44167
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 44294,
 						"time": 73.60438487083333,
-						"ticks": 44294
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 46091,
 						"time": 76.59995320624998,
-						"ticks": 46091
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 46221,
 						"time": 76.81807397708332,
-						"ticks": 46221
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 48014,
 						"time": 79.78904915833331,
-						"ticks": 48014
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 48162,
 						"time": 80.03247030833332,
-						"ticks": 48162
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 49927,
 						"time": 82.93032298749996,
-						"ticks": 49927
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 49998,
 						"time": 83.04787265833329,
-						"ticks": 49998
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 51846,
 						"time": 86.0871876083333,
-						"ticks": 51846
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 51937,
 						"time": 86.23784986249997,
-						"ticks": 51937
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 53774,
 						"time": 89.32960433749997,
-						"ticks": 53774
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 53915,
 						"time": 89.58139009374997,
-						"ticks": 53915
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 55688,
 						"time": 92.60445141666665,
-						"ticks": 55688
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 55765,
 						"time": 92.73278474999998,
-						"ticks": 55765
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 57611,
 						"time": 95.7870926333333,
-						"ticks": 57611
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 57734,
 						"time": 96.00368841666663,
-						"ticks": 57734
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 59530,
 						"time": 99.01654789583331,
-						"ticks": 59530
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 59600,
 						"time": 99.13559558333331,
-						"ticks": 59600
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 61450,
 						"time": 102.27981164583332,
-						"ticks": 61450
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 61546,
 						"time": 102.44307704583332,
-						"ticks": 61546
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 63370,
 						"time": 105.61296649999998,
-						"ticks": 63370
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 63501,
 						"time": 105.84360018749999,
-						"ticks": 63501
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 65280,
 						"time": 109.6354575833333,
-						"ticks": 65280
+						"value": 0
 					},
 					{
 						"number": 64,
-						"value": 1,
+						"ticks": 65600,
 						"time": 110.90529891666664,
-						"ticks": 65600
+						"value": 1
 					},
 					{
 						"number": 64,
-						"value": 0,
+						"ticks": 67028,
 						"time": 116.57196586666663,
-						"ticks": 67028
+						"value": 0
 					}
 				],
 				"91": [
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 1920,
 						"time": 3.2311085,
-						"ticks": 1920
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 3840,
 						"time": 6.394017,
-						"ticks": 3840
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 5760,
 						"time": 9.560101249999997,
-						"ticks": 5760
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 7680,
 						"time": 12.713363999999997,
-						"ticks": 7680
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 9600,
 						"time": 15.889377749999996,
-						"ticks": 9600
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 11520,
 						"time": 19.045871499999997,
-						"ticks": 11520
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 13440,
 						"time": 22.206388250000003,
-						"ticks": 13440
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 15360,
 						"time": 25.3669615,
-						"ticks": 15360
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 17280,
 						"time": 28.58243125,
-						"ticks": 17280
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 19200,
 						"time": 31.80852025,
-						"ticks": 19200
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 21120,
 						"time": 34.96804050000001,
-						"ticks": 21120
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 23040,
 						"time": 38.14290458333334,
-						"ticks": 23040
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 24960,
 						"time": 41.32284908333335,
-						"ticks": 24960
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 26880,
 						"time": 44.500878083333355,
-						"ticks": 26880
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 28800,
 						"time": 47.664132833333355,
-						"ticks": 28800
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 30720,
 						"time": 50.86405633333336,
-						"ticks": 30720
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 32640,
 						"time": 54.08695983333336,
-						"ticks": 32640
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 34560,
 						"time": 57.308435833333355,
-						"ticks": 34560
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 36480,
 						"time": 60.552275083333356,
-						"ticks": 36480
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 38400,
 						"time": 63.75689008333335,
-						"ticks": 38400
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 40320,
 						"time": 66.94913683333336,
-						"ticks": 40320
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 42240,
 						"time": 70.22153483333335,
-						"ticks": 42240
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 44160,
 						"time": 73.37649358333333,
-						"ticks": 44160
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 46080,
 						"time": 76.58149683333332,
-						"ticks": 46080
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 48000,
 						"time": 79.76602283333331,
-						"ticks": 48000
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 49920,
 						"time": 82.91873358333329,
-						"ticks": 49920
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 51840,
 						"time": 86.0772538333333,
-						"ticks": 51840
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 53760,
 						"time": 89.3046043333333,
-						"ticks": 53760
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 55680,
 						"time": 92.59111808333331,
-						"ticks": 55680
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 57600,
 						"time": 95.7675890833333,
-						"ticks": 57600
+						"value": 1
 					},
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 59520,
 						"time": 98.99954108333331,
-						"ticks": 59520
+						"value": 1
 					}
 				]
 			},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -7322,78 +7324,79 @@
 				"7": [
 					{
 						"number": 7,
-						"value": 0.8661417322834646,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.8661417322834646
 					},
 					{
 						"number": 7,
-						"value": 1,
+						"ticks": 70319,
 						"time": 123.45675356249997,
-						"ticks": 70319
+						"value": 1
 					},
 					{
 						"number": 7,
-						"value": 0.8661417322834646,
+						"ticks": 73200,
 						"time": 129.1390180833333,
-						"ticks": 73200
+						"value": 0.8661417322834646
 					},
 					{
 						"number": 7,
-						"value": 1,
+						"ticks": 78960,
 						"time": 140.4248168333333,
-						"ticks": 78960
+						"value": 1
 					},
 					{
 						"number": 7,
-						"value": 0.8661417322834646,
+						"ticks": 83520,
 						"time": 149.39730950000003,
-						"ticks": 83520
+						"value": 0.8661417322834646
 					},
 					{
 						"number": 7,
-						"value": 1,
+						"ticks": 95280,
 						"time": 172.66893854166668,
-						"ticks": 95280
+						"value": 1
 					},
 					{
 						"number": 7,
-						"value": 0.8661417322834646,
+						"ticks": 98400,
 						"time": 178.89025179166666,
-						"ticks": 98400
+						"value": 0.8661417322834646
 					},
 					{
 						"number": 7,
-						"value": 1,
+						"ticks": 113040,
 						"time": 208.87614029166664,
-						"ticks": 113040
+						"value": 1
 					}
 				],
 				"10": [
 					{
 						"number": 10,
-						"value": 0.5039370078740157,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.5039370078740157
 					}
 				],
 				"91": [
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 67200,
 						"time": 117.2545055833333,
-						"ticks": 67200
+						"value": 1
 					}
 				],
 				"93": [
 					{
 						"number": 93,
-						"value": 0,
+						"ticks": 67200,
 						"time": 117.2545055833333,
-						"ticks": 67200
+						"value": 0
 					}
 				]
 			},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -9389,72 +9392,73 @@
 				"7": [
 					{
 						"number": 7,
-						"value": 0.8661417322834646,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.8661417322834646
 					},
 					{
 						"number": 7,
-						"value": 1,
+						"ticks": 67440,
 						"time": 117.7351975833333,
-						"ticks": 67440
+						"value": 1
 					},
 					{
 						"number": 7,
-						"value": 0.8661417322834646,
+						"ticks": 70440,
 						"time": 123.69500658333331,
-						"ticks": 70440
+						"value": 0.8661417322834646
 					},
 					{
 						"number": 7,
-						"value": 1,
+						"ticks": 82800,
 						"time": 147.97998650000002,
-						"ticks": 82800
+						"value": 1
 					},
 					{
 						"number": 7,
-						"value": 0.8661417322834646,
+						"ticks": 86160,
 						"time": 154.5333512916667,
-						"ticks": 86160
+						"value": 0.8661417322834646
 					},
 					{
 						"number": 7,
-						"value": 1,
+						"ticks": 92400,
 						"time": 166.91997704166673,
-						"ticks": 92400
+						"value": 1
 					},
 					{
 						"number": 7,
-						"value": 0.8661417322834646,
+						"ticks": 95280,
 						"time": 172.66893854166668,
-						"ticks": 95280
+						"value": 0.8661417322834646
 					}
 				],
 				"10": [
 					{
 						"number": 10,
-						"value": 0.5039370078740157,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.5039370078740157
 					}
 				],
 				"91": [
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 67200,
 						"time": 117.2545055833333,
-						"ticks": 67200
+						"value": 1
 					}
 				],
 				"93": [
 					{
 						"number": 93,
-						"value": 0,
+						"ticks": 67200,
 						"time": 117.2545055833333,
-						"ticks": 67200
+						"value": 0
 					}
 				]
 			},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -11261,96 +11265,97 @@
 				"7": [
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 73200,
 						"time": 129.1390180833333,
-						"ticks": 73200
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 76080,
 						"time": 134.7841388333333,
-						"ticks": 76080
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 88560,
 						"time": 159.22850904166668,
-						"ticks": 88560
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 95280,
 						"time": 172.66893854166668,
-						"ticks": 95280
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 102000,
 						"time": 186.04419279166666,
-						"ticks": 102000
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 105720,
 						"time": 193.56880679166662,
-						"ticks": 105720
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 106800,
 						"time": 195.76510904166665,
-						"ticks": 106800
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 109920,
 						"time": 202.02690104166663,
-						"ticks": 109920
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 111600,
 						"time": 205.71381854166665,
-						"ticks": 111600
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 113040,
 						"time": 208.87614029166664,
-						"ticks": 113040
+						"value": 0.7874015748031497
 					}
 				],
 				"10": [
 					{
 						"number": 10,
-						"value": 0.5039370078740157,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.5039370078740157
 					}
 				],
 				"91": [
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 67200,
 						"time": 117.2545055833333,
-						"ticks": 67200
+						"value": 1
 					}
 				],
 				"93": [
 					{
 						"number": 93,
-						"value": 0,
+						"ticks": 67200,
 						"time": 117.2545055833333,
-						"ticks": 67200
+						"value": 0
 					}
 				]
 			},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -12941,96 +12946,97 @@
 				"7": [
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 76080,
 						"time": 134.7841388333333,
-						"ticks": 76080
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 78960,
 						"time": 140.4248168333333,
-						"ticks": 78960
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 85680,
 						"time": 153.60127379166667,
-						"ticks": 85680
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 89040,
 						"time": 160.18482104166668,
-						"ticks": 89040
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 94320,
 						"time": 170.7730212916667,
-						"ticks": 94320
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 98399,
 						"time": 178.8882676645833,
-						"ticks": 98399
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 99360,
 						"time": 180.77336879166666,
-						"ticks": 99360
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 102000,
 						"time": 186.04419279166666,
-						"ticks": 102000
+						"value": 0.7874015748031497
 					},
 					{
 						"number": 7,
-						"value": 0.9448818897637795,
+						"ticks": 104879,
 						"time": 191.89804066249997,
-						"ticks": 104879
+						"value": 0.9448818897637795
 					},
 					{
 						"number": 7,
-						"value": 0.7874015748031497,
+						"ticks": 108480,
 						"time": 199.09588054166665,
-						"ticks": 108480
+						"value": 0.7874015748031497
 					}
 				],
 				"10": [
 					{
 						"number": 10,
-						"value": 0.5039370078740157,
+						"ticks": 0,
 						"time": 0,
-						"ticks": 0
+						"value": 0.5039370078740157
 					}
 				],
 				"91": [
 					{
 						"number": 91,
-						"value": 1,
+						"ticks": 67200,
 						"time": 117.2545055833333,
-						"ticks": 67200
+						"value": 1
 					}
 				],
 				"93": [
 					{
 						"number": 93,
-						"value": 0,
+						"ticks": 67200,
 						"time": 117.2545055833333,
-						"ticks": 67200
+						"value": 0
 					}
 				]
 			},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -14312,6 +14318,7 @@
 		{
 			"channel": 0,
 			"controlChanges": {},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -14323,6 +14330,7 @@
 		{
 			"channel": 0,
 			"controlChanges": {},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -14334,6 +14342,7 @@
 		{
 			"channel": 0,
 			"controlChanges": {},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",
@@ -14345,6 +14354,7 @@
 		{
 			"channel": 0,
 			"controlChanges": {},
+			"pitchBends": [],
 			"instrument": {
 				"family": "piano",
 				"name": "acoustic grand piano",

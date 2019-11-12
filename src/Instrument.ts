@@ -12,13 +12,13 @@ export class Instrument {
 	/**
 	 * The instrument number
 	 */
-	number: number = 0;
+	number = 0;
 
 	/**
-	 * @param {Array} [trackData]
-	 * @param {Track} track
+	 * @param trackData
+	 * @param track 
 	 */
-	constructor(trackData: MidiTrackData, track) {
+	constructor(trackData: MidiTrackData, track: Track) {
 
 		privateTrackMap.set(this, track);
 		this.number = 0;
@@ -64,7 +64,7 @@ export class Instrument {
 	 */
 	get percussion(): boolean {
 		const track = privateTrackMap.get(this);
-		return [9, 10].includes(track.channel);
+		return track.channel === 9;
 	}
 
 	/**
@@ -72,9 +72,9 @@ export class Instrument {
 	 */
 	toJSON(): InstrumentJSON {
 		return {
-			family : this.family,
-			name : this.name,
-			number : this.number,
+			family: this.family,
+			name: this.name,
+			number: this.number,
 		};
 	}
 

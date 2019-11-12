@@ -1,4 +1,5 @@
 import { Header } from "./Header";
+import { MidiPitchBendEvent } from "midi-file";
 
 const privateHeaderMap = new WeakMap<PitchBend, Header>();
 
@@ -18,10 +19,10 @@ export class PitchBend implements PitchBendInterface {
 	ticks: number;
 
 	/**
-	 * @param {ControlChangeEvent} event
-	 * @param {Header} header
+	 * @param event
+	 * @param header
 	 */
-	constructor(event, header: Header) {
+	constructor(event: Partial<MidiPitchBendEvent>, header: Header) {
 		privateHeaderMap.set(this, header);
 
 		this.ticks = event.absoluteTime;
@@ -43,9 +44,9 @@ export class PitchBend implements PitchBendInterface {
 
 	toJSON(): PitchBendJSON {
 		return {
-			ticks : this.ticks,
-			time : this.time,
-			value : this.value,
+			ticks: this.ticks,
+			time: this.time,
+			value: this.value,
 		};
 	}
 }

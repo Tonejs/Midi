@@ -1,8 +1,8 @@
 import { Header } from "./Header";
 
-export type ControlChangeName =  "modulationWheel" | "breath" | "footController" | "portamentoTime"
-	| "volume" | "balance" | "pan" | "sustain" | "portamentoTime" | "sostenuto" | "softPedal"
-	| "legatoFootswitch" | "portamentoControl";
+export type ControlChangeName = "modulationWheel" | "breath" | "footController" | "portamentoTime"
+| "volume" | "balance" | "pan" | "sustain" | "portamentoTime" | "sostenuto" | "softPedal"
+| "legatoFootswitch" | "portamentoControl";
 
 interface ControlChangeMap {
 	[key: number]: ControlChangeName;
@@ -11,19 +11,19 @@ interface ControlChangeMap {
  * A map of values to control change names
  */
 export const controlChangeNames: ControlChangeMap = {
-	1 : "modulationWheel",
-	2 : "breath",
-	4 : "footController",
-	5 : "portamentoTime",
-	7 : "volume",
-	8 : "balance",
-	10 : "pan",
-	64 : "sustain",
-	65 : "portamentoTime",
-	66 : "sostenuto",
-	67 : "softPedal",
-	68 : "legatoFootswitch",
-	84 : "portamentoControl",
+	1: "modulationWheel",
+	2: "breath",
+	4: "footController",
+	5: "portamentoTime",
+	7: "volume",
+	8: "balance",
+	10: "pan",
+	64: "sustain",
+	65: "portamentoTime",
+	66: "sostenuto",
+	67: "softPedal",
+	68: "legatoFootswitch",
+	84: "portamentoControl",
 };
 
 // swap the keys and values
@@ -103,10 +103,10 @@ export class ControlChange implements ControlChangeInterface {
 
 	toJSON(): ControlChangeJSON {
 		return {
-			number : this.number,
-			ticks : this.ticks,
-			time : this.time,
-			value : this.value,
+			number: this.number,
+			ticks: this.ticks,
+			time: this.time,
+			value: this.value,
 		};
 	}
 }
