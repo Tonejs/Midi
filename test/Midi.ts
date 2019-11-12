@@ -3,7 +3,9 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 import { Midi } from "../src/Midi";
 // add fetch to the window so that the fetch function could work
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const fetch = require("node-fetch");
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 global.fetch = fetch;
 import { createServer } from "http-server";
@@ -35,7 +37,10 @@ context("Midi", () => {
 			expect(track.notes).to.have.length(0);
 
 			// add note to the empty track
-			track.addNote();
+			track.addNote({
+				midi: 44,
+				time: 0
+			});
 			expect(track.notes).to.have.length(1);
 		});
 	});
@@ -58,7 +63,7 @@ context("Midi", () => {
 		let server = null;
 		before(done => {
 			server = createServer({
-				root : resolve(__dirname, "./midi"),
+				root: resolve(__dirname, "./midi"),
 			});
 			server.listen(9999, () => done());
 		});

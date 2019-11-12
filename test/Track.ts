@@ -177,16 +177,16 @@ context("Track", () => {
 			expect(firstTrack.notes).to.have.length(405);
 
 			// was inserted in the right place
-			const note = firstTrack.notes.find(note => note.velocity === 0.4 && note.midi === 60);
+			const note = firstTrack.notes.find(n => n.velocity === 0.4 && n.midi === 60);
 			expect(note.duration).to.be.closeTo(0.5, 0.01);
 			expect(note.time).to.be.closeTo(200, 0.01);
 			expect(note.ticks).to.be.equal(61440);
 
 			// search the array to make sure that it's ordered
 			let lastTick = 0;
-			firstTrack.notes.forEach(note => {
-				expect(note.ticks).at.least(lastTick);
-				lastTick = note.ticks;
+			firstTrack.notes.forEach(n => {
+				expect(n.ticks).at.least(lastTick);
+				lastTick = n.ticks;
 			});
 		});
 
@@ -233,6 +233,28 @@ context("Track", () => {
 			// remove all sustain events
 			track.controlChanges.sustain = null;
 			expect(track.controlChanges[64]).is.not.ok;
+		});
+	});
+
+	describe("PitchBend", () => {
+		
+		it("can add values", () => {
+			const midi = new Midi();
+			const track = midi.addTrack();
+			track.addPitchBend({
+				value: 0,
+				time: 1,
+			});
+			expect(track.pitchBends).to.have.length(1);
+		});
+
+		it("can parse values from midi file", () => {
+			const midi = new Midi(readFileSync(resolve(__dirname, "./midi/pitchBendTest.mid")));
+			expect(midi.tracks[0].pitchBends[0].value).to.equal(0);
+			expect(midi.tracks[0].pitchBends[0].time).to.equal(0);
+
+			expect(midi.tracks[0].pitchBends[25].ticks).to.equal(480);
+			expect(midi.tracks[0].pitchBends[25].value).to.be.closeTo(1, 0.01);
 		});
 	});
 

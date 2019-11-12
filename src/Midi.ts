@@ -158,5 +158,5 @@ export interface MidiJSON {
 	tracks: TrackJSON[];
 }
 
-export type TrackJSON = TrackJSON;
-export type HeaderJSON = HeaderJSON;
+export { TrackJSON } from "./Track";
+export { HeaderJSON } from "./Header";

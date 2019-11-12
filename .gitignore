@@ -13,3 +13,4 @@ coverage.lcov
 index.d.ts
 out/
 .vscode
+/.vs/*

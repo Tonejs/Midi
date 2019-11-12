@@ -15,10 +15,10 @@ export class Instrument {
 	number = 0;
 
 	/**
-	 * @param {Array} [trackData]
-	 * @param {Track} track
+	 * @param trackData
+	 * @param track 
 	 */
-	constructor(trackData: MidiTrackData, track) {
+	constructor(trackData: MidiTrackData, track: Track) {
 
 		privateTrackMap.set(this, track);
 		this.number = 0;

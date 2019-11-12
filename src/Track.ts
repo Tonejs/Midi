@@ -1,11 +1,12 @@
-import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent } from "midi-file";
-
+import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiPitchBendEvent, MidiTrackData, MidiTrackNameEvent } from "midi-file";
 import { insert } from "./BinarySearch";
 import { ControlChange, ControlChangeInterface } from "./ControlChange";
 import { ControlChangesJSON, createControlChanges } from "./ControlChanges";
+import { PitchBend, PitchBendInterface, PitchBendJSON } from "./PitchBend";
+
 import { Header } from "./Header";
 import { Instrument, InstrumentJSON } from "./Instrument";
-import { Note, NoteInterface, NoteJSON } from "./Note";
+import { Note, NoteConstructorInterface, NoteJSON } from "./Note";
 
 const privateHeaderMap = new WeakMap<Track, Header>();
 
@@ -39,6 +40,11 @@ export class Track {
 	 * The control change events
 	 */
 	controlChanges = createControlChanges();
+
+	/**
+	 * The pitch bend events
+	 */
+	pitchBends: PitchBend[] = []
 
 	constructor(trackData: MidiTrackData, header: Header) {
 
@@ -85,6 +91,15 @@ export class Track {
 				});
 			});
 
+			const pitchBends = trackData.filter(event => event.type === "pitchBend") as MidiPitchBendEvent[];
+			pitchBends.forEach(event => {
+				this.addPitchBend({
+					ticks: event.absoluteTime,
+					// scale the value between -2^13 to 2^13 to -2 to 2
+					value: event.value / Math.pow(2, 13),
+				});
+			});
+
 			// const endOfTrack = trackData.find(event => event.type === "endOfTrack");
 		}
 	}
@@ -93,7 +108,7 @@ export class Track {
 	 * Add a note to the notes array
 	 * @param props The note properties to add
 	 */
-	addNote(props: Partial<NoteInterface> = {}): this {
+	addNote(props: NoteConstructorInterface): this {
 		const header = privateHeaderMap.get(this);
 		const note = new Note({
 			midi: 0,
@@ -112,7 +127,7 @@ export class Track {
 	 * Add a control change to the track
 	 * @param props
 	 */
-	addCC(props: Partial<ControlChangeInterface>): this {
+	addCC(props: Omit<ControlChangeInterface, "ticks"> | Omit<ControlChangeInterface, "time">): this {
 		const header = privateHeaderMap.get(this);
 		const cc = new ControlChange({
 			controllerType: props.number,
@@ -123,6 +138,17 @@ export class Track {
 			this.controlChanges[cc.number] = [];
 		}
 		insert(this.controlChanges[cc.number], cc, "ticks");
+		return this;
+	}
+
+	/**
+	 * Add a control change to the track
+	 */
+	addPitchBend(props: Omit<PitchBendInterface, "ticks"> | Omit<PitchBendInterface, "time">): this {
+		const header = privateHeaderMap.get(this);
+		const pb = new PitchBend({}, header);
+		Object.assign(pb, props);
+		insert(this.pitchBends, pb, "ticks");
 		return this;
 	}
 
@@ -194,6 +220,7 @@ export class Track {
 		return {
 			channel: this.channel,
 			controlChanges,
+			pitchBends: this.pitchBends.map(pb => pb.toJSON()),
 			instrument: this.instrument.toJSON(),
 			name: this.name,
 			notes: this.notes.map(n => n.toJSON()),
@@ -207,4 +234,5 @@ export interface TrackJSON {
 	channel: number;
 	instrument: InstrumentJSON;
 	controlChanges: ControlChangesJSON;
+	pitchBends: PitchBendJSON[];
 }
