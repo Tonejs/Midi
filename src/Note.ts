@@ -178,6 +178,10 @@ export class Note implements NoteInterface {
 			ticks: this.ticks,
 			time: this.time,
 			velocity: this.velocity,
+			noteOffVelocity: this.noteOffVelocity,
+			octave: this.octave,
+			pitch: this.pitch,
+			bars: this.bars,
 		};
 	}
 }
@@ -190,6 +194,10 @@ export interface NoteJSON {
 	duration: number;
 	ticks: number;
 	durationTicks: number;
+	noteOffVelocity: number;
+	octave: number;
+	pitch: string;
+	bars: number;
 }
 
 export interface NoteOnEvent {
@@ -206,6 +214,7 @@ export interface NoteOffEvent {
 export interface NoteInterface {
 	time: number;
 	ticks: number;
+	bars: number;
 	duration: number;
 	durationTicks: number;
 	midi: number;
