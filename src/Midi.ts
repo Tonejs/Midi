@@ -1,4 +1,4 @@
-import { parseMidi } from "midi-file";
+import { MidiChannelEvent, MidiTrackData, parseMidi } from "midi-file";
 import { encode } from "./Encode";
 import { Header, HeaderJSON } from "./Header";
 import { Track, TrackJSON } from "./Track";
@@ -54,6 +54,9 @@ export class Midi {
 					event.absoluteTime = currentTicks;
 				});
 			});
+
+			// ensure at most one instrument per track
+			midiData.tracks = splitTracks(midiData.tracks);
 		}
 
 		this.header = new Header(midiData);
@@ -159,3 +162,49 @@ export interface MidiJSON {
 
 export { TrackJSON } from "./Track";
 export { HeaderJSON } from "./Header";
+
+/**
+ * Given a list of MIDI tracks, make sure that each channel corresponds to at
+ * most one channel and at most one instrument. This means splitting up tracks
+ * that contain more than one channel or instrument.
+ */
+function splitTracks(tracks: MidiTrackData[]): MidiTrackData[] {
+	const newTracks = [];
+
+	for (let i = 0; i < tracks.length; i++) {
+		const defaultTrack = newTracks.length;
+		// a map from [program, channel] tuples to new track numbers
+		const trackMap = new Map<string, number>();
+		// a map from channel numbers to current program numbers
+		const currentProgram = Array(16).fill(0) as Array<number>;
+
+		for (const event of tracks[i]) {
+			let targetTrack = defaultTrack;
+
+			// If the event has a channel, we need to find that channel's current
+			// program number and the appropriate track for this [program, channel]
+			// pair.
+			const channel = (event as MidiChannelEvent).channel;
+			if (channel !== undefined) {
+				if (event.type === "programChange") {
+					currentProgram[channel] = event.programNumber;
+				}
+				const program = currentProgram[channel];
+				const trackKey = `${program} ${channel}`;
+				if (trackMap.has(trackKey)) {
+					targetTrack = trackMap.get(trackKey);
+				} else {
+					targetTrack = defaultTrack + trackMap.size;
+					trackMap.set(trackKey, targetTrack);
+				}
+			}
+
+			if (!newTracks[targetTrack]) {
+				newTracks.push([]);
+			}
+			newTracks[targetTrack].push(event);
+		}
+	}
+
+	return newTracks;
+}
