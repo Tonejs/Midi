@@ -10,7 +10,7 @@ context("Track", () => {
 		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/beethoven/symphony_7_2.mid")));
 
 		it("has the correct number of tracks", () => {
-			expect(midi.tracks.length).to.equal(12);
+			expect(midi.tracks.length).to.equal(17);
 		});
 
 		it("tracks have correct names", () => {
@@ -66,6 +66,16 @@ context("Track", () => {
 			expect(drumMidi.tracks.length).to.equal(1);
 			expect(drumMidi.tracks[0].channel).to.equal(9);
 		});
+	});
+
+	describe("single-track beethoven symphony 7", () => {
+
+		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/beethoven/symphony_7_2_singletrack.mid")));
+
+		it("has the correct number of tracks", () => {
+			expect(midi.tracks.length).to.equal(17);
+		});
+
 	});
 
 	describe("control changes on debussy claire de lune", () => {
