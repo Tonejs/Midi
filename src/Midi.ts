@@ -204,14 +204,6 @@ function splitTracks(tracks: MidiTrackData[]): MidiTrackData[] {
 			}
 			newTracks[targetTrack].push(event);
 		}
-
-		// Remove tracks without any notes (except for the default track).
-		for (let j = defaultTrack + 1; j < newTracks.length; j++) {
-			if (newTracks[j].filter(
-				event => event.type.startsWith("note")).length === 0) {
-				delete newTracks[j--];
-			}
-		}
 	}
 
 	return newTracks;
