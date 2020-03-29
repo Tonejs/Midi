@@ -70,6 +70,7 @@ export class Track {
 					// once it's got the note off, add it
 					const noteOff = noteOffs.splice(offIndex, 1)[0];
 					this.addNote({
+						channel : currentNote.channel,
 						durationTicks : noteOff.absoluteTime - currentNote.absoluteTime,
 						midi : currentNote.noteNumber,
 						noteOffVelocity : noteOff.velocity / 127,
@@ -107,9 +108,11 @@ export class Track {
 			midi : 0,
 			ticks : 0,
 			velocity : 1,
+			channel : 0,
 		}, {
 			ticks : 0,
 			velocity : 0,
+			channel : 0,
 		}, header);
 		Object.assign(note, props);
 		insert(this.notes, note, "ticks");
@@ -139,7 +142,6 @@ export class Track {
 	 * @param props The pitchbend properties to add
 	 */
 	addPitchbend(props: Partial<PitchbendChangeInterface> = {}): this {
-		console.log('adding PB attempt!');
 		const header = privateHeaderMap.get(this);
 		const pb = new PitchbendChange(
 			props, header

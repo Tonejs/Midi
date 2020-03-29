@@ -59,9 +59,14 @@ const privateHeaderMap = new WeakMap<Note, Header>();
 export class Note implements NoteInterface {
 
 	/**
-	 * The notes midi value
+	 * The note's midi value
 	 */
 	midi: number;
+
+	/**
+	 * The note's channel number
+	 */
+	channel: number;
 
 	/**
 	 * The normalized velocity (0-1)
@@ -86,6 +91,8 @@ export class Note implements NoteInterface {
 	constructor(noteOn: NoteOnEvent, noteOff: NoteOffEvent, header: Header) {
 
 		privateHeaderMap.set(this, header);
+
+		this.channel = noteOn.channel;
 
 		this.midi = noteOn.midi;
 
@@ -173,6 +180,7 @@ export class Note implements NoteInterface {
 		return {
 			duration : this.duration,
 			durationTicks : this.durationTicks,
+			channel : this.channel,
 			midi : this.midi,
 			name : this.name,
 			ticks : this.ticks,
@@ -184,6 +192,7 @@ export class Note implements NoteInterface {
 
 export interface NoteJSON {
 	time: number;
+	channel: number;
 	midi: number;
 	name: string;
 	velocity: number;
@@ -196,16 +205,19 @@ export interface NoteOnEvent {
 	ticks: number;
 	velocity: number;
 	midi: number;
+	channel: number;
 }
 
 export interface NoteOffEvent {
 	ticks: number;
 	velocity: number;
+	channel: number;
 }
 
 export interface NoteInterface {
 	time: number;
 	ticks: number;
+	channel: number;
 	duration: number;
 	durationTicks: number;
 	midi: number;
