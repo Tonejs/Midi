@@ -3,7 +3,6 @@ import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
 	MidiInstrumentEvent, MidiKeySignatureEvent, MidiNoteOffEvent,
 	MidiNoteOnEvent, MidiPitchBendEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "midi-file";
 import { ControlChange } from "./ControlChange";
-import { PitchbendChange } from "./PitchbendChange";
 import { PitchBend } from "./PitchBend";
 import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatureEvent } from "./Header";
 import { Midi } from "./Midi";
@@ -60,7 +59,7 @@ function encodeControlChanges(track: Track): MidiControllerEvent[] {
 function encodePitchBend(pb: PitchBend, channel: number): MidiPitchBendEvent {
 	return {
 		absoluteTime: pb.ticks,
-		channel,
+		channel: channel,
 		deltaTime: 0,
 		type: "pitchBend",
 		value: pb.value,

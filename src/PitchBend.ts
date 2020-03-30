@@ -32,6 +32,7 @@ export class PitchBend implements PitchBendInterface {
 
 		this.ticks = event.absoluteTime;
 		this.value = event.value;
+		this.channel = event.channel;
 	}
 
 	/**

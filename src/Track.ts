@@ -7,7 +7,6 @@ import { PitchBend, PitchBendInterface, PitchBendJSON } from "./PitchBend";
 import { Header } from "./Header";
 import { Instrument, InstrumentJSON } from "./Instrument";
 import { Note, NoteConstructorInterface, NoteJSON } from "./Note";
-import { PitchbendChange, PitchbendChangeInterface, PitchbendChangeJSON } from "./PitchbendChange";
 
 const privateHeaderMap = new WeakMap<Track, Header>();
 
@@ -34,7 +33,7 @@ export class Track {
 	/**
 	 * The track's pitch bend events
 	 */
-	pitchbends: PitchbendChange[] = [];
+	pitchbends: PitchBend[] = [];
 
 	/**
 	 * The channel number of the track. Applies this channel
@@ -104,12 +103,8 @@ export class Track {
 					ticks: event.absoluteTime,
 					// scale the value between -2^13 to 2^13 to -2 to 2
 					value: event.value / Math.pow(2, 13),
+					channel: event.channel,
 				});
-			});
-
-			const pitchbendChanges = trackData.filter(event => event.type === "pitchBend") as MidiPitchBendEvent[];
-			pitchbendChanges.forEach(event => {
-				this.addPitchbend(event);
 			});
 
 			// const endOfTrack = trackData.find(event => event.type === "endOfTrack");
@@ -156,12 +151,12 @@ export class Track {
 	}
 
 	/**
-	 * Add a pitchbend to the pitchbendchanges array
+	 * Add a pitchbend to the pitchbends array
 	 * @param props The pitchbend properties to add
 	 */
-	addPitchbend(props: Partial<PitchbendChangeInterface> = {}): this {
+	addPitchbend(props: Partial<PitchBendInterface> = {}): this {
 		const header = privateHeaderMap.get(this);
-		const pb = new PitchbendChange(
+		const pb = new PitchBend(
 			props, header
 		);
 		Object.assign(pb, props);
