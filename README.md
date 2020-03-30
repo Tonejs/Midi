@@ -95,6 +95,7 @@ The data parsed from the midi file looks like this:
           midi: Number,               // midi number, e.g. 60
           time: Number,               // time in seconds
           ticks: Number,              // time in ticks
+          channel: Number,            // original midi channel number (0-15)
           name: String,               // note name, e.g. "C4",
           pitch: String,              // the pitch class, e.g. "C",
           octave : Number,            // the octave, e.g. 4
@@ -115,6 +116,16 @@ The data parsed from the midi file looks like this:
           }
         ],
       },
+
+      // pitch bend events, if in the midi file
+      pitchBends: [
+        {
+          ticks: Number,              // time in ticks
+          time: Number,               // time in seconds
+          value: Number,              // pitch bend, floating point in semitones
+          channel: Number,            // midi channel number
+        }
+      ]
 
       instrument: {                   // and object representing the program change events
         number : Number,              // the instrument number 0-127
