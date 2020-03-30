@@ -178,14 +178,14 @@ export class Note implements NoteInterface {
 
 	toJSON(): NoteJSON {
 		return {
-			duration : this.duration,
-			durationTicks : this.durationTicks,
-			channel : this.channel,
-			midi : this.midi,
-			name : this.name,
-			ticks : this.ticks,
-			time : this.time,
-			velocity : this.velocity,
+			duration: this.duration,
+			durationTicks: this.durationTicks,
+			channel: this.channel,
+			midi: this.midi,
+			name: this.name,
+			ticks: this.ticks,
+			time: this.time,
+			velocity: this.velocity,
 		};
 	}
 }
@@ -254,4 +254,4 @@ type TimeDescription = {
  * @hidden
  */
 export type NoteConstructorInterface = PitchDescription & VelocityDescription & TimeDescription &
-{ channel: number; }
+{ channel: number }

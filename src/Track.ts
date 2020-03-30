@@ -1,4 +1,4 @@
-import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiTrackData, MidiTrackNameEvent, MidiPitchbendEvent } from "midi-file";
+import { MidiControllerEvent, MidiNoteOffEvent, MidiNoteOnEvent, MidiPitchBendEvent, MidiTrackData, MidiTrackNameEvent } from "midi-file";
 import { insert } from "./BinarySearch";
 import { ControlChange, ControlChangeInterface } from "./ControlChange";
 import { ControlChangesJSON, createControlChanges } from "./ControlChanges";
@@ -79,12 +79,12 @@ export class Track {
 					// once it's got the note off, add it
 					const noteOff = noteOffs.splice(offIndex, 1)[0];
 					this.addNote({
-						channel : currentNote.channel,
-						durationTicks : noteOff.absoluteTime - currentNote.absoluteTime,
-						midi : currentNote.noteNumber,
-						noteOffVelocity : noteOff.velocity / 127,
-						ticks : currentNote.absoluteTime,
-						velocity : currentNote.velocity / 127,
+						channel: currentNote.channel,
+						durationTicks: noteOff.absoluteTime - currentNote.absoluteTime,
+						midi: currentNote.noteNumber,
+						noteOffVelocity: noteOff.velocity / 127,
+						ticks: currentNote.absoluteTime,
+						velocity: currentNote.velocity / 127,
 					});
 				}
 			}
@@ -98,7 +98,7 @@ export class Track {
 				});
 			});
 
-			const pitchBends = trackData.filter(event => event.type === "pitchBend") as MidiPitchbendEvent[];
+			const pitchBends = trackData.filter(event => event.type === "pitchBend") as MidiPitchBendEvent[];
 			pitchBends.forEach(event => {
 				this.addPitchbend({
 					ticks: event.absoluteTime,
@@ -107,10 +107,10 @@ export class Track {
 				});
 			});
 
-			const pitchbendChanges = trackData.filter(event => event.type === "pitchBend") as MidiPitchbendEvent[];
+			const pitchbendChanges = trackData.filter(event => event.type === "pitchBend") as MidiPitchBendEvent[];
 			pitchbendChanges.forEach(event => {
-				this.addPitchbend(event)
-			})
+				this.addPitchbend(event);
+			});
 
 			// const endOfTrack = trackData.find(event => event.type === "endOfTrack");
 		}
@@ -123,14 +123,14 @@ export class Track {
 	addNote(props: NoteConstructorInterface): this {
 		const header = privateHeaderMap.get(this);
 		const note = new Note({
-			midi : 0,
-			ticks : 0,
-			velocity : 1,
-			channel : 0,
+			midi: 0,
+			ticks: 0,
+			velocity: 1,
+			channel: 0,
 		}, {
-			ticks : 0,
-			velocity : 0,
-			channel : 0,
+			ticks: 0,
+			velocity: 0,
+			channel: 0,
 		}, header);
 		Object.assign(note, props);
 		insert(this.notes, note, "ticks");
@@ -223,12 +223,12 @@ export class Track {
 		});
 		json.pitchBends.forEach(pb => {
 			this.addPitchbend({
-				ticks : pb.ticks,
-				value : pb.value,
-				time : pb.time,
-				channel : pb.channel,
-			})
-		})
+				ticks: pb.ticks,
+				value: pb.value,
+				time: pb.time,
+				channel: pb.channel,
+			});
+		});
 	}
 
 	/**
@@ -246,10 +246,10 @@ export class Track {
 		return {
 			channel: this.channel,
 			controlChanges,
-			instrument : this.instrument.toJSON(),
-			name : this.name,
-			notes : this.notes.map(n => n.toJSON()),
-			pitchBends : this.pitchbends.map(n => n.toJSON())
+			instrument: this.instrument.toJSON(),
+			name: this.name,
+			notes: this.notes.map(n => n.toJSON()),
+			pitchBends: this.pitchbends.map(n => n.toJSON())
 		};
 	}
 }

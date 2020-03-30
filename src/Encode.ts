@@ -1,7 +1,7 @@
-import { MidiPitchBendEvent, writeMidi } from "midi-file";
+import { writeMidi } from "midi-file";
 import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
 	MidiInstrumentEvent, MidiKeySignatureEvent, MidiNoteOffEvent,
-	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent, MidiPitchbendEvent } from "midi-file";
+	MidiNoteOnEvent, MidiPitchBendEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "midi-file";
 import { ControlChange } from "./ControlChange";
 import { PitchbendChange } from "./PitchbendChange";
 import { PitchBend } from "./PitchBend";

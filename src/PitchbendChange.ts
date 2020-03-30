@@ -3,16 +3,15 @@ import { Header } from "./Header";
 const privateHeaderMap = new WeakMap<PitchbendChange, Header>();
 
 // convert [-8191,8191]] to [-2,2]
-export function PitchbendMIDItoFloat(pb_14bit: number): number {
-	return pb_14bit / 8191.0 * 2.0;
+export function PitchbendMIDItoFloat(PitchbendFourteenBit: number): number {
+	return PitchbendFourteenBit / 8191.0 * 2.0;
 }
 
-/**)
+/** )
  * @typedef PitchbendChangeEvent
  * @property {number=} value
  * @property {number=} absoluteTime
  */
-
 
 /**
  * Represents a pitch bend change event
@@ -20,7 +19,7 @@ export function PitchbendMIDItoFloat(pb_14bit: number): number {
 export class PitchbendChange implements PitchbendChangeInterface {
 
 	/**
-	 * The number value of the pitch bend, in semitones
+	 * The number value of the pitch bend, in semitones [-2,+2]
 	 */
 	value: number;
 
@@ -43,7 +42,6 @@ export class PitchbendChange implements PitchbendChangeInterface {
 		privateHeaderMap.set(this, header);
 
 		this.ticks = event.absoluteTime;
-		this.value = event.value;
 		this.value = PitchbendMIDItoFloat(event.value);
 	}
 
@@ -62,10 +60,10 @@ export class PitchbendChange implements PitchbendChangeInterface {
 
 	toJSON(): PitchbendChangeJSON {
 		return {
-			ticks : this.ticks,
-			time : this.time,
-			value : this.value,
-			channel : this.channel
+			ticks: this.ticks,
+			time: this.time,
+			value: this.value,
+			channel: this.channel
 		};
 	}
 }
