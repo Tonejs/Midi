@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { parseMidi } from "midi-file";
 import { basename, resolve } from "path";
 import { Midi } from "../src/Midi";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const glob = require("glob");
 
 describe("JSON", () => {

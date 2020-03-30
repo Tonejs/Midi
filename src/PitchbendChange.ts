@@ -20,11 +20,9 @@ export function PitchbendMIDItoFloat(pb_14bit: number): number {
 export class PitchbendChange implements PitchbendChangeInterface {
 
 	/**
-	 * The number value of the pitch bend
-	 * Also in semitones
+	 * The number value of the pitch bend, in semitones
 	 */
 	value: number;
-	semitones: number;
 
 	/**
 	 * Channel number pitchbend applies to
@@ -46,7 +44,7 @@ export class PitchbendChange implements PitchbendChangeInterface {
 
 		this.ticks = event.absoluteTime;
 		this.value = event.value;
-		this.semitones = PitchbendMIDItoFloat(event.value);
+		this.value = PitchbendMIDItoFloat(event.value);
 	}
 
 	/**
@@ -64,11 +62,10 @@ export class PitchbendChange implements PitchbendChangeInterface {
 
 	toJSON(): PitchbendChangeJSON {
 		return {
-			channel : this.channel,
 			ticks : this.ticks,
 			time : this.time,
 			value : this.value,
-			semitones : this.semitones
+			channel : this.channel
 		};
 	}
 }
@@ -77,7 +74,6 @@ export interface PitchbendChangeJSON {
 	ticks: number;
 	time: number;
 	value: number;
-	semitones: number;
 	channel: number;
 }
 
@@ -85,6 +81,5 @@ export interface PitchbendChangeInterface {
 	ticks: number;
 	time: number;
 	value: number;
-	semitones: number;
 	channel: number;
 }

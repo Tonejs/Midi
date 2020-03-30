@@ -129,7 +129,7 @@ export const instrumentByPatchID = [
 	"gunshot",
 ];
 
-export const instrumentFamilyByID = [
+export const InstrumentFamilyByID = [
 	"piano",
 	"chromatic percussion",
 	"organ",
@@ -148,14 +148,14 @@ export const instrumentFamilyByID = [
 	"sound effects",
 ];
 
-export const drumKitByPatchID = {
-	0 : "standard kit",
-	8 : "room kit",
-	16 : "power kit",
-	24 : "electronic kit",
-	25 : "tr-808 kit",
-	32 : "jazz kit",
-	40 : "brush kit",
-	48 : "orchestra kit",
-	56 : "sound fx kit",
+export const DrumKitByPatchID = {
+	0: "standard kit",
+	8: "room kit",
+	16: "power kit",
+	24: "electronic kit",
+	25: "tr-808 kit",
+	32: "jazz kit",
+	40: "brush kit",
+	48: "orchestra kit",
+	56: "sound fx kit",
 };

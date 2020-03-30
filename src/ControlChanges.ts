@@ -13,6 +13,7 @@ export interface ControlChangesJSON {
 
 /**
  * Automatically creates an alias for named control values using Proxies
+ * @hidden
  */
 export function createControlChanges(): ControlChanges {
 	return new Proxy({}, {

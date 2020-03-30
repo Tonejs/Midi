@@ -38,7 +38,7 @@ context("Header", () => {
 			expect(midi.header.timeSignatures[0].timeSignature).to.deep.equal([2, 4]);
 		});
 
-		it ("can set the tempo with setTempo", () => {
+		it("can set the tempo with setTempo", () => {
 			const firstNoteTicks = midi.tracks[0].notes[0].ticks;
 			const firstNoteTime = midi.tracks[0].notes[0].time;
 			expect(midi.header.tempos).to.have.length(4);
@@ -88,14 +88,14 @@ context("Header", () => {
 		it("defaults to 120", () => {
 			const track = midi.addTrack();
 			track.addNote({
-				time : 0,
-				midi : 20,
-				duration : 1,
+				time: 0,
+				midi: 20,
+				duration: 1,
 			});
 			track.addNote({
-				time : 1,
-				midi : 30,
-				duration : 1,
+				time: 1,
+				midi: 30,
+				duration: 1,
 			});
 
 			expect(track.notes[0].ticks).to.equal(0);
@@ -107,8 +107,8 @@ context("Header", () => {
 
 		it("can change the tempo and updates time and duration of all of the notes", () => {
 			midi.header.tempos.push({
-				bpm : 60,
-				ticks : 0,
+				bpm: 60,
+				ticks: 0,
 			});
 			midi.header.update();
 
@@ -124,8 +124,8 @@ context("Header", () => {
 
 		it("can have multiple tempos scheduled", () => {
 			midi.header.tempos.push({
-				bpm : 120,
-				ticks : 960,
+				bpm: 120,
+				ticks: 960,
 			});
 			expect(midi.header.tempos).to.have.length(2);
 			midi.header.update();
@@ -148,16 +148,16 @@ context("Header", () => {
 		it("defaults to [4, 4]", () => {
 			const track = midi.addTrack();
 			track.addNote({
-				time : 0,
-				midi : 20,
+				time: 0,
+				midi: 20,
 			});
 			track.addNote({
-				time : 2,
-				midi : 30,
+				time: 2,
+				midi: 30,
 			});
 			track.addNote({
-				time : 3,
-				midi : 40,
+				time: 3,
+				midi: 40,
 			});
 
 			expect(track.notes[0].bars).to.equal(0);
@@ -168,21 +168,21 @@ context("Header", () => {
 		it("uses the current time signature", () => {
 			const track = midi.addTrack();
 			midi.header.timeSignatures.push({
-				ticks : 0,
-				timeSignature : [5, 4],
+				ticks: 0,
+				timeSignature: [5, 4],
 			});
 			midi.header.update();
 			track.addNote({
-				time : 0,
-				midi : 20,
+				time: 0,
+				midi: 20,
 			});
 			track.addNote({
-				time : 2,
-				midi : 30,
+				time: 2,
+				midi: 30,
 			});
 			track.addNote({
-				time : 2.5,
-				midi : 40,
+				time: 2.5,
+				midi: 40,
 			});
 
 			expect(track.notes[0].bars).to.equal(0);
@@ -193,21 +193,21 @@ context("Header", () => {
 		it("can have multiple schedule time signatures", () => {
 			const track = midi.addTrack();
 			midi.header.timeSignatures.push({
-				ticks : midi.header.ppq * 10,
-				timeSignature : [4, 4],
+				ticks: midi.header.ppq * 10,
+				timeSignature: [4, 4],
 			});
 			midi.header.update();
 			track.addNote({
-				time : 0,
-				midi : 20,
+				time: 0,
+				midi: 20,
 			});
 			track.addNote({
-				time : 5,
-				midi : 30,
+				time: 5,
+				midi: 30,
 			});
 			track.addNote({
-				time : 7,
-				midi : 40,
+				time: 7,
+				midi: 40,
 			});
 
 			expect(track.notes[0].bars).to.equal(0);

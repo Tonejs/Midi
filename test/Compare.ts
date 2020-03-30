@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { readFileSync } from "fs";
 import { basename, resolve } from "path";
 import { Midi } from "../src/Midi";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const glob = require("glob");
 
 function parseGroundTruth(path) {
@@ -30,11 +31,12 @@ describe("matches pre-parsed midi", async () => {
 				const noteLimit = 30;
 				// const truthTrack = truth[trackIndex].slice(0, noteLimit)
 				track.notes.slice(0, noteLimit).forEach(note => {
+					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 					// @ts-ignore
 					const match = truth.find(truthTrack => {
 						truthTrack = truthTrack.slice(0, noteLimit + 10);
-						const trackMatch = truthTrack.find(([midi, start, end]) => {
-							const sameMidi = midi === note.midi;
+						const trackMatch = truthTrack.find(([mid, start, end]) => {
+							const sameMidi = mid === note.midi;
 							const sameTime = Math.abs(start - note.time) < 0.1;
 							const sameDuration = Math.abs(end - (note.time + note.duration)) < 0.1;
 							return sameMidi && sameTime && sameDuration;

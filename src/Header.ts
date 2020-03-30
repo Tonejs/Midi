@@ -6,7 +6,7 @@ const privatePPQMap = new WeakMap<Header, number>();
 export interface TempoEvent {
 	ticks: number;
 	bpm: number;
-	readonly time?: number;
+	time?: number;
 }
 
 export interface TimeSignatureEvent {
@@ -27,6 +27,9 @@ export interface KeySignatureEvent {
 	scale: string;
 }
 
+/**
+ * @hidden
+ */
 export const keySignatureKeys = ["Cb", "Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#"];
 
 /** The parsed midi file header */
@@ -55,7 +58,7 @@ export class Header {
 	/**
 	 * The name of the midi file
 	 */
-	name: string = "";
+	name = "";
 
 	constructor(midiData?: MidiData) {
 		// look through all the tracks for tempo changes
@@ -69,13 +72,13 @@ export class Header {
 				if (event.meta) {
 					if (event.type === "timeSignature") {
 						this.timeSignatures.push({
-							ticks : event.absoluteTime,
-							timeSignature : [event.numerator, event.denominator],
+							ticks: event.absoluteTime,
+							timeSignature: [event.numerator, event.denominator],
 						});
 					} else if (event.type === "setTempo") {
 						this.tempos.push({
-							bpm : 60000000 / event.microsecondsPerBeat,
-							ticks : event.absoluteTime,
+							bpm: 60000000 / event.microsecondsPerBeat,
+							ticks: event.absoluteTime,
 						});
 					} else if (event.type === "keySignature") {
 						this.keySignatures.push({
@@ -111,7 +114,6 @@ export class Header {
 			const lastBPM = index > 0 ? this.tempos[index - 1].bpm : this.tempos[0].bpm;
 			const beats = (event.ticks / this.ppq) - lastEventBeats;
 			const elapsedSeconds = (60 / lastBPM) * beats;
-			// @ts-ignore
 			event.time = elapsedSeconds + currentTime;
 			currentTime = event.time;
 			lastEventBeats += beats;
@@ -189,17 +191,17 @@ export class Header {
 	 */
 	toJSON(): HeaderJSON {
 		return {
-			keySignatures : this.keySignatures,
-			meta : this.meta,
-			name : this.name,
-			ppq : this.ppq,
-			tempos : this.tempos.map(t => {
+			keySignatures: this.keySignatures,
+			meta: this.meta,
+			name: this.name,
+			ppq: this.ppq,
+			tempos: this.tempos.map(t => {
 				return {
-					bpm : t.bpm,
-					ticks : t.ticks,
+					bpm: t.bpm,
+					ticks: t.ticks,
 				};
 			}),
-			timeSignatures : this.timeSignatures,
+			timeSignatures: this.timeSignatures,
 		};
 	}
 
