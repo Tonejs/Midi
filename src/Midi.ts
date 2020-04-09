@@ -160,8 +160,8 @@ export interface MidiJSON {
 	tracks: TrackJSON[];
 }
 
-export { TrackJSON } from "./Track";
-export { HeaderJSON } from "./Header";
+export { TrackJSON, Track } from "./Track";
+export { HeaderJSON, Header } from "./Header";
 
 /**
  * Given a list of MIDI tracks, make sure that each channel corresponds to at
