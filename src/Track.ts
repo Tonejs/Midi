@@ -156,14 +156,16 @@ export class Track {
 	 * The end time of the last event in the track
 	 */
 	get duration(): number {
-		if (!this.notes.length)
+		if (!this.notes.length) {
 			return 0;
+		}
 
 		let maxDuration = this.notes[this.notes.length - 1].time + this.notes[this.notes.length - 1].duration;
 		for (let i = 0; i < this.notes.length - 1; i++) {
-			let duration = this.notes[i].time + this.notes[i].duration;
-			if (maxDuration < duration)
+			const duration = this.notes[i].time + this.notes[i].duration;
+			if (maxDuration < duration) {
 				maxDuration = duration;
+			}
 		}
 
 		return maxDuration;
@@ -173,14 +175,16 @@ export class Track {
 	 * The end time of the last event in the track in ticks
 	 */
 	get durationTicks(): number {
-		if (!this.notes.length)
+		if (!this.notes.length) {
 			return 0;
+		}
 
 		let maxDuration = this.notes[this.notes.length - 1].ticks + this.notes[this.notes.length - 1].durationTicks;
 		for (let i = 0; i < this.notes.length - 1; i++) {
-			let duration = this.notes[i].ticks + this.notes[i].durationTicks;
-			if (maxDuration < duration)
+			const duration = this.notes[i].ticks + this.notes[i].durationTicks;
+			if (maxDuration < duration) {
 				maxDuration = duration;
+			}
 		}
 
 		return maxDuration;
