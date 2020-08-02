@@ -1,165 +1,197 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Tonejs Midi</title>
-	<script type="text/javascript" src="https://unpkg.com/tone@13.4.9/build/Tone.js"></script>
-	<script type="text/javascript" src="https://unpkg.com/@tonejs/ui@0.0.8/build/tonejs-ui.js"></script>
-	<script type="text/javascript" src="https://unpkg.com/@tonejs/midi"></script>
-</head>
-<body>
-	<style type="text/css">
+	<head>
+		<title>Tonejs Midi</title>
+		<script
+			type="text/javascript"
+			src="https://unpkg.com/tone@latest/build/Tone.js"
+		></script>
+		<script
+			type="text/javascript"
+			src="https://unpkg.com/@tonejs/ui@0.0.8/build/tonejs-ui.js"
+		></script>
+		<script type="text/javascript" src="./build/Midi.js"></script>
+	</head>
+	<body>
+		<style type="text/css">
+			#FileDrop {
+				position: relative;
+				width: 100%;
+				height: 100px;
+				border: 2px dashed black;
+				color: black;
+				margin: 20px auto;
+			}
 
-		#FileDrop{
-			position: relative;
-			width: 100%;
-			height: 100px;
-			border: 2px dashed black;
-			color: black;
-			margin: 20px auto;
-		}
+			#FileDrop.Hover {
+				background-color: black;
+				color: white;
+			}
 
-		#FileDrop.Hover{
-			background-color: black;
-			color: white;
-		}
+			#FileDrop input {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				left: 0px;
+				top: 0px;
+			}
 
-		#FileDrop input {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			opacity: 0;
-			left: 0px;
-			top: 0px;
-		}
+			#FileDrop #Text {
+				position: absolute;
+				width: 100%;
+				height: 20px;
+				line-height: 20px;
+				left: 0px;
+				top: 50%;
+				transform: translate(0, -50%);
+				text-align: center;
+			}
 
-		#FileDrop #Text {
-			position: absolute;
-			width: 100%;
-			height: 20px;
-			line-height: 20px;
-			left: 0px;
-			top: 50%;
-			transform: translate(0, -50%);
-			text-align: center;
-		}
+			textarea {
+				font-family: monospace;
+				height: 300px;
+				width: 100%;
+				display: inline-block;
+				position: relative;
+				float: left;
+			}
 
-		textarea {
-			font-family: monospace;
-			height: 300px;
-			width: 100%;
-			display: inline-block;
-			position: relative;
-			float: left;
-		}
+			#Results {
+				position: relative;
+				width: 100%;
+				margin: 10px auto;
+			}
 
-		#Results {
-			position: relative;
-			width: 100%;
-			margin: 10px auto;
-		}
+			#Description {
+				position: relative;
+				width: 100%;
+				text-align: center;
+				height: 40px;
+				font-size: 16px;
+				margin: 10px auto;
+				font-family: sans-serif;
+			}
 
-		#Description {
-			position: relative;
-			width: 100%;
-			text-align: center;
-			height: 40px;
-			font-size: 16px;
-			margin: 10px auto;
-			font-family: sans-serif;
-		}
-
-		tone-play-toggle {
-			margin-top: 10px;
-		}
-
-	</style>
-	<tone-top-bar></tone-top-bar>
-	<tone-content>
-		<div id="Description">Parse a MIDI file into a Tone.js-friendly JSON format.</div>
-		<div id="FileDrop">
-			<div id="Text">
-				Drop a midi file here
+			tone-play-toggle {
+				margin-top: 10px;
+			}
+		</style>
+		<tone-top-bar></tone-top-bar>
+		<tone-content>
+			<div id="Description">
+				Parse a MIDI file into a Tone.js-friendly JSON format.
 			</div>
-			<input type="file" accept="audio/midi">
-		</div>
-		<div id="Results">
-			<textarea id="ResultsText" placeholder="json output..."></textarea>
-		</div>
-		<tone-play-toggle disabled></tone-play-toggle>
-	</tone-content>
+			<div id="FileDrop">
+				<div id="Text">
+					Drop a midi file here
+				</div>
+				<input type="file" accept="audio/midi" />
+			</div>
+			<div id="Results">
+				<textarea
+					id="ResultsText"
+					placeholder="json output..."
+				></textarea>
+			</div>
+			<tone-play-toggle disabled></tone-play-toggle>
+		</tone-content>
 
-
-	<script type="text/javascript">
-
-
-		if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
-			document.querySelector("#FileDrop #Text").textContent = "Reading files not supported by this browser";
-		} else {
-
-			const fileDrop = document.querySelector("#FileDrop")
-
-			fileDrop.addEventListener("dragenter", () => fileDrop.classList.add("Hover"))
-
-			fileDrop.addEventListener("dragleave", () => fileDrop.classList.remove("Hover"))
-
-			fileDrop.addEventListener("drop", () => fileDrop.classList.remove("Hover"))
-
-			document.querySelector("#FileDrop input").addEventListener("change", e => {
-				//get the files
-				const files = e.target.files
-				if (files.length > 0){
-					const file = files[0]
-					document.querySelector("#FileDrop #Text").textContent = file.name
-					parseFile(file)
-				}
-			})
-		}
-
-		let currentMidi = null
-
-		function parseFile(file){
-			//read the file
-			const reader = new FileReader()
-			reader.onload = function(e){
-				const midi = new Midi(e.target.result)
-				document.querySelector("#ResultsText").value = JSON.stringify(midi, undefined, 2)
-				document.querySelector('tone-play-toggle').removeAttribute('disabled')
-				currentMidi = midi
-			}
-			reader.readAsArrayBuffer(file)
-		}
-
-		const synths = []
-		document.querySelector('tone-play-toggle').addEventListener('play', (e) => {
-			const playing = e.detail
-			if (playing && currentMidi){
-				const now = Tone.now() + 0.5
-				currentMidi.tracks.forEach(track => {
-					//create a synth for each track
-					const synth = new Tone.PolySynth(10, Tone.Synth, {
-						envelope : {
-							attack : 0.02,
-							decay : 0.1,
-							sustain : 0.3,
-							release : 1
-						}
-					}).toMaster()
-					synths.push(synth)
-					//schedule all of the events
-					track.notes.forEach(note => {
-						synth.triggerAttackRelease(note.name, note.duration, note.time + now, note.velocity)
-					})
-				})
+		<script type="text/javascript">
+			if (
+				!(
+					window.File &&
+					window.FileReader &&
+					window.FileList &&
+					window.Blob
+				)
+			) {
+				document.querySelector("#FileDrop #Text").textContent =
+					"Reading files not supported by this browser";
 			} else {
-				//dispose the synth and make a new one
-				while(synths.length){
-					const synth = synths.shift()
-					synth.dispose()
-				}
+				const fileDrop = document.querySelector("#FileDrop");
+
+				fileDrop.addEventListener("dragenter", () =>
+					fileDrop.classList.add("Hover")
+				);
+
+				fileDrop.addEventListener("dragleave", () =>
+					fileDrop.classList.remove("Hover")
+				);
+
+				fileDrop.addEventListener("drop", () =>
+					fileDrop.classList.remove("Hover")
+				);
+
+				document
+					.querySelector("#FileDrop input")
+					.addEventListener("change", (e) => {
+						//get the files
+						const files = e.target.files;
+						if (files.length > 0) {
+							const file = files[0];
+							document.querySelector(
+								"#FileDrop #Text"
+							).textContent = file.name;
+							parseFile(file);
+						}
+					});
 			}
-		})
 
-	</script>
+			let currentMidi = null;
 
-</body>
+			function parseFile(file) {
+				//read the file
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					const midi = new Midi(e.target.result);
+					document.querySelector(
+						"#ResultsText"
+					).value = JSON.stringify(midi, undefined, 2);
+					document
+						.querySelector("tone-play-toggle")
+						.removeAttribute("disabled");
+					currentMidi = midi;
+				};
+				reader.readAsArrayBuffer(file);
+			}
+
+			const synths = [];
+			document
+				.querySelector("tone-play-toggle")
+				.addEventListener("play", (e) => {
+					const playing = e.detail;
+					if (playing && currentMidi) {
+						const now = Tone.now() + 0.5;
+						currentMidi.tracks.forEach((track) => {
+							//create a synth for each track
+							const synth = new Tone.PolySynth(Tone.Synth, {
+								envelope: {
+									attack: 0.02,
+									decay: 0.1,
+									sustain: 0.3,
+									release: 1,
+								},
+							}).toDestination();
+							synths.push(synth);
+							//schedule all of the events
+							track.notes.forEach((note) => {
+								synth.triggerAttackRelease(
+									note.name,
+									note.duration,
+									note.time + now,
+									note.velocity
+								);
+							});
+						});
+					} else {
+						//dispose the synth and make a new one
+						while (synths.length) {
+							const synth = synths.shift();
+							synth.disconnect();
+						}
+					}
+				});
+		</script>
+	</body>
 </html>
