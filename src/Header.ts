@@ -30,11 +30,26 @@ export interface KeySignatureEvent {
 /**
  * @hidden
  */
-export const keySignatureKeys = ["Cb", "Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#"];
+export const keySignatureKeys = [
+	"Cb",
+	"Gb",
+	"Db",
+	"Ab",
+	"Eb",
+	"Bb",
+	"F",
+	"C",
+	"G",
+	"D",
+	"A",
+	"E",
+	"B",
+	"F#",
+	"C#",
+];
 
 /** The parsed midi file header */
 export class Header {
-
 	/**
 	 * The array of all the tempo events
 	 */
@@ -67,28 +82,44 @@ export class Header {
 
 		if (midiData) {
 			privatePPQMap.set(this, midiData.header.ticksPerBeat);
-			// check the first track for all the relevant data
-			midiData.tracks[0].forEach(event => {
+			// check time signature and tempo events from all of the tracks
+			midiData.tracks.forEach((track) =>
+				track.forEach((event) => {
+					if (event.meta) {
+						if (event.type === "timeSignature") {
+							this.timeSignatures.push({
+								ticks: event.absoluteTime,
+								timeSignature: [
+									event.numerator,
+									event.denominator,
+								],
+							});
+						} else if (event.type === "setTempo") {
+							this.tempos.push({
+								bpm: 60000000 / event.microsecondsPerBeat,
+								ticks: event.absoluteTime,
+							});
+						} else if (event.type === "keySignature") {
+							this.keySignatures.push({
+								key: keySignatureKeys[event.key + 7],
+								scale: event.scale === 0 ? "major" : "minor",
+								ticks: event.absoluteTime,
+							});
+						}
+					}
+				})
+			);
+			// check the first track for other relevant data
+			midiData.tracks[0].forEach((event) => {
 				if (event.meta) {
-					if (event.type === "timeSignature") {
-						this.timeSignatures.push({
-							ticks: event.absoluteTime,
-							timeSignature: [event.numerator, event.denominator],
-						});
-					} else if (event.type === "setTempo") {
-						this.tempos.push({
-							bpm: 60000000 / event.microsecondsPerBeat,
-							ticks: event.absoluteTime,
-						});
-					} else if (event.type === "keySignature") {
-						this.keySignatures.push({
-							key: keySignatureKeys[event.key + 7],
-							scale: event.scale === 0 ? "major" : "minor",
-							ticks: event.absoluteTime,
-						});
-					} else if (event.type === "trackName") {
+					if (event.type === "trackName") {
 						this.name = event.text;
-					} else if (event.type !== "endOfTrack") {
+					} else if (
+						event.type === "text" ||
+						event.type === "cuePoint" ||
+						event.type === "marker" ||
+						event.type === "lyrics"
+					) {
 						this.meta.push({
 							text: event.text,
 							ticks: event.absoluteTime,
@@ -111,8 +142,9 @@ export class Header {
 		// make sure it's sorted
 		this.tempos.sort((a, b) => a.ticks - b.ticks);
 		this.tempos.forEach((event, index) => {
-			const lastBPM = index > 0 ? this.tempos[index - 1].bpm : this.tempos[0].bpm;
-			const beats = (event.ticks / this.ppq) - lastEventBeats;
+			const lastBPM =
+				index > 0 ? this.tempos[index - 1].bpm : this.tempos[0].bpm;
+			const beats = event.ticks / this.ppq - lastEventBeats;
 			const elapsedSeconds = (60 / lastBPM) * beats;
 			event.time = elapsedSeconds + currentTime;
 			currentTime = event.time;
@@ -120,9 +152,15 @@ export class Header {
 		});
 		this.timeSignatures.sort((a, b) => a.ticks - b.ticks);
 		this.timeSignatures.forEach((event, index) => {
-			const lastEvent = index > 0 ? this.timeSignatures[index - 1] : this.timeSignatures[0];
+			const lastEvent =
+				index > 0
+					? this.timeSignatures[index - 1]
+					: this.timeSignatures[0];
 			const elapsedBeats = (event.ticks - lastEvent.ticks) / this.ppq;
-			const elapsedMeasures = (elapsedBeats / lastEvent.timeSignature[0]) / (lastEvent.timeSignature[1] / 4);
+			const elapsedMeasures =
+				elapsedBeats /
+				lastEvent.timeSignature[0] /
+				(lastEvent.timeSignature[1] / 4);
 			lastEvent.measures = lastEvent.measures || 0;
 			event.measures = elapsedMeasures + lastEvent.measures;
 		});
@@ -141,7 +179,7 @@ export class Header {
 			return tempoTime + (60 / tempo.bpm) * elapsedBeats;
 		} else {
 			// assume 120
-			const beats = (ticks / this.ppq);
+			const beats = ticks / this.ppq;
 			return (60 / 120) * beats;
 		}
 	}
@@ -154,9 +192,15 @@ export class Header {
 		if (index !== -1) {
 			const timeSigEvent = this.timeSignatures[index];
 			const elapsedBeats = (ticks - timeSigEvent.ticks) / this.ppq;
-			return timeSigEvent.measures + elapsedBeats / (timeSigEvent.timeSignature[0] / timeSigEvent.timeSignature[1]) / 4;
+			return (
+				timeSigEvent.measures +
+				elapsedBeats /
+					(timeSigEvent.timeSignature[0] /
+						timeSigEvent.timeSignature[1]) /
+					4
+			);
 		} else {
-			return (ticks / this.ppq) / 4;
+			return ticks / this.ppq / 4;
 		}
 	}
 
@@ -176,7 +220,7 @@ export class Header {
 		if (index !== -1) {
 			const tempo = this.tempos[index];
 			const tempoTime = tempo.time;
-			const elapsedTime = (seconds - tempoTime);
+			const elapsedTime = seconds - tempoTime;
 			const elapsedBeats = elapsedTime / (60 / tempo.bpm);
 			return Math.round(tempo.ticks + elapsedBeats * this.ppq);
 		} else {
@@ -195,7 +239,7 @@ export class Header {
 			meta: this.meta,
 			name: this.name,
 			ppq: this.ppq,
-			tempos: this.tempos.map(t => {
+			tempos: this.tempos.map((t) => {
 				return {
 					bpm: t.bpm,
 					ticks: t.ticks,
@@ -211,10 +255,14 @@ export class Header {
 	fromJSON(json: HeaderJSON): void {
 		this.name = json.name;
 		// clone all the attributes
-		this.tempos = json.tempos.map(t => Object.assign({}, t));
-		this.timeSignatures = json.timeSignatures.map(t => Object.assign({}, t));
-		this.keySignatures = json.keySignatures.map(t => Object.assign({}, t));
-		this.meta = json.meta.map(t => Object.assign({}, t));
+		this.tempos = json.tempos.map((t) => Object.assign({}, t));
+		this.timeSignatures = json.timeSignatures.map((t) =>
+			Object.assign({}, t)
+		);
+		this.keySignatures = json.keySignatures.map((t) =>
+			Object.assign({}, t)
+		);
+		this.meta = json.meta.map((t) => Object.assign({}, t));
 		privatePPQMap.set(this, json.ppq);
 		this.update();
 	}
@@ -225,10 +273,12 @@ export class Header {
 	 * @param bpm The tempo in beats per second
 	 */
 	setTempo(bpm: number): void {
-		this.tempos = [{
-			bpm,
-			ticks: 0,
-		}];
+		this.tempos = [
+			{
+				bpm,
+				ticks: 0,
+			},
+		];
 		this.update();
 	}
 }

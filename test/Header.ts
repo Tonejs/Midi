@@ -4,9 +4,7 @@ import { resolve } from "path";
 import { Midi } from "../src/Midi";
 
 context("Header", () => {
-
 	describe("empty midi file", () => {
-
 		const midi = new Midi();
 
 		it("has defaults", () => {
@@ -17,8 +15,11 @@ context("Header", () => {
 	});
 
 	describe("parses beethoven Symphony 7", () => {
-
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/beethoven/symphony_7_2.mid")));
+		const midi = new Midi(
+			readFileSync(
+				resolve(__dirname, "./midi/beethoven/symphony_7_2.mid")
+			)
+		);
 
 		it("parsed the PPQ", () => {
 			expect(midi.header.ppq).to.equal(256);
@@ -35,7 +36,10 @@ context("Header", () => {
 
 		it("parsed the time signatures", () => {
 			expect(midi.header.timeSignatures).to.have.length(1);
-			expect(midi.header.timeSignatures[0].timeSignature).to.deep.equal([2, 4]);
+			expect(midi.header.timeSignatures[0].timeSignature).to.deep.equal([
+				2,
+				4,
+			]);
 		});
 
 		it("can set the tempo with setTempo", () => {
@@ -51,8 +55,11 @@ context("Header", () => {
 	});
 
 	describe("parses debussy claire de lune", () => {
-
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/debussy/claire_de_lune.mid")));
+		const midi = new Midi(
+			readFileSync(
+				resolve(__dirname, "./midi/debussy/claire_de_lune.mid")
+			)
+		);
 
 		it("parsed the PPQ", () => {
 			expect(midi.header.ppq).to.equal(480);
@@ -77,12 +84,29 @@ context("Header", () => {
 
 		it("parsed the time signatures", () => {
 			expect(midi.header.timeSignatures).to.have.length(1);
-			expect(midi.header.timeSignatures[0].timeSignature).to.deep.equal([9, 8]);
+			expect(midi.header.timeSignatures[0].timeSignature).to.deep.equal([
+				9,
+				8,
+			]);
+		});
+	});
+
+	describe("can get a tempo on a track which isn't the first track", () => {
+		const midi = new Midi(
+			readFileSync(resolve(__dirname, "./midi/230_bpm_multitrack.mid"))
+		);
+
+		it("parsed the PPQ", () => {
+			expect(midi.header.ppq).to.equal(96);
+		});
+
+		it("parsed the tempo", () => {
+			expect(midi.header.tempos).to.have.length(1);
+			expect(midi.header.tempos[0].bpm).to.be.closeTo(230, 0.01);
 		});
 	});
 
 	describe("Tempo", () => {
-
 		const midi = new Midi();
 
 		it("defaults to 120", () => {
@@ -142,7 +166,6 @@ context("Header", () => {
 	});
 
 	describe("Time Signature", () => {
-
 		const midi = new Midi();
 
 		it("defaults to [4, 4]", () => {
@@ -214,6 +237,5 @@ context("Header", () => {
 			expect(track.notes[1].bars).to.equal(2);
 			expect(track.notes[2].bars).to.equal(3);
 		});
-
 	});
 });
