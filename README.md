@@ -1,13 +1,15 @@
 [![Build Status](https://travis-ci.org/Tonejs/Midi.svg?branch=master)](https://travis-ci.org/Tonejs/Midi)
 [![codecov](https://codecov.io/gh/Tonejs/Midi/branch/master/graph/badge.svg)](https://codecov.io/gh/Tonejs/Midi)
 
+This is a modified version of [`@tonejs/midi`](https://github.com/Tonejs/Midi) which uses ES modules.
+
 ## Installation
 
-`npm install @tonejs/midi`
+`npm install @david18284/tonejs-midi-es`
 
 ## [DEMO](https://tonejs.github.io/Midi/)
 
-Midi makes it straightforward to read and write MIDI files with Javascript. It uses [midi-file](https://github.com/carter-thaxton/midi-file) for parsing and writing. 
+Midi makes it straightforward to read and write MIDI files with Javascript. It uses [midi-file](https://github.com/carter-thaxton/midi-file) for parsing and writing.
 
 ## Import
 
@@ -71,7 +73,7 @@ The data parsed from the midi file looks like this:
 {
   // the transport and timing data
   header: {
-    name: String,                     // the name of the first empty track, 
+    name: String,                     // the name of the first empty track,
                                       // which is usually the song name
     tempos: TempoEvent[],             // the tempo, e.g. 120
     timeSignatures: TimeSignatureEvent[],  // the time signature, e.g. [4, 4],
@@ -160,7 +162,7 @@ track.addNote({
   value : 127,
   time : 0.2
 })
- 
+
 // write the output
 fs.writeFileSync("output.mid", new Buffer(midi.toArray()))
 ```
