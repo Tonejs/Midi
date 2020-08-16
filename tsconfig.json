@@ -2,13 +2,14 @@
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"outDir": "dist",
-		"module": "commonjs",
+		"module": "ES2015",
 		"sourceMap": true,
 		"esModuleInterop": true,
-		"target" : "es5",
+		"target" : "ES6",
 		"declaration": true,
 		// "noUnusedLocals": true,
 		"lib" : ["es2015", "es2017", "dom"],
+		"moduleResolution": "node",
 		"types": [
 			"node",
 			"mocha"
