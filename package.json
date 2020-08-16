@@ -14,7 +14,7 @@
 		"lint": "eslint --ext ts ./src",
 		"lint:fix": "npm run lint -- --fix",
 		"watch": "webpack -w --mode=development",
-		"test": "nyc mocha --timeout=10000 --require ts-node/register ./test/*.ts"
+		"test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" nyc mocha --timeout=10000 --require ts-node/register ./test/*.ts"
 	},
 	"files": [
 		"build",

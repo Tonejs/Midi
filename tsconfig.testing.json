@@ -1,0 +1,34 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": false,
+		"outDir": "dist",
+		"module": "CommonJS",
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"target" : "ES5",
+		"declaration": true,
+		// "noUnusedLocals": true,
+		"lib" : ["es2015", "es2017", "dom"],
+		"moduleResolution": "node",
+		"types": [
+			"node",
+			"mocha"
+		]
+	},
+	"files": [
+		"./src/midi-file.d.ts"
+	],
+	"include": [
+		"./src/*.ts"
+	],
+	"exclude": [
+		// "node_modules"
+	],
+	"typedocOptions": {
+		"exclude" : ["./src/Encode.ts", "./src/BinarySearch.ts", "./src/InstrumentMaps.ts"],
+		"mode": "file",
+		"excludeNotExported" : true,
+		"out": "docs",
+		"theme" : "minimal"
+    }
+}
