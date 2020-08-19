@@ -7,7 +7,9 @@
 	"jsnext:main": "dist/Midi.js",
 	"types": "dist/Midi.d.ts",
 	"scripts": {
-		"build": "tsc && webpack -p --mode=production",
+		"build": "rm -rf dist && npm run tsc && npm run bundle",
+		"bundle": "rollup -c -m --environment INCLUDE_DEPS,BUILD:production",
+		"tsc": "tsc --declaration --declarationDir dist --emitDeclarationOnly --outDir dist",
 		"codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
 		"docs": "typedoc",
 		"increment": "node scripts/increment_version.js",
@@ -37,6 +39,7 @@
 		"@babel/core": "^7.2.2",
 		"@babel/polyfill": "^7.2.5",
 		"@babel/preset-env": "^7.3.1",
+		"@babel/preset-typescript": "^7.10.4",
 		"@babel/register": "^7.9.0",
 		"@types/chai": "^4.1.7",
 		"@types/mocha": "^8.0.1",
@@ -51,18 +54,21 @@
 		"mocha": "^8.1.0",
 		"node-fetch": "^2.3.0",
 		"nyc": "^14.1.1",
+		"rollup": "2.23.0",
+		"rollup-plugin-babel": "^4.4.0",
+		"rollup-plugin-typescript2": "^0.27.2",
 		"semver": "^5.6.0",
 		"source-map-support": "^0.5.12",
 		"ts-loader": "^5.4.5",
 		"ts-node": "^8.1.0",
 		"typedoc": "^0.15.0",
-		"typescript": "^3.7.2",
+		"typescript": "^3.9.7",
 		"webpack": "^4.44.1",
 		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
-		"array-flatten": "^2.1.2",
-		"midi-file": "^1.1.2"
+		"array-flatten": "^3.0.0",
+		"midi-file-esbuild": "^1.1.2"
 	},
 	"nyc": {
 		"include": [

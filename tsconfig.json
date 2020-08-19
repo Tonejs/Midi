@@ -2,7 +2,8 @@
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"outDir": "dist",
-		"module": "commonjs",
+		"module": "es6",
+		"moduleResolution": "node",
 		"sourceMap": true,
 		"esModuleInterop": true,
 		"target" : "es5",
@@ -21,7 +22,6 @@
 		"./src/*.ts"
 	],
 	"exclude": [
-		// "node_modules"
 	],
 	"typedocOptions": {
 		"exclude" : ["./src/Encode.ts", "./src/BinarySearch.ts", "./src/InstrumentMaps.ts"],

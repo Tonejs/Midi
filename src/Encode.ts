@@ -8,8 +8,7 @@ import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatu
 import { Midi } from "./Midi";
 import { Note } from "./Note";
 import { Track } from "./Track";
-import flatten from "array-flatten";
-
+import { flatten } from "array-flatten";
 function encodeNote(note: Note, channel: number): [MidiNoteOnEvent, MidiNoteOffEvent] {
 	return [{
 		absoluteTime: note.ticks,
