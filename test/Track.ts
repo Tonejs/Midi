@@ -4,10 +4,12 @@ import { resolve } from "path";
 import { Midi } from "../src/Midi";
 
 context("Track", () => {
-
 	describe("getters for beethoven symphony 7", () => {
-
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/beethoven/symphony_7_2.mid")));
+		const midi = new Midi(
+			readFileSync(
+				resolve(__dirname, "./midi/beethoven/symphony_7_2.mid")
+			)
+		);
 
 		it("has the correct number of tracks", () => {
 			expect(midi.tracks.length).to.equal(17);
@@ -33,7 +35,9 @@ context("Track", () => {
 
 		it("can set instrument", () => {
 			midi.tracks[0].instrument.name = "acoustic grand piano";
-			expect(midi.tracks[0].instrument.name).to.equal("acoustic grand piano");
+			expect(midi.tracks[0].instrument.name).to.equal(
+				"acoustic grand piano"
+			);
 			expect(midi.tracks[0].instrument.number).to.equal(0);
 			midi.tracks[0].instrument.number = 73;
 			expect(midi.tracks[0].instrument.name).to.equal("flute");
@@ -54,7 +58,7 @@ context("Track", () => {
 		});
 
 		it("tracks have notes", () => {
-			midi.tracks.forEach(track => {
+			midi.tracks.forEach((track) => {
 				expect(track.notes).to.be.an("array");
 			});
 			expect(midi.tracks[0].notes).to.have.length(404);
@@ -62,31 +66,51 @@ context("Track", () => {
 		});
 
 		it("parses midi drum beat", () => {
-			const drumMidi = new Midi(readFileSync(resolve(__dirname, "./midi/beat.mid")));
+			const drumMidi = new Midi(
+				readFileSync(resolve(__dirname, "./midi/beat.mid"))
+			);
 			expect(drumMidi.tracks.length).to.equal(1);
 			expect(drumMidi.tracks[0].channel).to.equal(9);
+		});
+
+		it("sets the endOfTrackTicks", () => {
+			expect(midi.tracks[0].endOfTrackTicks).to.equal(135058);
+			expect(midi.tracks[1].endOfTrackTicks).to.equal(141953);
 		});
 	});
 
 	describe("single-track beethoven symphony 7", () => {
-
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/beethoven/symphony_7_2_singletrack.mid")));
+		const midi = new Midi(
+			readFileSync(
+				resolve(
+					__dirname,
+					"./midi/beethoven/symphony_7_2_singletrack.mid"
+				)
+			)
+		);
 
 		it("has the correct number of tracks", () => {
 			expect(midi.tracks.length).to.equal(17);
 		});
-
 	});
 
 	describe("control changes on debussy claire de lune", () => {
-
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/debussy/claire_de_lune.mid")));
+		const midi = new Midi(
+			readFileSync(
+				resolve(__dirname, "./midi/debussy/claire_de_lune.mid")
+			)
+		);
 
 		it("tracks have control changes", () => {
-			midi.tracks.forEach(track => {
+			midi.tracks.forEach((track) => {
 				expect(track.controlChanges).to.be.an("object");
 			});
-			expect(midi.tracks[1].controlChanges).to.include.keys([10, 64, 7, 91]);
+			expect(midi.tracks[1].controlChanges).to.include.keys([
+				10,
+				64,
+				7,
+				91,
+			]);
 			expect(midi.tracks[1].controlChanges[64]).to.have.length(326);
 		});
 
@@ -100,7 +124,9 @@ context("Track", () => {
 			expect(pedals[0]).has.property("value");
 
 			expect(midi.tracks[1].controlChanges[91]).to.have.length(1);
-			expect(midi.tracks[1].controlChanges[91][0]).to.have.property("name");
+			expect(midi.tracks[1].controlChanges[91][0]).to.have.property(
+				"name"
+			);
 			expect(midi.tracks[1].controlChanges[91][0].name).to.equal(null);
 		});
 
@@ -127,8 +153,9 @@ context("Track", () => {
 	});
 
 	describe("getter for bach in format 0", () => {
-
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/bach/bach_format0.mid")));
+		const midi = new Midi(
+			readFileSync(resolve(__dirname, "./midi/bach/bach_format0.mid"))
+		);
 
 		it("has 1 track", () => {
 			expect(midi.tracks.length).to.equal(1);
@@ -144,8 +171,9 @@ context("Track", () => {
 	});
 
 	describe("Non-standard Format 1", () => {
-
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/joplin/TheEntertainer.mid")));
+		const midi = new Midi(
+			readFileSync(resolve(__dirname, "./midi/joplin/TheEntertainer.mid"))
+		);
 
 		it("has 2 track", () => {
 			expect(midi.tracks.length).to.equal(2);
@@ -158,11 +186,13 @@ context("Track", () => {
 	});
 
 	describe("Tchaikovsky symphony", () => {
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/tchaikovsky_seasons.mid")));
+		const midi = new Midi(
+			readFileSync(resolve(__dirname, "./midi/tchaikovsky_seasons.mid"))
+		);
 
 		it("doesn't have negative durations", () => {
-			midi.tracks.forEach(track => {
-				track.notes.forEach(note => {
+			midi.tracks.forEach((track) => {
+				track.notes.forEach((note) => {
 					expect(note.duration).to.be.gte(0);
 				});
 			});
@@ -170,8 +200,11 @@ context("Track", () => {
 	});
 
 	describe("can add note to beethoven symphony 7", () => {
-
-		const midi = new Midi(readFileSync(resolve(__dirname, "./midi/beethoven/symphony_7_2.mid")));
+		const midi = new Midi(
+			readFileSync(
+				resolve(__dirname, "./midi/beethoven/symphony_7_2.mid")
+			)
+		);
 
 		it("can add a note", () => {
 			const firstTrack = midi.tracks[0];
@@ -187,14 +220,16 @@ context("Track", () => {
 			expect(firstTrack.notes).to.have.length(405);
 
 			// was inserted in the right place
-			const note = firstTrack.notes.find(n => n.velocity === 0.4 && n.midi === 60);
+			const note = firstTrack.notes.find(
+				(n) => n.velocity === 0.4 && n.midi === 60
+			);
 			expect(note.duration).to.be.closeTo(0.5, 0.01);
 			expect(note.time).to.be.closeTo(200, 0.01);
 			expect(note.ticks).to.be.equal(61440);
 
 			// search the array to make sure that it's ordered
 			let lastTick = 0;
-			firstTrack.notes.forEach(n => {
+			firstTrack.notes.forEach((n) => {
 				expect(n.ticks).at.least(lastTick);
 				lastTick = n.ticks;
 			});
@@ -214,14 +249,17 @@ context("Track", () => {
 			expect(secondTrack.notes).to.have.length(421);
 
 			// the previously last note is second to last
-			expect(secondTrack.notes[secondTrack.notes.length - 2].ticks).to.equal(lastNote.ticks);
+			expect(
+				secondTrack.notes[secondTrack.notes.length - 2].ticks
+			).to.equal(lastNote.ticks);
 			// has new last note
-			expect(secondTrack.notes[secondTrack.notes.length - 1].ticks).to.equal(lastNote.ticks + 100);
+			expect(
+				secondTrack.notes[secondTrack.notes.length - 1].ticks
+			).to.equal(lastNote.ticks + 100);
 		});
 	});
 
 	describe("add CC values", () => {
-
 		const midi = new Midi();
 
 		it("can add values", () => {
@@ -247,7 +285,6 @@ context("Track", () => {
 	});
 
 	describe("PitchBend", () => {
-		
 		it("can add values", () => {
 			const midi = new Midi();
 			const track = midi.addTrack();
@@ -259,7 +296,9 @@ context("Track", () => {
 		});
 
 		it("can parse values from midi file", () => {
-			const midi = new Midi(readFileSync(resolve(__dirname, "./midi/pitchBendTest.mid")));
+			const midi = new Midi(
+				readFileSync(resolve(__dirname, "./midi/pitchBendTest.mid"))
+			);
 			expect(midi.tracks[0].pitchBends[0].value).to.equal(0);
 			expect(midi.tracks[0].pitchBends[0].time).to.equal(0);
 
@@ -267,5 +306,4 @@ context("Track", () => {
 			expect(midi.tracks[0].pitchBends[25].value).to.be.closeTo(1, 0.01);
 		});
 	});
-
 });
