@@ -103,7 +103,6 @@ export class Track {
 					});
 				}
 			}
-
 			const controlChanges = trackData.filter(
 				(event) => event.type === "controller"
 			) as MidiControllerEvent[];
@@ -262,7 +261,7 @@ export class Track {
 					this.addCC({
 						number: cc.number,
 						ticks: cc.ticks,
-						value: cc.value,
+						value: cc.value*127,
 					});
 				});
 			}
