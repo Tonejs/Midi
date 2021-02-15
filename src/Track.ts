@@ -127,8 +127,8 @@ export class Track {
 			});
 
 			const endOfTrackEvent:
-				| MidiEndOfTrackEvent
-				| undefined = trackData.find(
+			| MidiEndOfTrackEvent
+			| undefined = trackData.find(
 				(event): event is MidiEndOfTrackEvent =>
 					event.type === "endOfTrack"
 			);
@@ -169,8 +169,8 @@ export class Track {
 	 */
 	addCC(
 		props:
-			| Omit<ControlChangeInterface, "ticks">
-			| Omit<ControlChangeInterface, "time">
+		| Omit<ControlChangeInterface, "ticks">
+		| Omit<ControlChangeInterface, "time">
 	): this {
 		const header = privateHeaderMap.get(this);
 		const cc = new ControlChange(
@@ -193,8 +193,8 @@ export class Track {
 	 */
 	addPitchBend(
 		props:
-			| Omit<PitchBendInterface, "ticks">
-			| Omit<PitchBendInterface, "time">
+		| Omit<PitchBendInterface, "ticks">
+		| Omit<PitchBendInterface, "time">
 	): this {
 		const header = privateHeaderMap.get(this);
 		const pb = new PitchBend({}, header);

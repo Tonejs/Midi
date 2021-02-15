@@ -40,7 +40,7 @@ function encodeControlChange(cc: ControlChange, channel: number): MidiController
 		controllerType: cc.number,
 		deltaTime: 0,
 		type: "controller",
-		value: cc.value,
+		value: Math.floor(cc.value * 127),
 	};
 }
 
