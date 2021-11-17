@@ -62,7 +62,7 @@
 	},
 	"dependencies": {
 		"array-flatten": "^2.1.2",
-		"midi-file": "^1.1.2"
+		"midi-file": "1.1.2"
 	},
 	"nyc": {
 		"include": [
