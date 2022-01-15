@@ -1,4 +1,4 @@
-import { MidiInstrumentEvent, MidiTrackData } from "midi-file";
+import { MidiInstrumentEvent, MidiData } from "midi-file";
 import { DrumKitByPatchID, instrumentByPatchID, InstrumentFamilyByID } from "./InstrumentMaps";
 import { Track } from "./Track";
 
@@ -21,7 +21,7 @@ export class Instrument {
 	 * @param trackData
 	 * @param track 
 	 */
-	constructor(trackData: MidiTrackData, track: Track) {
+	constructor(trackData: MidiData, track: Track) {
 
 		privateTrackMap.set(this, track);
 		this.number = 0;

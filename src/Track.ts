@@ -4,7 +4,7 @@ import {
 	MidiNoteOffEvent,
 	MidiNoteOnEvent,
 	MidiPitchBendEvent,
-	MidiTrackData,
+	MidiData,
 	MidiTrackNameEvent,
 } from "midi-file";
 import { insert } from "./BinarySearch";
@@ -58,7 +58,7 @@ export class Track {
 	 */
 	pitchBends: PitchBend[] = [];
 
-	constructor(trackData: MidiTrackData, header: Header) {
+	constructor(trackData: MidiData, header: Header) {
 		privateHeaderMap.set(this, header);
 
 		if (trackData) {
