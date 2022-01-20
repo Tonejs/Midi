@@ -4,7 +4,7 @@ import { MidiPitchBendEvent } from "midi-file";
 const privateHeaderMap = new WeakMap<PitchBend, Header>();
 
 /**
- * Represents a pitch bend event
+ * Represents a pitch bend event.
  */
 export class PitchBend implements PitchBendInterface {
 
@@ -14,7 +14,7 @@ export class PitchBend implements PitchBendInterface {
 	value: number;
 
 	/**
-	 * The tick time of the event
+	 * The tick time of the event.
 	 */
 	ticks: number;
 
@@ -22,7 +22,7 @@ export class PitchBend implements PitchBendInterface {
 	 * @param event
 	 * @param header
 	 */
-	constructor(event: Partial<MidiPitchBendEvent>, header: Header) {
+	constructor(event: Partial<MidiPitchBendEvent & { absoluteTime: number; }>, header: Header) {
 		privateHeaderMap.set(this, header);
 
 		this.ticks = event.absoluteTime;

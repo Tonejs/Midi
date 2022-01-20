@@ -1,10 +1,9 @@
 import { writeMidi } from "midi-file";
-import type { MidiData, MidiEndOfTrackEvent,
-	MidiProgramChangeEvent, MidiTextEvent
-} from "midi-file";
 
 import type {
 	MidiNoteOnEvent, MidiNoteOffEvent, MidiControllerEvent,
+	MidiData, MidiEndOfTrackEvent,
+	MidiProgramChangeEvent, MidiTextEvent, MidiEvent,
 	MidiPitchBendEvent, MidiTrackNameEvent, MidiKeySignatureEvent,
 	MidiTimeSignatureEvent, MidiSetTempoEvent
 } from "midi-file";
@@ -47,7 +46,10 @@ function encodeNotes(track: Track): Array<MidiNoteOnEvent | MidiNoteOffEvent> {
 	return flatten(track.notes.map(note => encodeNote(note, track.channel))) as unknown as Array<MidiNoteOnEvent | MidiNoteOffEvent>;
 }
 
-function encodeControlChange(cc: ControlChange, channel: number): MidiControllerEvent {
+function encodeControlChange(
+	cc: ControlChange,
+	channel: number
+): (MidiControllerEvent & WithAbsoluteTime) {
 	return {
 		absoluteTime: cc.ticks,
 		channel,
@@ -70,7 +72,10 @@ function encodeControlChanges(track: Track): MidiControllerEvent[] {
 	return controlChanges;
 }
 
-function encodePitchBend(pb: PitchBend, channel: number): MidiPitchBendEvent {
+function encodePitchBend(
+	pb: PitchBend,
+	channel: number
+): (MidiPitchBendEvent & WithAbsoluteTime) {
 	return {
 		absoluteTime: pb.ticks,
 		channel,
@@ -88,7 +93,7 @@ function encodePitchBends(track: Track): MidiPitchBendEvent[] {
 	return pitchBends;
 }
 
-function encodeInstrument(track: Track): MidiProgramChangeEvent {
+function encodeInstrument(track: Track): (MidiProgramChangeEvent & WithAbsoluteTime) {
 	return {
 		absoluteTime: 0,
 		channel: track.channel,
@@ -98,7 +103,7 @@ function encodeInstrument(track: Track): MidiProgramChangeEvent {
 	};
 }
 
-function encodeTrackName(name: string): MidiTrackNameEvent {
+function encodeTrackName(name: string): (MidiTrackNameEvent & WithAbsoluteTime) {
 	return {
 		absoluteTime: 0,
 		deltaTime: 0,
@@ -108,7 +113,7 @@ function encodeTrackName(name: string): MidiTrackNameEvent {
 	};
 }
 
-function encodeTempo(tempo: TempoEvent): MidiSetTempoEvent {
+function encodeTempo(tempo: TempoEvent): (MidiSetTempoEvent & WithAbsoluteTime) {
 	return {
 		absoluteTime: tempo.ticks,
 		deltaTime: 0,
@@ -118,7 +123,7 @@ function encodeTempo(tempo: TempoEvent): MidiSetTempoEvent {
 	};
 }
 
-function encodeTimeSignature(timeSig: TimeSignatureEvent): MidiTimeSignatureEvent {
+function encodeTimeSignature(timeSig: TimeSignatureEvent): (MidiTimeSignatureEvent & WithAbsoluteTime) {
 	return {
 		absoluteTime: timeSig.ticks,
 		deltaTime: 0,
@@ -133,7 +138,7 @@ function encodeTimeSignature(timeSig: TimeSignatureEvent): MidiTimeSignatureEven
 
 // function encodeMeta(event: )
 
-function encodeKeySignature(keySig: KeySignatureEvent): MidiKeySignatureEvent {
+function encodeKeySignature(keySig: KeySignatureEvent): (MidiKeySignatureEvent & WithAbsoluteTime) {
 	const keyIndex = keySignatureKeys.indexOf(keySig.key);
 	return {
 		absoluteTime: keySig.ticks,
@@ -145,14 +150,16 @@ function encodeKeySignature(keySig: KeySignatureEvent): MidiKeySignatureEvent {
 	};
 }
 
-function encodeText(textEvent: MetaEvent): MidiTextEvent {
+function encodeText(
+	textEvent: (MetaEvent & { ticks: number; })
+): (MidiTextEvent & WithAbsoluteTime) {
 	return {
 		absoluteTime: textEvent.ticks,
 		deltaTime: 0,
 		meta: true,
 		text: textEvent.text,
 		type: textEvent.type,
-	} as MidiTextEvent;
+	} as (MidiTextEvent & WithAbsoluteTime);
 }
 
 /**
@@ -184,7 +191,7 @@ export function encode(midi: Midi): Uint8Array {
 				...midi.header.timeSignatures.map(timeSig => encodeTimeSignature(timeSig)),
 			],
 			// The remaining tracks.
-			...midi.tracks.map(track => {
+			...midi.tracks.map((track) => {
 				return [
 					// Add the name
 					encodeTrackName(track.name),
@@ -202,23 +209,25 @@ export function encode(midi: Midi): Uint8Array {
 	};
 
 	// Sort and set `deltaTime` of all of the tracks.
-	midiData.tracks = midiData.tracks.map(track => {
+	midiData.tracks = midiData.tracks.map((track: (MidiEvent & WithAbsoluteTime)[]) => {
 		track = track.sort((a, b) => a.absoluteTime - b.absoluteTime);
+		
 		let lastTime = 0;
 		track.forEach(note => {
 			note.deltaTime = note.absoluteTime - lastTime;
 			lastTime = note.absoluteTime;
 			delete note.absoluteTime;
 		});
-		// end of track
+
+		// End of track.
 		track.push({
 			deltaTime: 0,
 			meta: true,
 			type: "endOfTrack",
-		} as MidiEndOfTrackEvent);
+		} as (MidiEndOfTrackEvent & WithAbsoluteTime));
 		return track;
 	});
 
-	// return midiData
+	//Rreturn `midiData`.
 	return new Uint8Array(writeMidi(midiData));
 }

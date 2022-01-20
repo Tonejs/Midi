@@ -1,5 +1,5 @@
 import type {
-	MidiChannelEvent, MidiData,
+	MidiData,
 	MidiEvent
 } from "midi-file";
 
@@ -210,7 +210,7 @@ function splitTracks(tracks: Array<MidiEvent[]>): Array<MidiEvent[]> {
 			if (!newTracks[targetTrack]) {
 				newTracks.push([]);
 			}
-			
+
 			newTracks[targetTrack].push(event);
 		}
 	}
