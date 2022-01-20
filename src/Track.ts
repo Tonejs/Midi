@@ -66,7 +66,7 @@ export class Track {
 	constructor(trackData: MidiEvent[], header: Header) {
 		privateHeaderMap.set(this, header);
 
-		if (trackData) {			
+		if (trackData) {
 			// Get the name of the track.
 			const nameEvent = trackData.find(
 				(e) => e.type === "trackName"
@@ -82,7 +82,6 @@ export class Track {
 		this.channel = 0;
 
 		if (trackData) {
-
 			const noteOns = trackData.filter(
 				(event) => event.type === "noteOn"
 			) as (MidiNoteOnEvent & WithAbsoluteTime)[];

@@ -58,7 +58,7 @@ export class Midi {
 			// Add the absolute times to each of the tracks.
 			midiData.tracks.forEach(track => {
 				let currentTicks = 0;
-				
+
 				track.forEach((event: MidiEvent & { absoluteTime: number; }) => {
 					currentTicks += event.deltaTime;
 					event.absoluteTime = currentTicks;
@@ -187,28 +187,26 @@ function splitTracks(tracks: Array<MidiEvent[]>): Array<MidiEvent[]> {
 
 	for (let i = 0; i < tracks.length; i++) {
 		const defaultTrack = newTracks.length;
-
-		// A map from [program, channel] tuples to new track numbers.
+		// a map from [program, channel] tuples to new track numbers
 		const trackMap = new Map<string, number>();
-
-		// A map from channel numbers to current program numbers.
+		// a map from channel numbers to current program numbers
 		const currentProgram = Array(16).fill(0) as Array<number>;
 
 		for (const event of tracks[i]) {
 			let targetTrack = defaultTrack;
 
 			// If the event has a channel, we need to find that channel's current
-			// program number and the appropriate track for
-			// this [program, channel] pair.
-			const channel = (event as MidiEvent & { channel?: number; }).channel;
-			if (channel) {
+			// program number and the appropriate track for this [program, channel]
+			// pair.
+			const channel = (event as (MidiEvent & { channel?: number })).channel;
+			if (channel !== undefined) {
 				if (event.type === "programChange") {
 					currentProgram[channel] = event.programNumber;
 				}
 
 				const program = currentProgram[channel];
 				const trackKey = `${program} ${channel}`;
-
+				
 				if (trackMap.has(trackKey)) {
 					targetTrack = trackMap.get(trackKey);
 				} else {
