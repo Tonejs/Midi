@@ -1,13 +1,13 @@
 import { writeMidi } from "midi-file";
 import type { MidiData, MidiEndOfTrackEvent,
-	MidiInstrumentEvent, MidiTextEvent
+	MidiProgramChangeEvent, MidiTextEvent
 } from "midi-file";
 
 import type {
 	MidiNoteOnEvent, MidiNoteOffEvent, MidiControllerEvent,
 	MidiPitchBendEvent, MidiTrackNameEvent, MidiKeySignatureEvent,
 	MidiTimeSignatureEvent, MidiSetTempoEvent
-} from "./midi-file";
+} from "midi-file";
 
 import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatureEvent } from "./Header";
 import { ControlChange } from "./ControlChange";
@@ -18,7 +18,13 @@ import { Track } from "./Track";
 
 import flatten from "array-flatten";
 
-function encodeNote(note: Note, channel: number): [MidiNoteOnEvent, MidiNoteOffEvent] {
+/** Used to add `absoluteTime` property. */
+type WithAbsoluteTime = { absoluteTime: number };
+
+function encodeNote(note: Note, channel: number): [
+	(MidiNoteOnEvent & WithAbsoluteTime),
+	(MidiNoteOffEvent & WithAbsoluteTime)
+] {
 	return [{
 		absoluteTime: note.ticks,
 		channel,
@@ -82,7 +88,7 @@ function encodePitchBends(track: Track): MidiPitchBendEvent[] {
 	return pitchBends;
 }
 
-function encodeInstrument(track: Track): MidiInstrumentEvent {
+function encodeInstrument(track: Track): MidiProgramChangeEvent {
 	return {
 		absoluteTime: 0,
 		channel: track.channel,
@@ -150,7 +156,7 @@ function encodeText(textEvent: MetaEvent): MidiTextEvent {
 }
 
 /**
- * Convert the midi object to an array
+ * Convert the MIDI object to an array.
  */
 export function encode(midi: Midi): Uint8Array {
 	const midiData: MidiData = {
@@ -161,7 +167,7 @@ export function encode(midi: Midi): Uint8Array {
 		},
 		tracks: [
 			[
-				// the name data
+				// The name data.
 				{
 					absoluteTime: 0,
 					deltaTime: 0,
@@ -174,13 +180,13 @@ export function encode(midi: Midi): Uint8Array {
 				...midi.header.meta.map(e => encodeText(e)),
 				// the first track is all the tempo data
 				...midi.header.tempos.map(tempo => encodeTempo(tempo)),
-				// and the time signature data
+				// and the time signature data.
 				...midi.header.timeSignatures.map(timeSig => encodeTimeSignature(timeSig)),
 			],
-			// the remaining tracks
+			// The remaining tracks.
 			...midi.tracks.map(track => {
 				return [
-					// add the name
+					// Add the name
 					encodeTrackName(track.name),
 					// the instrument
 					encodeInstrument(track),
@@ -188,14 +194,14 @@ export function encode(midi: Midi): Uint8Array {
 					...encodeNotes(track),
 					// and the control changes
 					...encodeControlChanges(track),
-					// and the pitch bends
+					// and the pitch bends.
 					...encodePitchBends(track)
 				];
 			}),
 		],
 	};
 
-	// sort and set deltaTime of all of the tracks
+	// Sort and set `deltaTime` of all of the tracks.
 	midiData.tracks = midiData.tracks.map(track => {
 		track = track.sort((a, b) => a.absoluteTime - b.absoluteTime);
 		let lastTime = 0;
