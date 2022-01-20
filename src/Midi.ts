@@ -55,6 +55,16 @@ export class Midi {
 			// Parse MIDI data.
 			midiData = parseMidi(midiArrayLike);
 
+			// Add the absolute times to each of the tracks.
+			midiData.tracks.forEach(track => {
+				let currentTicks = 0;
+				
+				track.forEach((event: MidiEvent & { absoluteTime: number; }) => {
+					currentTicks += event.deltaTime;
+					event.absoluteTime = currentTicks;
+				});
+			});
+
 			// Ensure at most one instrument per track.
 			midiData.tracks = splitTracks(midiData.tracks);
 		}

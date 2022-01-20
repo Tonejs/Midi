@@ -86,15 +86,11 @@ export class Header {
 			
 			// Check time signature and tempo events from all of the tracks.
 			midiData.tracks.forEach(track => {
-				let currentTicks = 0; // Used for absolute times.
-
-				track.forEach((event: MidiEvent & { meta?: boolean; }) => {
-					currentTicks += event.deltaTime;
-
+				track.forEach((event: MidiEvent & { absoluteTime: number; meta?: boolean; }) => {
 					if (event.meta) {
 						if (event.type === "timeSignature") {
 							this.timeSignatures.push({
-								ticks: currentTicks,
+								ticks: event.absoluteTime,
 								timeSignature: [
 									event.numerator,
 									event.denominator,
@@ -102,14 +98,14 @@ export class Header {
 							});
 						} else if (event.type === "setTempo") {
 							this.tempos.push({
-								bpm: 60_000_000 / event.microsecondsPerBeat,
-								ticks: currentTicks,
+								bpm: 60000000 / event.microsecondsPerBeat,
+								ticks: event.absoluteTime,
 							});
 						} else if (event.type === "keySignature") {
 							this.keySignatures.push({
 								key: keySignatureKeys[event.key + 7],
 								scale: event.scale === 0 ? "major" : "minor",
-								ticks: currentTicks,
+								ticks: event.absoluteTime,
 							});
 						}
 					}

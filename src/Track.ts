@@ -63,14 +63,11 @@ export class Track {
 	 */
 	pitchBends: PitchBend[] = [];
 
-	/** The track data with absolute times. */
-	parsedTrackData: (MidiEvent & WithAbsoluteTime)[];
-
 	constructor(trackData: MidiEvent[], header: Header) {
 		privateHeaderMap.set(this, header);
 
-		// Get the name of the track.
-		if (trackData) {
+		if (trackData) {			
+			// Get the name of the track.
 			const nameEvent = trackData.find(
 				(e) => e.type === "trackName"
 			) as MidiTrackNameEvent;
@@ -85,21 +82,12 @@ export class Track {
 		this.channel = 0;
 
 		if (trackData) {
-			let currentTicks = 0; // Used for absolute times.
-			this.parsedTrackData = trackData.map((event) => {
-				currentTicks += event.deltaTime;
 
-				return {
-					...event,
-					absoluteTime: currentTicks
-				}
-			}); 
-
-			const noteOns = this.parsedTrackData.filter(
+			const noteOns = trackData.filter(
 				(event) => event.type === "noteOn"
 			) as (MidiNoteOnEvent & WithAbsoluteTime)[];
 
-			const noteOffs = this.parsedTrackData.filter(
+			const noteOffs = trackData.filter(
 				(event) => event.type === "noteOff"
 			) as (MidiNoteOffEvent & WithAbsoluteTime)[];
 
@@ -131,7 +119,7 @@ export class Track {
 				}
 			}
 
-			const controlChanges = this.parsedTrackData.filter(
+			const controlChanges = trackData.filter(
 				(event) => event.type === "controller"
 			) as (MidiControllerEvent & WithAbsoluteTime)[];
 			controlChanges.forEach((event) => {
@@ -142,7 +130,7 @@ export class Track {
 				});
 			});
 
-			const pitchBends = this.parsedTrackData.filter(
+			const pitchBends = trackData.filter(
 				(event) => event.type === "pitchBend"
 			) as (MidiPitchBendEvent & WithAbsoluteTime)[];
 			pitchBends.forEach((event) => {
@@ -155,7 +143,7 @@ export class Track {
 
 			const endOfTrackEvent:
 			| (MidiEndOfTrackEvent & WithAbsoluteTime)
-			| undefined = this.parsedTrackData.find(
+			| undefined = trackData.find(
 				(event): event is (MidiEndOfTrackEvent & WithAbsoluteTime) =>
 					event.type === "endOfTrack"
 			);
