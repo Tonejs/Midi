@@ -1,17 +1,22 @@
-import { MidiChannelEvent, MidiTrackData, parseMidi } from "midi-file";
-import { encode } from "./Encode";
+import type {
+	MidiChannelEvent, MidiData
+} from "midi-file";
+
+import { parseMidi } from "midi-file";
+
 import { Header, HeaderJSON } from "./Header";
 import { Track, TrackJSON } from "./Track";
+import { encode } from "./Encode";
 
 /**
- * The main midi parsing class
+ * The main midi parsing class.
  */
 export class Midi {
 
 	/**
 	 * Download and parse the MIDI file. Returns a promise
-	 * which resolves to the generated midi file
-	 * @param url The url to fetch
+	 * which resolves to the generated MIDI file.
+	 * @param url The URL to fetch.
 	 */
 	static async fromUrl(url: string): Promise<Midi> {
 		const response = await fetch(url);
@@ -19,7 +24,7 @@ export class Midi {
 			const arrayBuffer = await response.arrayBuffer();
 			return new Midi(arrayBuffer);
 		} else {
-			throw new Error(`could not load ${url}`);
+			throw new Error(`Could not load '${url}'`);
 		}
 	}
 
@@ -36,38 +41,32 @@ export class Midi {
 	/**
 	 * Parse the midi data
 	 */
-	constructor(midiArray?: (ArrayLike<number> | ArrayBuffer)) {
-
-		// parse the midi data if there is any
-		let midiData = null;
+	constructor(midiArray: (ArrayLike<number> | ArrayBuffer)) {
+		// Parse the MIDI data if there is any.
+		let midiData: (MidiData | null) = null;
 		if (midiArray) {
-			if (midiArray instanceof ArrayBuffer) {
-				midiArray = new Uint8Array(midiArray);
-			}
-			midiData = parseMidi(midiArray);
+			// Transform midiArray to ArrayLike<number>
+			// only if it's an ArrayBuffer.
+			const midiArrayLike: ArrayLike<number> = midiArray instanceof ArrayBuffer
+				? new Uint8Array(midiArray)
+				: midiArray;
 
-			// add the absolute times to each of the tracks
-			midiData.tracks.forEach(track => {
-				let currentTicks = 0;
-				track.forEach(event => {
-					currentTicks += event.deltaTime;
-					event.absoluteTime = currentTicks;
-				});
-			});
+			// Parse MIDI data.
+			midiData = parseMidi(midiArrayLike);
 
-			// ensure at most one instrument per track
+			// Ensure at most one instrument per track.
 			midiData.tracks = splitTracks(midiData.tracks);
 		}
 
 		this.header = new Header(midiData);
 		this.tracks = [];
 
-		// parse the midi data
+		// Parse MIDI data.
 		if (midiArray) {
-			// format 0, everything is on the same track
+			// Format 0, everything is on the same track.
 			this.tracks = midiData.tracks.map(trackData => new Track(trackData, this.header));
 
-			// if it's format 1 and there are no notes on the first track, remove it
+			// If it's format 1 and there are no notes on the first track, remove it.
 			if (midiData.header.format === 1 && this.tracks[0].duration === 0) {
 				this.tracks.shift();
 			}

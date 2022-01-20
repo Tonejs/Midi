@@ -1,13 +1,21 @@
-import { MidiPitchBendEvent, writeMidi } from "midi-file";
-import { MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
-	MidiInstrumentEvent, MidiKeySignatureEvent, MidiNoteOffEvent,
-	MidiNoteOnEvent, MidiTempoEvent, MidiTextEvent, MidiTimeSignatureEvent, MidiTrackNameEvent } from "midi-file";
+import { writeMidi } from "midi-file";
+import type { MidiData, MidiEndOfTrackEvent,
+	MidiInstrumentEvent, MidiTextEvent
+} from "midi-file";
+
+import type {
+	MidiNoteOnEvent, MidiNoteOffEvent, MidiControllerEvent,
+	MidiPitchBendEvent, MidiTrackNameEvent, MidiKeySignatureEvent,
+	MidiTimeSignatureEvent, MidiSetTempoEvent
+} from "./midi-file";
+
+import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatureEvent } from "./Header";
 import { ControlChange } from "./ControlChange";
 import { PitchBend } from "./PitchBend";
-import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatureEvent } from "./Header";
 import { Midi } from "./Midi";
 import { Note } from "./Note";
 import { Track } from "./Track";
+
 import flatten from "array-flatten";
 
 function encodeNote(note: Note, channel: number): [MidiNoteOnEvent, MidiNoteOffEvent] {
@@ -94,7 +102,7 @@ function encodeTrackName(name: string): MidiTrackNameEvent {
 	};
 }
 
-function encodeTempo(tempo: TempoEvent): MidiTempoEvent {
+function encodeTempo(tempo: TempoEvent): MidiSetTempoEvent {
 	return {
 		absoluteTime: tempo.ticks,
 		deltaTime: 0,

@@ -3,10 +3,13 @@ import {
 	MidiEndOfTrackEvent,
 	MidiNoteOffEvent,
 	MidiNoteOnEvent,
-	MidiPitchBendEvent,
-	MidiData,
-	MidiTrackNameEvent,
+	MidiPitchBendEvent
 } from "midi-file";
+
+import type {
+	MidiEvent, MidiTrackNameEvent
+} from "midi-file";
+
 import { insert } from "./BinarySearch";
 import { ControlChange, ControlChangeInterface } from "./ControlChange";
 import { ControlChangesJSON, createControlChanges } from "./ControlChanges";
@@ -19,58 +22,61 @@ import { Note, NoteConstructorInterface, NoteJSON } from "./Note";
 const privateHeaderMap = new WeakMap<Track, Header>();
 
 /**
- * A Track is a collection of notes and controlChanges
+ * A Track is a collection of 'notes' and 'controlChanges'.
  */
 export class Track {
 	/**
-	 * The name of the track
+	 * The name of the track.
 	 */
 	name = "";
 
 	/**
-	 * The instrument associated with the track
+	 * The instrument associated with the track.
 	 */
 	instrument: Instrument;
 
 	/**
-	 * The track's note events
+	 * The track's note events.
 	 */
 	notes: Note[] = [];
 
 	/**
 	 * The channel number of the track. Applies this channel
-	 * to all events associated with the channel
+	 * to all events associated with the channel.
 	 */
 	channel: number;
 
 	/**
-	 * The control change events
+	 * The control change events.
 	 */
 	controlChanges = createControlChanges();
 
 	/**
-	 * The end of track event (if it exists) in ticks
+	 * The end of track event (if it exists) in ticks.
 	 */
 	endOfTrackTicks?: number;
 
 	/**
-	 * The pitch bend events
+	 * The pitch bend events.
 	 */
 	pitchBends: PitchBend[] = [];
 
-	constructor(trackData: MidiData, header: Header) {
+	constructor(trackData: MidiEvent[], header: Header) {
 		privateHeaderMap.set(this, header);
 
+		// Get the name of the track.
 		if (trackData) {
 			const nameEvent = trackData.find(
 				(e) => e.type === "trackName"
 			) as MidiTrackNameEvent;
+
+			// Set empty name if 'trackName' event isn't found.
 			this.name = nameEvent ? nameEvent.text : "";
 		}
 
 		this.instrument = new Instrument(trackData, this);
 
-		// defaults to 0
+		// Defaults to 0.
 		this.channel = 0;
 
 		if (trackData) {
