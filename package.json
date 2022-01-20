@@ -54,9 +54,9 @@
 		"semver": "^5.6.0",
 		"source-map-support": "^0.5.12",
 		"ts-loader": "^5.4.5",
-		"ts-node": "^8.1.0",
+		"ts-node": "^8.10.2",
 		"typedoc": "^0.22.11",
-		"typescript": "^3.7.2",
+		"typescript": "^3.9.10",
 		"webpack": "^5.66.0",
 		"webpack-cli": "^4.9.1"
 	},
