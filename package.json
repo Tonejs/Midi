@@ -7,7 +7,7 @@
 	"jsnext:main": "dist/Midi.js",
 	"types": "dist/Midi.d.ts",
 	"scripts": {
-		"build": "tsc && webpack -p --mode=production",
+		"build": "tsc && webpack --mode=production",
 		"codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
 		"docs": "typedoc",
 		"increment": "node scripts/increment_version.js",
