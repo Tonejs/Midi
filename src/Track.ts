@@ -1,14 +1,16 @@
 import {
 	MidiControllerEvent,
 	MidiEndOfTrackEvent,
-	MidiNoteOffEvent,
-	MidiNoteOnEvent,
 	MidiPitchBendEvent
 } from "midi-file";
 
 import type {
-	MidiEvent, MidiTrackNameEvent
+	MidiEvent, MidiTrackNameEvent,
+	MidiNoteOnEvent, MidiNoteOffEvent
 } from "midi-file";
+
+// Used to add `absoluteTime` property to 'MidiEvent's.
+type WithAbsoluteTime = { absoluteTime: number; };
 
 import { insert } from "./BinarySearch";
 import { ControlChange, ControlChangeInterface } from "./ControlChange";
@@ -61,6 +63,9 @@ export class Track {
 	 */
 	pitchBends: PitchBend[] = [];
 
+	/** The track data with absolute times. */
+	parsedTrackData: (MidiEvent & WithAbsoluteTime)[];
+
 	constructor(trackData: MidiEvent[], header: Header) {
 		privateHeaderMap.set(this, header);
 
@@ -80,25 +85,41 @@ export class Track {
 		this.channel = 0;
 
 		if (trackData) {
-			const noteOns = trackData.filter(
+			let currentTicks = 0; // Used for absolute times.
+			this.parsedTrackData = trackData.map((event) => {
+				currentTicks += event.deltaTime;
+
+				return {
+					...event,
+					absoluteTime: currentTicks
+				}
+			}); 
+
+			const noteOns = this.parsedTrackData.filter(
 				(event) => event.type === "noteOn"
-			) as MidiNoteOnEvent[];
-			const noteOffs = trackData.filter(
+			) as (MidiNoteOnEvent & WithAbsoluteTime)[];
+
+			const noteOffs = this.parsedTrackData.filter(
 				(event) => event.type === "noteOff"
-			) as MidiNoteOffEvent[];
+			) as (MidiNoteOffEvent & WithAbsoluteTime)[];
+
 			while (noteOns.length) {
 				const currentNote = noteOns.shift();
-				// set the channel based on the note
+
+				// Set the channel based on the note.
 				this.channel = currentNote.channel;
-				// find the corresponding note off
+
+				// Find the corresponding note off.
 				const offIndex = noteOffs.findIndex(
 					(note) =>
 						note.noteNumber === currentNote.noteNumber &&
 						note.absoluteTime >= currentNote.absoluteTime
 				);
+
 				if (offIndex !== -1) {
-					// once it's got the note off, add it
+					// Once it's got the note off, add it.
 					const noteOff = noteOffs.splice(offIndex, 1)[0];
+
 					this.addNote({
 						durationTicks:
 							noteOff.absoluteTime - currentNote.absoluteTime,
@@ -110,9 +131,9 @@ export class Track {
 				}
 			}
 
-			const controlChanges = trackData.filter(
+			const controlChanges = this.parsedTrackData.filter(
 				(event) => event.type === "controller"
-			) as MidiControllerEvent[];
+			) as (MidiControllerEvent & WithAbsoluteTime)[];
 			controlChanges.forEach((event) => {
 				this.addCC({
 					number: event.controllerType,
@@ -121,21 +142,21 @@ export class Track {
 				});
 			});
 
-			const pitchBends = trackData.filter(
+			const pitchBends = this.parsedTrackData.filter(
 				(event) => event.type === "pitchBend"
-			) as MidiPitchBendEvent[];
+			) as (MidiPitchBendEvent & WithAbsoluteTime)[];
 			pitchBends.forEach((event) => {
 				this.addPitchBend({
 					ticks: event.absoluteTime,
-					// scale the value between -2^13 to 2^13 to -2 to 2
+					// Scale the value between -2^13 to 2^13 to -2 to 2.
 					value: event.value / Math.pow(2, 13),
 				});
 			});
 
 			const endOfTrackEvent:
-			| MidiEndOfTrackEvent
-			| undefined = trackData.find(
-				(event): event is MidiEndOfTrackEvent =>
+			| (MidiEndOfTrackEvent & WithAbsoluteTime)
+			| undefined = this.parsedTrackData.find(
+				(event): event is (MidiEndOfTrackEvent & WithAbsoluteTime) =>
 					event.type === "endOfTrack"
 			);
 
@@ -147,8 +168,8 @@ export class Track {
 	}
 
 	/**
-	 * Add a note to the notes array
-	 * @param props The note properties to add
+	 * Add a note to the notes array.
+	 * @param props The note properties to add.
 	 */
 	addNote(props: NoteConstructorInterface): this {
 		const header = privateHeaderMap.get(this);
@@ -164,13 +185,14 @@ export class Track {
 			},
 			header
 		);
+
 		Object.assign(note, props);
 		insert(this.notes, note, "ticks");
 		return this;
 	}
 
 	/**
-	 * Add a control change to the track
+	 * Add a control change to the track.
 	 * @param props
 	 */
 	addCC(
@@ -195,7 +217,7 @@ export class Track {
 	}
 
 	/**
-	 * Add a control change to the track
+	 * Add a control change to the track.
 	 */
 	addPitchBend(
 		props:
@@ -210,7 +232,7 @@ export class Track {
 	}
 
 	/**
-	 * The end time of the last event in the track
+	 * The end time of the last event in the track.
 	 */
 	get duration(): number {
 		if (!this.notes.length) {
@@ -220,6 +242,7 @@ export class Track {
 		let maxDuration =
 			this.notes[this.notes.length - 1].time +
 			this.notes[this.notes.length - 1].duration;
+
 		for (let i = 0; i < this.notes.length - 1; i++) {
 			const duration = this.notes[i].time + this.notes[i].duration;
 			if (maxDuration < duration) {
@@ -231,7 +254,7 @@ export class Track {
 	}
 
 	/**
-	 * The end time of the last event in the track in ticks
+	 * The end time of the last event in the track in ticks.
 	 */
 	get durationTicks(): number {
 		if (!this.notes.length) {
@@ -252,16 +275,18 @@ export class Track {
 	}
 
 	/**
-	 * Assign the json values to this track
+	 * Assign the JSON values to this track.
 	 */
 	fromJSON(json: TrackJSON): void {
 		this.name = json.name;
 		this.channel = json.channel;
 		this.instrument = new Instrument(undefined, this);
 		this.instrument.fromJSON(json.instrument);
+
 		if (json.endOfTrackTicks !== undefined) {
 			this.endOfTrackTicks = json.endOfTrackTicks;
 		}
+
 		for (const number in json.controlChanges) {
 			if (json.controlChanges[number]) {
 				json.controlChanges[number].forEach((cc) => {
@@ -273,6 +298,7 @@ export class Track {
 				});
 			}
 		}
+
 		json.notes.forEach((n) => {
 			this.addNote({
 				durationTicks: n.durationTicks,
@@ -284,10 +310,10 @@ export class Track {
 	}
 
 	/**
-	 * Convert the track into a JSON format
+	 * Convert the track into a JSON format.
 	 */
 	toJSON(): TrackJSON {
-		// convert all the CCs to JSON
+		// Convert all the CCs to JSON.
 		const controlChanges = {};
 		for (let i = 0; i < 127; i++) {
 			if (this.controlChanges.hasOwnProperty(i)) {

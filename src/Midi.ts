@@ -1,5 +1,6 @@
 import type {
-	MidiChannelEvent, MidiData
+	MidiChannelEvent, MidiData,
+	MidiEvent
 } from "midi-file";
 
 import { parseMidi } from "midi-file";
@@ -41,7 +42,7 @@ export class Midi {
 	/**
 	 * Parse the midi data
 	 */
-	constructor(midiArray: (ArrayLike<number> | ArrayBuffer)) {
+	constructor(midiArray?: (ArrayLike<number> | ArrayBuffer)) {
 		// Parse the MIDI data if there is any.
 		let midiData: (MidiData | null) = null;
 		if (midiArray) {
@@ -74,51 +75,53 @@ export class Midi {
 	}
 
 	/**
-	 * The name of the midi file, taken from the first track
+	 * The name of the midi file, taken from the first track.
 	 */
 	get name(): string {
 		return this.header.name;
 	}
+
 	set name(n) {
 		this.header.name = n;
 	}
 
 	/**
-	 * The total length of the file in seconds
+	 * The total length of the file in seconds.
 	 */
 	get duration(): number {
-		// get the max of the last note of all the tracks
+		// Get the max of the last note of all the tracks.
 		const durations = this.tracks.map(t => t.duration);
 		return Math.max(...durations);
 	}
 
 	/**
-	 * The total length of the file in ticks
+	 * The total length of the file in ticks.
 	 */
 	get durationTicks(): number {
-		// get the max of the last note of all the tracks
+		// Get the max of the last note of all the tracks.
 		const durationTicks = this.tracks.map(t => t.durationTicks);
 		return Math.max(...durationTicks);
 	}
 
 	/**
-	 * Add a track to the midi file
+	 * Add a track to the MIDI file.
 	 */
 	addTrack(): Track {
 		const track = new Track(undefined, this.header);
 		this.tracks.push(track);
+
 		return track;
 	}
 
 	/**
-	 * Encode the midi as a Uint8Array.
+	 * Encode the MIDI as a Uint8Array.
 	 */
 	toArray(): Uint8Array {
 		return encode(this);
 	}
 
 	/**
-	 * Convert the midi object to JSON.
+	 * Convert the MIDI object to JSON.
 	 */
 	toJSON(): MidiJSON {
 		return {
@@ -137,22 +140,24 @@ export class Midi {
 		this.tracks = json.tracks.map(trackJSON => {
 			const track = new Track(undefined, this.header);
 			track.fromJSON(trackJSON);
+
 			return track;
 		});
 	}
 
 	/**
-	 * Clone the entire object midi object
+	 * Clone the entire object MIDI object.
 	 */
 	clone(): Midi {
 		const midi = new Midi();
 		midi.fromJSON(this.toJSON());
+
 		return midi;
 	}
 }
 
 /**
- * The MIDI data in JSON format
+ * The MIDI data in JSON format.
  */
 export interface MidiJSON {
 	header: HeaderJSON;
@@ -167,29 +172,33 @@ export { HeaderJSON, Header } from "./Header";
  * most one channel and at most one instrument. This means splitting up tracks
  * that contain more than one channel or instrument.
  */
-function splitTracks(tracks: MidiTrackData[]): MidiTrackData[] {
+function splitTracks(tracks: Array<MidiEvent[]>): Array<MidiEvent[]> {
 	const newTracks = [];
 
 	for (let i = 0; i < tracks.length; i++) {
 		const defaultTrack = newTracks.length;
-		// a map from [program, channel] tuples to new track numbers
+
+		// A map from [program, channel] tuples to new track numbers.
 		const trackMap = new Map<string, number>();
-		// a map from channel numbers to current program numbers
+
+		// A map from channel numbers to current program numbers.
 		const currentProgram = Array(16).fill(0) as Array<number>;
 
 		for (const event of tracks[i]) {
 			let targetTrack = defaultTrack;
 
 			// If the event has a channel, we need to find that channel's current
-			// program number and the appropriate track for this [program, channel]
-			// pair.
-			const channel = (event as MidiChannelEvent).channel;
-			if (channel !== undefined) {
+			// program number and the appropriate track for
+			// this [program, channel] pair.
+			const channel = (event as MidiEvent & { channel?: number; }).channel;
+			if (channel) {
 				if (event.type === "programChange") {
 					currentProgram[channel] = event.programNumber;
 				}
+
 				const program = currentProgram[channel];
 				const trackKey = `${program} ${channel}`;
+
 				if (trackMap.has(trackKey)) {
 					targetTrack = trackMap.get(trackKey);
 				} else {
@@ -201,6 +210,7 @@ function splitTracks(tracks: MidiTrackData[]): MidiTrackData[] {
 			if (!newTracks[targetTrack]) {
 				newTracks.push([]);
 			}
+			
 			newTracks[targetTrack].push(event);
 		}
 	}
