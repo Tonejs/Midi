@@ -1,12 +1,9 @@
-import {
+import type {
 	MidiControllerEvent,
 	MidiEndOfTrackEvent,
-	MidiPitchBendEvent
-} from "midi-file";
-
-import type {
-	MidiEvent, MidiTrackNameEvent,
-	MidiNoteOnEvent, MidiNoteOffEvent
+	MidiEvent,
+	MidiNoteOffEvent, MidiNoteOnEvent,
+	MidiPitchBendEvent, MidiTrackNameEvent
 } from "midi-file";
 
 // Used to add `absoluteTime` property to 'MidiEvent's.

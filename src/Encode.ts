@@ -1,11 +1,11 @@
 import { writeMidi } from "midi-file";
 
 import type {
-	MidiNoteOnEvent, MidiNoteOffEvent, MidiControllerEvent,
-	MidiData, MidiEndOfTrackEvent,
-	MidiProgramChangeEvent, MidiTextEvent, MidiEvent,
-	MidiPitchBendEvent, MidiTrackNameEvent, MidiKeySignatureEvent,
-	MidiTimeSignatureEvent, MidiSetTempoEvent
+	MidiControllerEvent, MidiData, MidiEndOfTrackEvent,
+	MidiEvent, MidiKeySignatureEvent,
+	MidiNoteOffEvent, MidiNoteOnEvent, MidiPitchBendEvent,
+	MidiProgramChangeEvent, MidiSetTempoEvent, MidiTextEvent,
+	MidiTimeSignatureEvent, MidiTrackNameEvent
 } from "midi-file";
 
 import { KeySignatureEvent, keySignatureKeys, MetaEvent, TempoEvent, TimeSignatureEvent } from "./Header";
@@ -228,6 +228,6 @@ export function encode(midi: Midi): Uint8Array {
 		return track;
 	});
 
-	//Rreturn `midiData`.
+	// Rreturn `midiData`.
 	return new Uint8Array(writeMidi(midiData));
 }
