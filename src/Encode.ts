@@ -15,7 +15,7 @@ import { Midi } from "./Midi";
 import { Note } from "./Note";
 import { Track } from "./Track";
 
-import flatten from "array-flatten";
+import { flatten } from "array-flatten";
 
 /** Used to add `absoluteTime` property. */
 type WithAbsoluteTime = { absoluteTime: number };
