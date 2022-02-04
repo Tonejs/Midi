@@ -1,10 +1,23 @@
+import type { MidiControllerEvent } from "midi-file";
 import { Header } from "./Header";
-import { MidiControllerEvent } from "midi-file";
 
 /**
  * @hidden
  */
-export type ControlChangeName = "modulationWheel" | "breath" | "footController" | "portamentoTime" | "volume" | "balance" | "pan" | "sustain" | "portamentoTime" | "sostenuto" | "softPedal" | "legatoFootswitch" | "portamentoControl";
+export type ControlChangeName =
+	| "modulationWheel"
+	| "breath"
+	| "footController"
+	| "portamentoTime"
+	| "volume"
+	| "balance"
+	| "pan"
+	| "sustain"
+	| "portamentoTime"
+	| "sostenuto"
+	| "softPedal"
+	| "legatoFootswitch"
+	| "portamentoControl";
 
 interface ControlChangeMap {
 	[key: number]: ControlChangeName;
@@ -60,7 +73,7 @@ export class ControlChange implements ControlChangeInterface {
 	 * @param event
 	 * @param header
 	 */
-	constructor(event: Partial<MidiControllerEvent>, header: Header) {
+	constructor(event: Partial<MidiControllerEvent & { absoluteTime: number }>, header: Header) {
 		privateHeaderMap.set(this, header);
 		privateCCNumberMap.set(this, event.controllerType);
 

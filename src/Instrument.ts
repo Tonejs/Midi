@@ -1,4 +1,8 @@
-import { MidiInstrumentEvent, MidiData } from "midi-file";
+import type {
+	MidiEvent,
+	MidiProgramChangeEvent
+} from "midi-file";
+
 import { DrumKitByPatchID, instrumentByPatchID, InstrumentFamilyByID } from "./InstrumentMaps";
 import { Track } from "./Track";
 
@@ -8,12 +12,12 @@ import { Track } from "./Track";
 const privateTrackMap = new WeakMap<Instrument, Track>();
 
 /**
- * Describes the midi instrument of a track
+ * Describes the MIDI instrument of a track.
  */
 export class Instrument {
 
 	/**
-	 * The instrument number
+	 * The instrument number. Defaults to 0.
 	 */
 	number = 0;
 
@@ -21,12 +25,16 @@ export class Instrument {
 	 * @param trackData
 	 * @param track 
 	 */
-	constructor(trackData: MidiData, track: Track) {
-
+	constructor(trackData: MidiEvent[], track: Track) {
 		privateTrackMap.set(this, track);
 		this.number = 0;
+
 		if (trackData) {
-			const programChange = trackData.find(e => e.type === "programChange") as MidiInstrumentEvent;
+			const programChange = trackData.find(
+				e => e.type === "programChange"
+			) as MidiProgramChangeEvent;
+
+			// Set 'number' from 'programNumber' if exists.
 			if (programChange) {
 				this.number = programChange.programNumber;
 			}
@@ -34,7 +42,7 @@ export class Instrument {
 	}
 
 	/**
-	 * The common name of the instrument
+	 * The common name of the instrument.
 	 */
 	get name(): string {
 		if (this.percussion) {
@@ -63,7 +71,7 @@ export class Instrument {
 	}
 
 	/**
-	 * If the instrument is a percussion instrument
+	 * If the instrument is a percussion instrument.
 	 */
 	get percussion(): boolean {
 		const track = privateTrackMap.get(this);
@@ -71,18 +79,18 @@ export class Instrument {
 	}
 
 	/**
-	 * Convert it to JSON form
+	 * Convert it to JSON form.
 	 */
 	toJSON(): InstrumentJSON {
 		return {
 			family: this.family,
-			name: this.name,
 			number: this.number,
+			name: this.name
 		};
 	}
 
 	/**
-	 * Convert from JSON form
+	 * Convert from JSON form.
 	 */
 	fromJSON(json: InstrumentJSON): void {
 		this.number = json.number;
@@ -90,7 +98,7 @@ export class Instrument {
 }
 
 export interface InstrumentJSON {
+	family: string;
 	number: number;
 	name: string;
-	family: string;
 }

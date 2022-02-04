@@ -1,17 +1,23 @@
-import { MidiChannelEvent, MidiTrackData, parseMidi } from "midi-file";
-import { encode } from "./Encode";
+import type {
+	MidiData,
+	MidiEvent
+} from "midi-file";
+
+import { parseMidi } from "midi-file";
+
 import { Header, HeaderJSON } from "./Header";
 import { Track, TrackJSON } from "./Track";
+import { encode } from "./Encode";
 
 /**
- * The main midi parsing class
+ * The main midi parsing class.
  */
 export class Midi {
 
 	/**
 	 * Download and parse the MIDI file. Returns a promise
-	 * which resolves to the generated midi file
-	 * @param url The url to fetch
+	 * which resolves to the generated MIDI file.
+	 * @param url The URL to fetch.
 	 */
 	static async fromUrl(url: string): Promise<Midi> {
 		const response = await fetch(url);
@@ -19,7 +25,7 @@ export class Midi {
 			const arrayBuffer = await response.arrayBuffer();
 			return new Midi(arrayBuffer);
 		} else {
-			throw new Error(`could not load ${url}`);
+			throw new Error(`Could not load '${url}'`);
 		}
 	}
 
@@ -37,37 +43,41 @@ export class Midi {
 	 * Parse the midi data
 	 */
 	constructor(midiArray?: (ArrayLike<number> | ArrayBuffer)) {
-
-		// parse the midi data if there is any
-		let midiData = null;
+		// Parse the MIDI data if there is any.
+		let midiData: (MidiData | null) = null;
 		if (midiArray) {
-			if (midiArray instanceof ArrayBuffer) {
-				midiArray = new Uint8Array(midiArray);
-			}
-			midiData = parseMidi(midiArray);
+			// Transform midiArray to ArrayLike<number>
+			// only if it's an ArrayBuffer.
+			const midiArrayLike: ArrayLike<number> = midiArray instanceof ArrayBuffer
+				? new Uint8Array(midiArray)
+				: midiArray;
 
-			// add the absolute times to each of the tracks
+			// Parse MIDI data.
+			midiData = parseMidi(midiArrayLike);
+
+			// Add the absolute times to each of the tracks.
 			midiData.tracks.forEach(track => {
 				let currentTicks = 0;
-				track.forEach(event => {
+
+				track.forEach((event: MidiEvent & { absoluteTime: number; }) => {
 					currentTicks += event.deltaTime;
 					event.absoluteTime = currentTicks;
 				});
 			});
 
-			// ensure at most one instrument per track
+			// Ensure at most one instrument per track.
 			midiData.tracks = splitTracks(midiData.tracks);
 		}
 
 		this.header = new Header(midiData);
 		this.tracks = [];
 
-		// parse the midi data
+		// Parse MIDI data.
 		if (midiArray) {
-			// format 0, everything is on the same track
+			// Format 0, everything is on the same track.
 			this.tracks = midiData.tracks.map(trackData => new Track(trackData, this.header));
 
-			// if it's format 1 and there are no notes on the first track, remove it
+			// If it's format 1 and there are no notes on the first track, remove it.
 			if (midiData.header.format === 1 && this.tracks[0].duration === 0) {
 				this.tracks.shift();
 			}
@@ -75,51 +85,53 @@ export class Midi {
 	}
 
 	/**
-	 * The name of the midi file, taken from the first track
+	 * The name of the midi file, taken from the first track.
 	 */
 	get name(): string {
 		return this.header.name;
 	}
+
 	set name(n) {
 		this.header.name = n;
 	}
 
 	/**
-	 * The total length of the file in seconds
+	 * The total length of the file in seconds.
 	 */
 	get duration(): number {
-		// get the max of the last note of all the tracks
+		// Get the max of the last note of all the tracks.
 		const durations = this.tracks.map(t => t.duration);
 		return Math.max(...durations);
 	}
 
 	/**
-	 * The total length of the file in ticks
+	 * The total length of the file in ticks.
 	 */
 	get durationTicks(): number {
-		// get the max of the last note of all the tracks
+		// Get the max of the last note of all the tracks.
 		const durationTicks = this.tracks.map(t => t.durationTicks);
 		return Math.max(...durationTicks);
 	}
 
 	/**
-	 * Add a track to the midi file
+	 * Add a track to the MIDI file.
 	 */
 	addTrack(): Track {
 		const track = new Track(undefined, this.header);
 		this.tracks.push(track);
+
 		return track;
 	}
 
 	/**
-	 * Encode the midi as a Uint8Array.
+	 * Encode the MIDI as a Uint8Array.
 	 */
 	toArray(): Uint8Array {
 		return encode(this);
 	}
 
 	/**
-	 * Convert the midi object to JSON.
+	 * Convert the MIDI object to JSON.
 	 */
 	toJSON(): MidiJSON {
 		return {
@@ -138,22 +150,24 @@ export class Midi {
 		this.tracks = json.tracks.map(trackJSON => {
 			const track = new Track(undefined, this.header);
 			track.fromJSON(trackJSON);
+
 			return track;
 		});
 	}
 
 	/**
-	 * Clone the entire object midi object
+	 * Clone the entire object MIDI object.
 	 */
 	clone(): Midi {
 		const midi = new Midi();
 		midi.fromJSON(this.toJSON());
+
 		return midi;
 	}
 }
 
 /**
- * The MIDI data in JSON format
+ * The MIDI data in JSON format.
  */
 export interface MidiJSON {
 	header: HeaderJSON;
@@ -168,7 +182,7 @@ export { HeaderJSON, Header } from "./Header";
  * most one channel and at most one instrument. This means splitting up tracks
  * that contain more than one channel or instrument.
  */
-function splitTracks(tracks: MidiTrackData[]): MidiTrackData[] {
+function splitTracks(tracks: Array<MidiEvent[]>): Array<MidiEvent[]> {
 	const newTracks = [];
 
 	for (let i = 0; i < tracks.length; i++) {
@@ -184,13 +198,15 @@ function splitTracks(tracks: MidiTrackData[]): MidiTrackData[] {
 			// If the event has a channel, we need to find that channel's current
 			// program number and the appropriate track for this [program, channel]
 			// pair.
-			const channel = (event as MidiChannelEvent).channel;
+			const channel = (event as (MidiEvent & { channel?: number })).channel;
 			if (channel !== undefined) {
 				if (event.type === "programChange") {
 					currentProgram[channel] = event.programNumber;
 				}
+
 				const program = currentProgram[channel];
 				const trackKey = `${program} ${channel}`;
+				
 				if (trackMap.has(trackKey)) {
 					targetTrack = trackMap.get(trackKey);
 				} else {
@@ -202,6 +218,7 @@ function splitTracks(tracks: MidiTrackData[]): MidiTrackData[] {
 			if (!newTracks[targetTrack]) {
 				newTracks.push([]);
 			}
+
 			newTracks[targetTrack].push(event);
 		}
 	}

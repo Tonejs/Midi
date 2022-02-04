@@ -1,8 +1,7 @@
-import { MidiNoteEvent } from "midi-file";
 import { Header } from "./Header";
 
 /**
- * Convert a midi note into a pitch
+ * Convert a MIDI note into a pitch.
  */
 function midiToPitch(midi: number): string {
 	const octave = Math.floor(midi / 12) - 1;
@@ -10,7 +9,7 @@ function midiToPitch(midi: number): string {
 }
 
 /**
- * Convert a midi note to a pitch class (just the pitch no octave)
+ * Convert a MIDI note to a pitch class (just the pitch no octave).
  */
 function midiToPitchClass(midi: number): string {
 	const scaleIndexToNote = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
@@ -19,7 +18,7 @@ function midiToPitchClass(midi: number): string {
 }
 
 /**
- * Convert a pitch class to a MIDI note
+ * Convert a pitch class to a MIDI note.
  */
 function pitchClassToMidi(pitch: string): number {
 	const scaleIndexToNote = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
@@ -27,7 +26,7 @@ function pitchClassToMidi(pitch: string): number {
 }
 
 /**
- * Convert a pitch to a midi number
+ * Convert a pitch to a MIDI number.
  */
 // tslint:disable-next-line: only-arrow-functions typedef
 const pitchToMidi: (note: string) => number = (function() {
@@ -42,6 +41,7 @@ const pitchToMidi: (note: string) => number = (function() {
 		abb: 7, ab: 8, a: 9, "a#": 10, ax: 11,
 		bbb: 9, bb: 10, b: 11, "b#": 12, bx: 13,
 	};
+
 	return (note) => {
 		const split = regexp.exec(note);
 		const pitch = split[1];
@@ -54,37 +54,36 @@ const pitchToMidi: (note: string) => number = (function() {
 const privateHeaderMap = new WeakMap<Note, Header>();
 
 /**
- * A Note consists of a noteOn and noteOff event
+ * A Note consists of a `noteOn` and `noteOff` event.
  */
 export class Note implements NoteInterface {
 
 	/**
-	 * The notes midi value
+	 * The notes MIDI value.
 	 */
 	midi: number;
 
 	/**
-	 * The normalized velocity (0-1)
+	 * The normalized velocity (0-1).
 	 */
 	velocity: number;
 
 	/**
-	 * The velocity of the note off
+	 * The velocity of the note off.
 	 */
 	noteOffVelocity: number;
 
 	/**
-	 * The start time in ticks
+	 * The start time in ticks.
 	 */
 	ticks: number;
 
 	/**
-	 * The duration in ticks
+	 * The duration in ticks.
 	 */
 	durationTicks: number;
 
 	constructor(noteOn: NoteOnEvent, noteOff: NoteOffEvent, header: Header) {
-
 		privateHeaderMap.set(this, header);
 
 		this.midi = noteOn.midi;
@@ -99,7 +98,7 @@ export class Note implements NoteInterface {
 	}
 
 	/**
-	 * The note name and octave in scientific pitch notation, e.g. "C4"
+	 * The note name and octave in scientific pitch notation, e.g. "C4".
 	 */
 	get name(): string {
 		return midiToPitch(this.midi);
@@ -110,7 +109,7 @@ export class Note implements NoteInterface {
 	}
 
 	/**
-	 * The notes octave number
+	 * The notes octave number.
 	 */
 	get octave(): number {
 		return Math.floor(this.midi / 12) - 1;
@@ -122,7 +121,7 @@ export class Note implements NoteInterface {
 	}
 
 	/**
-	 * The pitch class name. e.g. "A"
+	 * The pitch class name. e.g. "A".
 	 */
 	get pitch(): string {
 		return midiToPitchClass(this.midi);
@@ -133,7 +132,7 @@ export class Note implements NoteInterface {
 	}
 
 	/**
-	 * The duration of the segment in seconds
+	 * The duration of the segment in seconds.
 	 */
 	get duration(): number {
 		const header = privateHeaderMap.get(this);
@@ -147,7 +146,7 @@ export class Note implements NoteInterface {
 	}
 
 	/**
-	 * The time of the event in seconds
+	 * The time of the event in seconds.
 	 */
 	get time(): number {
 		const header = privateHeaderMap.get(this);
@@ -161,7 +160,7 @@ export class Note implements NoteInterface {
 
 	/**
 	 * The number of measures (and partial measures) to this beat.
-	 * Takes into account time signature changes
+	 * Takes into account time signature changes.
 	 * @readonly
 	 */
 	get bars(): number {
