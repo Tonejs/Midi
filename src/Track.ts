@@ -291,6 +291,13 @@ export class Track {
 				velocity: n.velocity,
 			});
 		});
+		json.pitchBends.forEach((pb) => {
+			this.addPitchBend({
+				value: pb.value,
+				ticks: pb.value,
+				time: pb.time
+			});
+		});
 	}
 
 	/**
