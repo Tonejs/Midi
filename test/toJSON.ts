@@ -22,6 +22,8 @@ describe("JSON", () => {
 			expect(json.header.name).is.an("string");
 			expect(json.header).to.have.property("ppq");
 			expect(json.header.ppq).is.an("number");
+			expect(json.header.keySignatures).is.an("array");
+			expect(json.header.keySignatures[0]).to.have.property("key");
 
 			expect(json).to.have.property("tracks");
 			expect(json.tracks[0]).to.have.property("notes");

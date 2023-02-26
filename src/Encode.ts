@@ -139,13 +139,14 @@ function encodeTimeSignature(timeSig: TimeSignatureEvent): (MidiTimeSignatureEve
 // function encodeMeta(event: )
 
 function encodeKeySignature(keySig: KeySignatureEvent): (MidiKeySignatureEvent & WithAbsoluteTime) {
-	const keyIndex = keySignatureKeys.indexOf(keySig.key);
+	const scale = keySig.scale === "major" ? 0 : 1;
+	const keyIndex = keySignatureKeys[scale].indexOf(keySig.key);
 	return {
 		absoluteTime: keySig.ticks,
 		deltaTime: 0,
-		key: keyIndex + 7,
+		key: keyIndex - 7,
 		meta: true,
-		scale: keySig.scale === "major" ? 0 : 1,
+		scale: scale,
 		type: "keySignature",
 	};
 }

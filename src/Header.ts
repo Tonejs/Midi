@@ -31,21 +31,40 @@ export interface KeySignatureEvent {
  * @hidden
  */
 export const keySignatureKeys = [
-	"Cb",
-	"Gb",
-	"Db",
-	"Ab",
-	"Eb",
-	"Bb",
-	"F",
-	"C",
-	"G",
-	"D",
-	"A",
-	"E",
-	"B",
-	"F#",
-	"C#",
+	[
+		"Cb",
+		"Gb",
+		"Db",
+		"Ab",
+		"Eb",
+		"Bb",
+		"F",
+		"C",
+		"G",
+		"D",
+		"A",
+		"E",
+		"B",
+		"F#",
+		"C#",
+	],
+	[
+		"Ab",
+		"Eb",
+		"Bb",
+		"F",
+		"C",
+		"G",
+		"D",
+		"A",
+		"E",
+		"B",
+		"F#",
+		"C#",
+		"G#",
+		"D#",
+		"A#",
+	]
 ];
 
 /**
@@ -103,7 +122,7 @@ export class Header {
 							});
 						} else if (event.type === "keySignature") {
 							this.keySignatures.push({
-								key: keySignatureKeys[event.key + 7],
+								key: keySignatureKeys[event.scale][event.key + 7],
 								scale: event.scale === 0 ? "major" : "minor",
 								ticks: event.absoluteTime,
 							});

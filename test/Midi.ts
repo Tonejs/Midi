@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { readFileSync } from "fs";
+import { readFileSync, unlinkSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { Midi } from "../src/Midi";
 // add fetch to the window so that the fetch function could work
@@ -106,6 +106,68 @@ context("Midi", () => {
 			clone.tracks[0].notes[0].ticks = 111;
 			// shouldnt affect the original
 			expect(original.tracks[0].notes[0].ticks).to.not.equal(111);
+		});
+	});
+
+	context("roundtrip", () => {
+
+		it("can encode and decode header keySignatures", () => {
+			const original = new Midi();
+			original.fromJSON({
+				header: {
+					name: "test",
+					tempos: [
+					],
+					timeSignatures: [
+					],
+					meta: [
+
+					],
+					ppq: 480,
+					keySignatures: [
+						{
+							key: "C",
+							scale: "major",
+							ticks: 0,
+						},
+						{
+							key: "Cb",
+							scale: "major",
+							ticks: 1,
+						},
+						{
+							key: "C#",
+							scale: "major",
+							ticks: 2,
+						},
+						{
+							key: "Ab",
+							scale: "minor",
+							ticks: 3,
+						},
+						{
+							key: "C",
+							scale: "minor",
+							ticks: 4,
+						},
+						{
+							key: "D#",
+							scale: "minor",
+							ticks: 5,
+						},
+						{
+							key: "A#",
+							scale: "minor",
+							ticks: 6,
+						},
+					],
+				},
+				tracks: [],
+			});
+
+			const copy = new Midi(original.toArray());
+
+			expect(original.toJSON()).to.deep.equal(copy.toJSON());
 		});
 	});
 });
