@@ -83,8 +83,8 @@ export class Header {
 
 		if (midiData) {
 			privatePPQMap.set(this, midiData.header.ticksPerBeat);
-			
-			// Check time signature and tempo events from all of the tracks.
+
+			// Check time signature, tempo events, lyrics and markers from all of the tracks.
 			midiData.tracks.forEach(track => {
 				track.forEach((event: MidiEvent & { absoluteTime: number; meta?: boolean; }) => {
 					if (event.meta) {
@@ -107,6 +107,12 @@ export class Header {
 								scale: event.scale === 0 ? "major" : "minor",
 								ticks: event.absoluteTime,
 							});
+						} else if (event.type === "marker" || event.type === "lyrics") {
+							this.meta.push({
+								text: event.text,
+								ticks: event.absoluteTime,
+								type: event.type,
+							});
 						}
 					}
 				});
@@ -122,9 +128,7 @@ export class Header {
 						this.name = event.text;
 					} else if (
 						event.type === "text" ||
-						event.type === "cuePoint" ||
-						event.type === "marker" ||
-						event.type === "lyrics"
+						event.type === "cuePoint"
 					) {
 						this.meta.push({
 							text: event.text,
@@ -272,7 +276,7 @@ export class Header {
 	 */
 	fromJSON(json: HeaderJSON): void {
 		this.name = json.name;
-		
+
 		// Clone all the attributes.
 		this.tempos = json.tempos.map((t) => Object.assign({}, t));
 		this.timeSignatures = json.timeSignatures.map((t) =>
