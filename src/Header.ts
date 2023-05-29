@@ -168,10 +168,10 @@ export class Header {
 					: this.timeSignatures[0];
 
 			const elapsedBeats = (event.ticks - lastEvent.ticks) / this.ppq;
-			const elapsedMeasures =
-				elapsedBeats /
-				lastEvent.timeSignature[0] /
-				(lastEvent.timeSignature[1] / 4);
+			const elapsedMeasures = beatsToMeasures(
+				elapsedBeats,
+				lastEvent.timeSignature
+			);
 
 			lastEvent.measures = lastEvent.measures || 0;
 			event.measures = elapsedMeasures + lastEvent.measures;
@@ -210,10 +210,7 @@ export class Header {
 
 			return (
 				timeSigEvent.measures +
-				elapsedBeats /
-					(timeSigEvent.timeSignature[0] /
-						timeSigEvent.timeSignature[1]) /
-					4
+				beatsToMeasures(elapsedBeats, timeSigEvent.timeSignature)
 			);
 		} else {
 			return ticks / this.ppq / 4;
@@ -301,6 +298,10 @@ export class Header {
 		];
 		this.update();
 	}
+}
+
+function beatsToMeasures(beats: number, timeSignature: number[]): number {
+	return beats / (timeSignature[0] / timeSignature[1]) / 4;
 }
 
 export interface HeaderJSON {
