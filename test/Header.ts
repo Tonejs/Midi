@@ -238,4 +238,103 @@ context("Header", () => {
 			expect(track.notes[2].bars).to.equal(3);
 		});
 	});
+
+	describe("Time Signature measures", () => {
+		const midi = new Midi(
+			readFileSync(
+				resolve(__dirname, "./midi/bartok/concerto_for_orchestra_1.mid")
+			)
+		);
+		const ppq = midi.header.ppq;
+
+		it("parses time signature change position in measures", () => {
+			expect(midi.header.timeSignatures.length).to.equal(36);
+
+			const timeSignature1 = midi.header.timeSignatures[0];
+			expect(timeSignature1.timeSignature).to.deep.equal([
+				3,
+				4
+			]);
+			expect(timeSignature1.measures).to.equal(0);
+			expect(timeSignature1.ticks).to.equal(0);
+
+			const timeSignature2 = midi.header.timeSignatures[1];
+			expect(timeSignature2.timeSignature).to.deep.equal([
+				3,
+				8
+			]);
+			expect(timeSignature2.measures).to.equal(75);
+			expect(timeSignature2.ticks).to.equal(
+				225 * ppq,
+				"(225 beats at " + ppq + "ppq)"
+			);
+
+			const timeSignature3 = midi.header.timeSignatures[2];
+			expect(timeSignature3.timeSignature).to.deep.equal([
+				2,
+				8
+			]);
+			expect(timeSignature3.measures).to.equal(77);
+			expect(timeSignature3.ticks).to.equal(
+				228 * ppq,
+				"(228 beats at " + ppq + "ppq)"
+			);
+
+			const timeSignature4 = midi.header.timeSignatures[3];
+			expect(timeSignature4.timeSignature).to.deep.equal([
+				3,
+				8
+			]);
+			expect(timeSignature4.measures).to.equal(78);
+			expect(timeSignature4.ticks).to.equal(
+				229 * ppq,
+				"(229 beats at " + ppq + "ppq)"
+			);
+
+			const timeSignature35 = midi.header.timeSignatures[34];
+			expect(timeSignature35.timeSignature).to.deep.equal([
+				2,
+				8
+			]);
+			expect(timeSignature35.measures).to.equal(505);
+			expect(timeSignature35.ticks).to.equal(
+				870 * ppq,
+				"(870 beats at " + ppq + "ppq)"
+			);
+
+			const timeSignature36 = midi.header.timeSignatures[35];
+			expect(timeSignature36.timeSignature).to.deep.equal([
+				3,
+				8
+			]);
+			expect(timeSignature36.measures).to.equal(507);
+			expect(timeSignature36.ticks).to.equal(
+				872 * ppq,
+				"(872 beats at " + ppq + "ppq)"
+			);
+		});
+
+		it("converts ticks to measures", () => {
+			const header = midi.header;
+
+			expect(header.ticksToMeasures(0)).to.equal(0);
+			expect(
+				header.ticksToMeasures(225 * ppq),
+				"(225 beats at " + ppq + "ppq)"
+			).to.equal(75);
+			// add a half measure (1.5 eights = 0.75 quarters)
+			expect(
+				header.ticksToMeasures(225.75 * ppq),
+				"(225.75 beats at " + ppq + "ppq)"
+			).to.be.closeTo(75.5, 0.001);
+			expect(
+				header.ticksToMeasures(457 * ppq),
+				"(457 beats at " + ppq + "ppq)"
+			).to.equal(228);
+			expect(
+				header.ticksToMeasures(829 * ppq),
+				"(829 beats at " + ppq + "ppq)"
+			).to.equal(476);
+		});
+	});
 });
