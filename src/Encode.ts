@@ -81,7 +81,9 @@ function encodePitchBend(
 		channel,
 		deltaTime: 0,
 		type: "pitchBend",
-		value: pb.value,
+		// pb.value is normalized to [-1, 1] on parse in Track.ts (event.value / 2**13);
+		// undo that here so toArray() round-trips instead of flattening every bend to ~0.
+		value: pb.value * Math.pow(2, 13),
 	};
 }
 
