@@ -305,5 +305,18 @@ context("Track", () => {
 			expect(midi.tracks[0].pitchBends[25].ticks).to.equal(480);
 			expect(midi.tracks[0].pitchBends[25].value).to.be.closeTo(1, 0.01);
 		});
+
+		it("round-trips through toArray without flattening the value", () => {
+			const midi = new Midi(
+				readFileSync(resolve(__dirname, "./midi/pitchBendTest.mid"))
+			);
+			const expected = midi.tracks[0].pitchBends[25].value;
+
+			const roundTripped = new Midi(midi.toArray());
+			expect(roundTripped.tracks[0].pitchBends[25].value).to.be.closeTo(
+				expected,
+				0.01
+			);
+		});
 	});
 });
