@@ -220,6 +220,12 @@ function splitTracks(tracks: Array<MidiEvent[]>): Array<MidiEvent[]> {
 			}
 
 			newTracks[targetTrack].push(event);
+			if (event.type === "endOfTrack") {
+				// Each channel/program split ends at the original track's end tick.
+				for (let track = defaultTrack + 1; track < newTracks.length; track++) {
+					newTracks[track].push(event);
+				}
+			}
 		}
 	}
 
