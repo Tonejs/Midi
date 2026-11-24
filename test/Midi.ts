@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import { writeMidi } from "midi-file";
 import { readFileSync, unlinkSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { Midi } from "../src/Midi";
@@ -46,6 +47,20 @@ context("Midi", () => {
 	});
 
 	describe("from a file", () => {
+
+		it("preserves the source end tick on each split channel", () => {
+			const midi = new Midi(writeMidi({
+				header: { format: 0, numTracks: 1, ticksPerBeat: 96 },
+				tracks: [[
+					{ deltaTime: 0, type: "noteOn", channel: 0, noteNumber: 60, velocity: 80 },
+					{ deltaTime: 0, type: "noteOn", channel: 1, noteNumber: 64, velocity: 80 },
+					{ deltaTime: 48, type: "noteOff", channel: 0, noteNumber: 60, velocity: 0 },
+					{ deltaTime: 0, type: "noteOff", channel: 1, noteNumber: 64, velocity: 0 },
+					{ deltaTime: 48, type: "endOfTrack", meta: true },
+				]],
+			}));
+			expect(midi.tracks.map(track => track.endOfTrackTicks)).to.deep.equal([96, 96]);
+		});
 
 		it("has a duration", () => {
 			const midi = new Midi(readFileSync(resolve(__dirname, "./midi/debussy/childrens_corner_1.mid")));
